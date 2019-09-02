@@ -497,5 +497,9 @@ public class Compiler {
 	private SymbolTable		symbolTable;
 	private Lexer			lexer;
 	private ErrorSignaller	signalError;
+	
+	private void teste() {
+		System.out.println("somente teste para commit");
+	}
 
 }
