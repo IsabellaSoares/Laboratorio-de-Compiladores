@@ -1,0 +1,2 @@
+comp.Comp
+comp.TupleCheckNameText

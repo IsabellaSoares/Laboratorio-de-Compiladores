@@ -89,6 +89,9 @@ public class Compiler {
 	 */
 	@SuppressWarnings("incomplete-switch")
 	private void metaobjectAnnotation(ArrayList<MetaobjectAnnotation> metaobjectAnnotationList) {
+		
+		System.out.println("metaobjectAnnotation" + lexer.token + " " + lexer.getMetaobjectName());
+		
 		String name = lexer.getMetaobjectName();
 		int lineNumber = lexer.getLineNumber();
 		lexer.nextToken();
@@ -162,11 +165,17 @@ public class Compiler {
 	}
 
 	private void classDec() {
+		
+		System.out.println("classDec " + lexer.token + " " + lexer.getStringValue());
+		
 		if ( lexer.token == Token.ID && lexer.getStringValue().equals("open") ) {
 			// open class
 		}
 		if ( lexer.token != Token.CLASS ) error("'class' expected");
 		lexer.nextToken();
+		
+		System.out.println("classDec ID " + lexer.token + " " + lexer.getStringValue());
+		
 		if ( lexer.token != Token.ID )
 			error("Identifier expected");
 		String className = lexer.getStringValue();
@@ -188,8 +197,14 @@ public class Compiler {
 	}
 
 	private void memberList() {
+		
+		System.out.println("memberList " + lexer.token);
+		
 		while ( true ) {
 			qualifier();
+			
+			System.out.println("memberList Qualifier " + lexer.token);
+			
 			if ( lexer.token == Token.VAR ) {
 				fieldDec();
 			}
@@ -218,15 +233,21 @@ public class Compiler {
 	}
 
 	private void methodDec() {
+		
+		System.out.println("methodDec " + lexer.token);
+		
 		lexer.nextToken();
 		if ( lexer.token == Token.ID ) {
 			// unary method
+			
+			System.out.println("methodDec ID " + lexer.token + " " + lexer.getStringValue());
+			
 			lexer.nextToken();
 
 		}
 		else if ( lexer.token == Token.IDCOLON ) {
 			// keyword method. It has parameters
-
+			//lexer.nextToken();
 		}
 		else {
 			error("An identifier or identifer: was expected after 'func'");
@@ -249,13 +270,19 @@ public class Compiler {
 	}
 
 	private void statementList() {
-		  // only '}' is necessary in this test
+		
+		System.out.println("statementList " + lexer.token);
+		
+		// only '}' is necessary in this test
 		while ( lexer.token != Token.RIGHTCURBRACKET && lexer.token != Token.END ) {
 			statement();
 		}
 	}
 
 	private void statement() {
+		
+		System.out.println("statement " + lexer.token + " " + lexer.getStringValue());
+				
 		boolean checkSemiColon = true;
 		switch ( lexer.token ) {
 		case IF:
@@ -372,9 +399,12 @@ public class Compiler {
 
 	 */
 	private void writeStat() {
+		System.out.println("writeStat");
 		next();
-		check(Token.DOT, "a '.' was expected after 'Out'");
+		System.out.println("writeStat " + lexer.token);
+		check(Token.DOT, "a '.' was expected after 'Out'");		
 		next();
+		System.out.println("writeStat " + lexer.token + " " + lexer.getStringValue());
 		check(Token.IDCOLON, "'print:' or 'println:' was expected after 'Out.'");
 		String printName = lexer.getStringValue();
 		expr();
