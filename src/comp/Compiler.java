@@ -6,11 +6,7 @@ package comp;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import ast.LiteralInt;
-import ast.MetaobjectAnnotation;
-import ast.Program;
-import ast.Statement;
-import ast.TypeCianetoClass;
+import ast.*;
 import lexer.Lexer;
 import lexer.Token;
 
@@ -314,12 +310,19 @@ public class Compiler {
 		default:
 			if ( lexer.token == Token.ID && lexer.getStringValue().equals("Out") ) {
 				writeStat();
+				
+				if (lexer.token == Token.SEMICOLON) {
+					checkSemiColon = false;
+				}
+				
+				next();
 			}
 			else {
 				expr();
 			}
 
 		}
+		
 		if ( checkSemiColon ) {
 			check(Token.SEMICOLON, "';' expected");
 		}
@@ -407,11 +410,133 @@ public class Compiler {
 		System.out.println("writeStat " + lexer.token + " " + lexer.getStringValue());
 		check(Token.IDCOLON, "'print:' or 'println:' was expected after 'Out.'");
 		String printName = lexer.getStringValue();
-		expr();
+		//expr();
+		ArrayList<Expr> exprList = exprList();
+		
+		if (lexer.token == Token.SEMICOLON) {
+			System.out.println("writeStat semicolon " + lexer.token + " " + lexer.getStringValue());
+			//System.exit(1);
+		}
+	}
+	
+	private ArrayList<Expr> exprList() {
+		ArrayList<Expr> exprList = new ArrayList<>();
+		
+		Expr e = null;
+		next();
+		e = expr();
+		
+		if (e == null) {
+			this.error("Expression expected");
+		}
+		
+		exprList.add(e);
+		
+		while (lexer.token == Token.COMMA) {
+			System.out.println("exprList comma " + lexer.token);
+			next();
+			e = expr();
+			
+			if (e == null) {
+				this.error("Expression expected");
+			}
+			
+			exprList.add(e);
+			System.out.println("exprList before add " + lexer.token);
+		}
+		
+		
+		return exprList;
 	}
 
-	private void expr() {
-
+	private Expr expr() {
+		System.out.println("expr " + lexer.token);
+		Expr e = null;
+		e = simpleExpr();
+		//relation();
+		//simpleExpr();
+		
+		return e;
+	}
+	
+	private Expr simpleExpr() {
+		System.out.println("simpleExpr " + lexer.token);
+		Expr e = null;
+		e = sumSubExpr();
+		//++
+		//sumSubExpr();
+		
+		return e;
+	}
+	
+	private Expr sumSubExpr() {
+		System.out.println("sumSubExpr " + lexer.token);
+		Expr e = null;
+		e = term();
+		//lowOperator();
+		//term();
+		
+		return e;
+	}
+	
+	private Expr term() {
+		System.out.println("term " + lexer.token);
+		Expr e = null;
+		e = signalFactor();
+		//highOperator();
+		
+		return e;
+	}
+	
+	private SignalFactor signalFactor() {
+		System.out.println("signalFactor " + lexer.token);
+		return factor();
+		//signal(); +/-
+		//Token op = null;
+		//op = lexer.token if +/-
+		//Factor factor = factor();
+	}
+	
+	private Factor factor() {
+		
+		System.out.println("factor " + lexer.token);
+		
+		return basicValue();		
+		
+		//BasicValue |
+		//“(” Expression “)” |
+		//“!” Factor |
+		//“nil” |
+		//ObjectCreation |
+		//PrimaryExpr
+	}
+	
+	private BasicValue basicValue() {
+		System.out.println("basicValue " + lexer.token);
+		//next();
+		
+		if (lexer.token == Token.LITERALINT) {
+			Integer value = lexer.getNumberValue();
+			System.out.println("LITERALINT " + lexer.token + " " + value);
+			next();
+			return new BasicValue(value);
+		} else if (lexer.token == Token.LITERALSTRING) {
+			String value = lexer.getLiteralStringValue();
+			System.out.println("LITERALSTRING " + lexer.token + " " + value);
+			next();
+			return new BasicValue(value);
+		} else if (lexer.token == Token.TRUE) {
+			boolean value = true;
+			next();
+			return new BasicValue(value);
+		} else if (lexer.token == Token.FALSE) {
+			boolean value = false;
+			next();
+			return new BasicValue(value);
+		} else {
+			this.error("Basic value expected");
+			return null;
+		}	
 	}
 
 	private void fieldDec() {

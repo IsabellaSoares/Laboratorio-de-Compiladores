@@ -35,5 +35,5 @@ _________________________________________________________________________
 ######################################################
 Erros que foram sinalizados mas n�o deveriam ter sido:
 
-testes/OK_GER01.ci, 42, ';' expected
+testes/OK_GER01.ci, 43, Basic value expected
 
