@@ -451,12 +451,20 @@ public class Compiler {
 
 	private Expr expr() {
 		//System.out.println("expr " + lexer.token);
-		Expr e = null;
-		e = simpleExpr();
-		//relation();
-		//simpleExpr();
+		Expr left = null;
+		left = simpleExpr();
 		
-		return e;
+		while (relation(lexer.token)) {			
+			Token op = lexer.token;
+			next();
+			
+			Expr right = null;
+			right = simpleExpr();
+			
+			left = new CompositeExpr(left, op, right);
+		}
+		
+		return left;
 	}
 	
 	private Expr simpleExpr() {
@@ -500,6 +508,27 @@ public class Compiler {
 	private Factor factor() {
 		
 		//System.out.println("factor " + lexer.token);
+		
+		if (lexer.token == Token.LEFTPAR) {			
+			next();
+			
+			Expr e = null;
+			e = expr();
+			
+			if (lexer.token != Token.RIGHTPAR) {
+				this.error("')' expected");
+			} else {
+				System.out.println("factor rightpar " + lexer.token);
+				System.exit(1);
+			}
+			
+			if (e == null) {
+				return null;
+			}
+			
+			next();
+			return new ExprFactor(e);
+		}
 		
 		return basicValue();		
 		
@@ -624,9 +653,6 @@ public class Compiler {
 		return null;
 	}
 
-
-
-
 	private LiteralInt literalInt() {
 
 		LiteralInt e = null;
@@ -647,6 +673,11 @@ public class Compiler {
 				|| token == Token.LEFTPAR || token == Token.NULL
 				|| token == Token.ID || token == Token.LITERALSTRING;
 
+	}
+	
+	private static boolean relation (Token token) {
+		return token == Token.EQ || token == Token.LT || token == Token.GT
+				|| token == Token.LE || token == Token.GE || token == Token.NEQ;
 	}
 
 	private SymbolTable		symbolTable;
