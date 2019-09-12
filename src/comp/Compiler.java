@@ -491,7 +491,6 @@ public class Compiler {
 			this.error("';' expected");
 		}
 		
-		//System.out.println("writeStat semicolon");
 		return new WriteStat(exprList, printName);
 	}
 	
