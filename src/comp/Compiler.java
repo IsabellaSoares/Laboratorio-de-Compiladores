@@ -86,8 +86,6 @@ public class Compiler {
 	@SuppressWarnings("incomplete-switch")
 	private void metaobjectAnnotation(ArrayList<MetaobjectAnnotation> metaobjectAnnotationList) {
 		
-		//System.out.println("metaobjectAnnotation" + lexer.token + " " + lexer.getMetaobjectName());
-		
 		String name = lexer.getMetaobjectName();
 		int lineNumber = lexer.getLineNumber();
 		lexer.nextToken();
@@ -162,15 +160,11 @@ public class Compiler {
 
 	private void classDec() {
 		
-		//System.out.println("classDec " + lexer.token + " " + lexer.getStringValue());
-		
 		if ( lexer.token == Token.ID && lexer.getStringValue().equals("open") ) {
 			// open class
 		}
 		if ( lexer.token != Token.CLASS ) error("'class' expected");
 		lexer.nextToken();
-		
-		//System.out.println("classDec " + lexer.token + " " + lexer.getStringValue());
 		
 		if ( lexer.token != Token.ID )
 			error("Identifier expected");
@@ -186,10 +180,6 @@ public class Compiler {
 		}
 
 		MemberList memberList = memberList();
-		//System.out.println("classDec " + lexer.token);
-		
-		//System.out.println("Voltou do memberList " +  lexer.token);
-		//System.exit(1);
 		
 		if ( lexer.token != Token.END)
 			error("'end' expected");
@@ -199,27 +189,17 @@ public class Compiler {
 
 	private MemberList memberList() {
 		
-		//System.out.println("memberList " + lexer.token);
-		
 		Qualifier qualifier = null;
 		MethodDec methodDec = null;
 		
 		while ( true ) {
-			//System.out.println("qualifier antes " + lexer.token);
-			
 			if (lexer.token != Token.END) {
 				qualifier = qualifier();
 			}
-			
-			//System.out.println("qualifier depois " + lexer.token);
-			
-			//System.out.println("memberList Qualifier " + lexer.token);
-			
 			if ( lexer.token == Token.VAR ) {
 				fieldDec();
 			} else if ( lexer.token == Token.FUNC ) {
 				methodDec = methodDec();
-				//System.out.println("memberList " + lexer.token);
 			} else {
 				break;
 			}
@@ -245,8 +225,6 @@ public class Compiler {
 
 	private MethodDec methodDec() {
 		
-		//System.out.println("methodDec " + lexer.token);
-		
 		lexer.nextToken();
 		
 		String id = null;
@@ -255,11 +233,8 @@ public class Compiler {
 		if ( lexer.token == Token.ID ) {
 			// unary method
 			
-			//System.out.println("methodDec ID " + lexer.token + " " + lexer.getStringValue());
-			
 			id = lexer.getStringValue();
 			lexer.nextToken();
-
 		} else if ( lexer.token == Token.IDCOLON ) {
 			// keyword method. It has parameters
 			//lexer.nextToken();
@@ -284,22 +259,16 @@ public class Compiler {
 		
 		statList = statementList();
 		
-		//System.out.println("methodDec retornou statementList " + lexer.token);
-		
 		if ( lexer.token != Token.RIGHTCURBRACKET ) {
 			error("'}' expected");
 		}
 		
-		//System.out.println("methodDec " + lexer.token);
 		next();
-		//System.out.println("methodDec " + lexer.token);
 		
 		return new MethodDec(id, type, statList);
 	}
 
 	private ArrayList<Statement> statementList() {
-		
-		//System.out.println("statementList " + lexer.token);
 		
 		ArrayList<Statement> stateList = new ArrayList<>();
 		
@@ -307,22 +276,15 @@ public class Compiler {
 		while ( lexer.token != Token.RIGHTCURBRACKET && lexer.token != Token.END ) {
 			Statement e = statement();
 			stateList.add(e);
-			System.out.println("statementList " + lexer.token);
 		}
-		
-		//System.out.println("statementList acabou " + lexer.token);
 		
 		return stateList;
 	}
 
 	private Statement statement() {
 		
-		System.out.println("statement " + lexer.token + " " + lexer.getStringValue());
-		
 		if (lexer.token == Token.SEMICOLON) {
 			next();
-			//System.out.println("statement " + lexer.token + " " + lexer.getStringValue());
-			//System.exit(1);
 		}
 				
 		boolean checkSemiColon = true;
@@ -331,13 +293,9 @@ public class Compiler {
 		
 		switch ( lexer.token ) {
 		case IF:
-			//System.out.println("statement entrou no if");
-			//System.exit(1);
 			e = ifStat();
 			checkSemiColon = false;
-			//System.out.println("Voltou do IF " + lexer.token);
 			next();
-			//System.exit(1);
 			break;
 		case WHILE:
 			whileStat();
@@ -351,7 +309,6 @@ public class Compiler {
 			break;
 		case SEMICOLON:
 			next();
-			//System.out.println("statement SEMICOLON" + lexer.token + " " + lexer.getStringValue());
 			break;
 		case REPEAT:
 			repeatStat();
@@ -379,11 +336,9 @@ public class Compiler {
 				
 				next();				
 			} else {
-				//AssignExpr
-				System.out.println("Entrou aqui");
 				e = assignExpr();
 				next();
-				System.out.println("Saiu aqui " + lexer.token);
+				
 				if (lexer.token == Token.SEMICOLON) {
 					checkSemiColon = false;
 				}
@@ -462,16 +417,9 @@ public class Compiler {
 	}
 
 	private IfStat ifStat() {
-		//System.out.println("ifStat " + lexer.token);
-		//System.exit(1);
 		next();
-		//System.out.println("ifStat " + lexer.token);
-		//System.exit(1);
 		
 		Expr expr = expr();
-		
-		//System.out.println("ifStat " + lexer.token);
-		//System.exit(1);
 		
 		check(Token.LEFTCURBRACKET, "'{' expected after the 'if' expression");
 		
@@ -484,8 +432,6 @@ public class Compiler {
 			Statement e = statement();
 			ifState.add(e);
 		}
-		
-		//System.out.println("ifStat " + lexer.token + " " + lexer.getLineNumber());
 		
 		check(Token.RIGHTCURBRACKET, "'}' was expected");
 		
@@ -508,12 +454,9 @@ public class Compiler {
 
 	 */
 	private WriteStat writeStat() {
-		//System.out.println("writeStat");
 		next();
-		//System.out.println("writeStat " + lexer.token);
 		check(Token.DOT, "a '.' was expected after 'Out'");		
 		next();
-		//System.out.println("writeStat " + lexer.token + " " + lexer.getStringValue());
 		check(Token.IDCOLON, "'print:' or 'println:' was expected after 'Out.'");
 		
 		String printName = lexer.getStringValue();
@@ -527,8 +470,6 @@ public class Compiler {
 	}
 	
 	private ArrayList<Expr> exprList() {
-		//System.out.println("exprList");
-		
 		ArrayList<Expr> exprList = new ArrayList<>();
 		
 		Expr e = null;
@@ -542,7 +483,6 @@ public class Compiler {
 		exprList.add(e);
 		
 		while (lexer.token == Token.COMMA) {
-			//System.out.println("exprList comma " + lexer.token);
 			next();
 			e = expr();
 			
@@ -551,7 +491,6 @@ public class Compiler {
 			}
 			
 			exprList.add(e);
-			//System.out.println("exprList before add " + lexer.token);
 		}
 		
 		
@@ -559,7 +498,6 @@ public class Compiler {
 	}
 
 	private Expr expr() {
-		//System.out.println("expr " + lexer.token);
 		Expr left = null;
 		left = simpleExpr();
 		
@@ -577,7 +515,6 @@ public class Compiler {
 	}
 	
 	private Expr simpleExpr() {
-		//System.out.println("simpleExpr " + lexer.token);
 		Expr e = null;
 		e = sumSubExpr();
 		//++
@@ -587,7 +524,6 @@ public class Compiler {
 	}
 	
 	private Expr sumSubExpr() {
-		//System.out.println("sumSubExpr " + lexer.token);
 		Expr e = null;
 		e = term();
 		//lowOperator();
@@ -597,7 +533,6 @@ public class Compiler {
 	}
 	
 	private Expr term() {
-		//System.out.println("term " + lexer.token);
 		Expr e = null;
 		e = signalFactor();
 		//highOperator();
@@ -606,7 +541,6 @@ public class Compiler {
 	}
 	
 	private SignalFactor signalFactor() {
-		//System.out.println("signalFactor " + lexer.token);
 		return factor();
 		//signal(); +/-
 		//Token op = null;
@@ -615,12 +549,7 @@ public class Compiler {
 	}
 	
 	private Factor factor() {
-		
-		//System.out.println("factor " + lexer.token);
-		
 		if (lexer.token == Token.LEFTPAR) {
-			//System.out.println("factor leftpar " + lexer.token);
-			//System.exit(1);
 			next();
 			
 			Expr e = null;
@@ -629,8 +558,7 @@ public class Compiler {
 			if (lexer.token != Token.RIGHTPAR) {
 				this.error("')' expected");
 			} else {
-				//System.out.println("factor rightpar " + lexer.token);
-				//System.exit(1);
+				
 			}
 			
 			if (e == null) {
@@ -657,17 +585,12 @@ public class Compiler {
 	}
 	
 	private BasicValue basicValue() {
-		//System.out.println("basicValue " + lexer.token);
-		//next();
-		
 		if (lexer.token == Token.LITERALINT) {
 			Integer value = lexer.getNumberValue();
-			//System.out.println("LITERALINT " + lexer.token + " " + value);
 			next();
 			return new BasicValue(value);
 		} else if (lexer.token == Token.LITERALSTRING) {
 			String value = lexer.getLiteralStringValue();
-			//System.out.println("LITERALSTRING " + lexer.token + " " + value);
 			next();
 			return new BasicValue(value);
 		} else if (lexer.token == Token.TRUE) {
@@ -679,7 +602,6 @@ public class Compiler {
 			next();
 			return new BasicValue(value);
 		} else {
-			System.out.println(lexer.token + " " + lexer.getStringValue());
 			this.error("Basic value expected");
 			return null;
 		}	
@@ -689,19 +611,9 @@ public class Compiler {
 		Expr left = null, right = null;
 		left = expr();
 		
-		System.out.println("assignExpr " + lexer.token + " " + lexer.getStringValue());
-		//System.exit(1);
-		
 		if (lexer.token == Token.ASSIGN) {
-			//System.out.println("É ASSIGN");
-			//System.exit(1);
-			next();
-			//System.out.println("É ASSIGN " + lexer.token);
-			//System.exit(1);
-			
+			next();			
 			right = expr();
-			System.out.println("Saiu aqui");
-			//System.exit(1);
 		}
 		
 		return new AssignExpr(left, right);
@@ -721,20 +633,16 @@ public class Compiler {
 				
 				if (lexer.token == Token.ID) {
 					String id2 = lexer.getStringValue();
-					System.out.println("OI " + lexer.token + " " + lexer.getStringValue());
 					return new PrimarySimpleExpr(id, id2);
 				} else if (lexer.token == Token.IDCOLON) {
 					String id2 = lexer.getStringValue();
 					next();
 				} else if (lexer.token == Token.NEW) {
-					System.out.println("primary " + id);
-					System.out.println("primary " + lexer.token);
 					return new ObjectCreation(id);
 				} else {
 					this.error("Id or IdColon expected");
 				}
 			} else {
-				System.out.println("PrimaryExpr " + lexer.token);
 				return new PrimarySimpleExpr(id);
 			}
 			
