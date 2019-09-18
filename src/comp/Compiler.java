@@ -47,7 +47,7 @@ public class Compiler {
 			catch( CompilerError e) {
 				// if there was an exception, there is a compilation error
 				thereWasAnError = true;
-				while ( lexer.token != Token.CLASS && lexer.token != Token.EOF ) {
+				/*while ( lexer.token != Token.CLASS && lexer.token != Token.EOF ) {
 					try {
 						next();
 					}
@@ -55,7 +55,7 @@ public class Compiler {
 						e.printStackTrace();
 						return program;
 					}
-				}
+				}*/
 			}
 			catch ( RuntimeException e ) {
 				e.printStackTrace();
@@ -250,7 +250,7 @@ public class Compiler {
 		lexer.nextToken();
 		
 		String id = null;
-		Type type = null;
+		Type type = Type.nullType;
 		
 		if ( lexer.token == Token.ID ) {
 			// unary method
@@ -305,9 +305,9 @@ public class Compiler {
 		
 		// only '}' is necessary in this test
 		while ( lexer.token != Token.RIGHTCURBRACKET && lexer.token != Token.END ) {
-			//System.out.println("statementList " + lexer.token);
 			Statement e = statement();
 			stateList.add(e);
+			System.out.println("statementList " + lexer.token);
 		}
 		
 		//System.out.println("statementList acabou " + lexer.token);
@@ -317,7 +317,13 @@ public class Compiler {
 
 	private Statement statement() {
 		
-		//System.out.println("statement " + lexer.token + " " + lexer.getStringValue());
+		System.out.println("statement " + lexer.token + " " + lexer.getStringValue());
+		
+		if (lexer.token == Token.SEMICOLON) {
+			next();
+			//System.out.println("statement " + lexer.token + " " + lexer.getStringValue());
+			//System.exit(1);
+		}
 				
 		boolean checkSemiColon = true;
 		
@@ -351,25 +357,39 @@ public class Compiler {
 			repeatStat();
 			break;
 		case VAR:
-			localDec();
+			e = localDec();	
+			
+			if (lexer.token == Token.SEMICOLON) {
+				checkSemiColon = false;
+			}
+			
+			next();
+			
 			break;
 		case ASSERT:
 			assertStat();
 			break;
 		default:
 			if ( lexer.token == Token.ID && lexer.getStringValue().equals("Out") ) {
-				writeStat();
+				e = writeStat();
 				
 				if (lexer.token == Token.SEMICOLON) {
 					checkSemiColon = false;
 				}
 				
 				next();				
+			} else {
+				//AssignExpr
+				System.out.println("Entrou aqui");
+				e = assignExpr();
+				next();
+				System.out.println("Saiu aqui " + lexer.token);
+				if (lexer.token == Token.SEMICOLON) {
+					checkSemiColon = false;
+				}
+				
+				next();
 			}
-			else {
-				expr();
-			}
-
 		}
 		
 		if ( checkSemiColon ) {
@@ -379,25 +399,37 @@ public class Compiler {
 		return e;
 	}
 
-	private void localDec() {
+	private LocalDec localDec() {
 		next();
-		type();
+		
+		Type type = Type.nullType;
+		type = type();
+		
 		check(Token.ID, "A variable name was expected");
+		
+		ArrayList<Variable> idList = new ArrayList<>();
+		Expr expr = null;
+		
 		while ( lexer.token == Token.ID ) {
+			Variable var = new Variable(type, lexer.getStringValue());
+			idList.add(var);
+			
 			next();
+			
 			if ( lexer.token == Token.COMMA ) {
 				next();
-			}
-			else {
+			} else {
 				break;
 			}
 		}
+		
 		if ( lexer.token == Token.ASSIGN ) {
 			next();
 			// check if there is just one variable
-			expr();
+			expr = expr();
 		}
-
+		
+		return new LocalDec(type, idList, expr);
 	}
 
 	private void repeatStat() {
@@ -607,9 +639,14 @@ public class Compiler {
 			
 			next();
 			return new ExprFactor(e);
-		}
-		
-		return basicValue();		
+		} else if (lexer.token == Token.ID || 
+					lexer.token == Token.SUPER || 
+					lexer.token == Token.SELF || 
+					lexer.token == Token.READ) {
+			return primaryExpr();
+		} else {
+			return basicValue();
+		}			
 		
 		//BasicValue |
 		//“(” Expression “)” |
@@ -642,9 +679,74 @@ public class Compiler {
 			next();
 			return new BasicValue(value);
 		} else {
+			System.out.println(lexer.token + " " + lexer.getStringValue());
 			this.error("Basic value expected");
 			return null;
 		}	
+	}
+	
+	private AssignExpr assignExpr () {
+		Expr left = null, right = null;
+		left = expr();
+		
+		System.out.println("assignExpr " + lexer.token + " " + lexer.getStringValue());
+		//System.exit(1);
+		
+		if (lexer.token == Token.ASSIGN) {
+			//System.out.println("É ASSIGN");
+			//System.exit(1);
+			next();
+			//System.out.println("É ASSIGN " + lexer.token);
+			//System.exit(1);
+			
+			right = expr();
+			System.out.println("Saiu aqui");
+			//System.exit(1);
+		}
+		
+		return new AssignExpr(left, right);
+	}
+	
+	private Factor primaryExpr() {		
+		if (lexer.token == Token.ID) {
+			//Id |
+			//Id “.” Id |
+			//Id “.” IdColon ExpressionList |
+			
+			String id = lexer.getStringValue();
+			next();
+			
+			if (lexer.token == Token.DOT ) {
+				next();			
+				
+				if (lexer.token == Token.ID) {
+					String id2 = lexer.getStringValue();
+					System.out.println("OI " + lexer.token + " " + lexer.getStringValue());
+					return new PrimarySimpleExpr(id, id2);
+				} else if (lexer.token == Token.IDCOLON) {
+					String id2 = lexer.getStringValue();
+					next();
+				} else if (lexer.token == Token.NEW) {
+					System.out.println("primary " + id);
+					System.out.println("primary " + lexer.token);
+					return new ObjectCreation(id);
+				} else {
+					this.error("Id or IdColon expected");
+				}
+			} else {
+				System.out.println("PrimaryExpr " + lexer.token);
+				return new PrimarySimpleExpr(id);
+			}
+			
+		} else if (lexer.token == Token.SUPER) {
+			
+		} else if (lexer.token == Token.SELF) {
+			
+		} else {
+			// return readExpr();
+		}
+		
+		return null;
 	}
 
 	private void fieldDec() {
