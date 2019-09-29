@@ -4,11 +4,15 @@ Marcelo Augusto Rodrigues da Silva  726565
 */
 package ast;
 
-import java.util.ArrayList;
-
 public class ReadExpr extends PrimaryExpr {
+	private Type type;
+	
+	public ReadExpr (Type type) {
+		this.type = type;
+	}
+	
 	public Type getType() {
-		return null;
+		return this.type;
 	};
 	
 	public void genJava( PW pw, boolean putParenthesis ) {};

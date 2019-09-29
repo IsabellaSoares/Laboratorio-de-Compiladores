@@ -664,7 +664,12 @@ public class Compiler {
 	}
 	
 	private Factor primaryExpr() {		
-		if (lexer.token == Token.ID) {			
+		if (lexer.token == Token.ID) {
+			
+			if (lexer.getStringValue().equals("In")) {
+				return readExpr();
+			}
+			
 			String id = lexer.getStringValue();
 			next();
 			
@@ -692,8 +697,24 @@ public class Compiler {
 			
 		} else if (lexer.token == Token.SELF) {
 			
+		}
+		
+		return null;
+	}
+	
+	private ReadExpr readExpr() {
+		next();		
+		check(Token.DOT, "a '.' was expected after 'Out'");		
+		next();
+		
+		if (lexer.getStringValue().equals("readInt")) {
+			next();
+			return new ReadExpr(Type.intType);
+		} else if (lexer.getStringValue().equals("readString")) {
+			next();
+			return new ReadExpr(Type.stringType);
 		} else {
-			// return readExpr();
+			this.error("'readInt' or 'readString' was expected after 'In.'");
 		}
 		
 		return null;
