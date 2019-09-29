@@ -524,28 +524,47 @@ public class Compiler {
 	}
 	
 	private Expr sumSubExpr() {
-		Expr e = null;
-		e = term();
-		//lowOperator();
-		//term();
+		Expr left = null;
+		left = term();
 		
-		return e;
+		if (lexer.token == Token.PLUS || lexer.token == Token.MINUS || lexer.token == Token.OR) {
+			Token operator = lexer.token;
+			Expr right = null;
+			right = term();
+			
+			left = new CompositeSumSubExpr(left, operator, right);
+		}
+		
+		return left;
 	}
 	
 	private Expr term() {
-		Expr e = null;
-		e = signalFactor();
-		//highOperator();
+		Expr left = null;
+		left = signalFactor();
 		
-		return e;
+		if (lexer.token == Token.MULT || lexer.token == Token.DIV || lexer.token == Token.AND) {
+			Token operator = lexer.token;
+			next();
+			Expr right = null;
+			right = signalFactor();
+			
+			left = new CompositeTerm(left, operator, right);
+		}		
+		
+		return left;
 	}
 	
 	private SignalFactor signalFactor() {
-		return factor();
-		//signal(); +/-
-		//Token op = null;
-		//op = lexer.token if +/-
-		//Factor factor = factor();
+		Token operator = null;
+		
+		if (lexer.token == Token.PLUS || lexer.token == Token.MINUS) {
+			operator = lexer.token;
+			next();
+		}
+		
+		Factor factor = factor();
+		
+		return new CompositeSignalFactor(operator, factor);
 	}
 	
 	private Factor factor() {

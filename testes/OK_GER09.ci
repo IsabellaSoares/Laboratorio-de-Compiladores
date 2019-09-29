@@ -1,0 +1,61 @@
+/*
+    Matheus Nadaleti Garcia
+    email: mat.nadaleti@hotmail.com
+*/
+
+@annot("check", "self", "super")
+@nce
+
+/*
+  @filename   ok-ger09.ci
+
+  @comment    Testa se a geracao de codigo para self e super estao corretas.
+  Deve escrever
+  1 1 2 2 3 3 4 4
+
+  */
+
+open
+class A
+
+    func m1:Int n {
+        Out.print: "1 " ++ n, " ";
+    }  
+
+end
+
+open
+class B extends A
+
+    func m2:Int n {
+        super.m1: 1;
+        Out.print: " 2 " ++ n, " ";
+    }  
+
+end
+
+class C extends B
+
+    func m3: Int n {
+        super.m2: 2;
+        Out.print: " 3 " ++ n, " ";
+    } 
+
+    func m4:Int n {
+        self.m3: 3;
+        Out.println: " 4 " ++ n, " ";
+    } 
+
+end
+
+class Program
+   
+   func run {
+      var C c;
+      
+      Out.println: "1 1 2 2 3 3 4 4";
+      c = C.new;
+      c.m4: 4;
+   }   
+
+end

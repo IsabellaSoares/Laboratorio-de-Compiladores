@@ -18,7 +18,7 @@ public class ObjectCreation extends Factor {
 	}
 
 	@Override
-	public void genC(PW pw, boolean putParenthesis) {
+	public void genJava(PW pw, boolean putParenthesis) {
 		// TODO Auto-generated method stub
 		
 	}

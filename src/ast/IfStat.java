@@ -16,5 +16,5 @@ public class IfStat extends Statement {
 		this.elseState = elseState;
 	}
 	
-	public void genC( PW pw ) {};
+	public void genJava( PW pw ) {};
 }

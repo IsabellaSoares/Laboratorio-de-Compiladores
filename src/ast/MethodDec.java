@@ -18,5 +18,5 @@ public class MethodDec extends Member {
 		//this.paramList = paramList;
 	}
 	
-	public void genC( PW pw ) {};
+	public void genJava( PW pw ) {};
 }

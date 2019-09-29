@@ -17,5 +17,5 @@ public class LocalDec extends Statement {
 		this.expr = expr;
 	}
 	
-	public void genC(PW pw) {};
+	public void genJava(PW pw) {};
 }

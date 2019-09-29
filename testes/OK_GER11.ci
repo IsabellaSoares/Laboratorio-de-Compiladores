@@ -1,0 +1,56 @@
+/*
+    Matheus Nadaleti Garcia
+    email: mat.nadaleti@hotmail.com
+*/
+
+@annot("check", "messageToself")
+@nce
+
+/*
+  @filename   ok-ger11.ci
+
+  @comment    Teste se a geracao de codigo para chamadas para self esta correta.
+  Um dos metodos chamado pertence 'a subclasse.
+  Deve escrever
+  4 1 2 3 4
+
+  */
+
+open
+class A
+
+    func m1 {
+        Out.print: " 2 ";
+    }
+
+    func m2: Int n {
+        Out.print: n, " ";
+        self.m1;
+    }
+
+end
+
+class B extends A
+
+    override
+    func m1 {
+        Out.println: " 4 ";
+    }
+
+end
+
+class Program
+
+    func run {
+        var A a;
+        var B b;
+
+        Out.println: "4 1 2 3 4";
+        Out.print: "4 ";
+        a = A.new;
+        a.m2: 1;
+        a = B.new;
+        a.m2: 3;
+    }
+
+end

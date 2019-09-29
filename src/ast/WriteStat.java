@@ -14,5 +14,5 @@ public class WriteStat extends Statement {
 		this.printName = printName;
 	}
 	
-	public void genC( PW pw ) {};
+	public void genJava( PW pw ) {};
 }

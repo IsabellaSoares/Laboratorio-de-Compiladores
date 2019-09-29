@@ -1,0 +1,48 @@
+@annot("check", "readInt")
+@nce
+
+/*
+Matheus da Silva Jesus - 620025
+matheus.jesus@dcomp.sor.ufscar.br
+*/
+
+/*
+  @filename   ok-ger05.ci
+      
+  @comment    Testa se codigo para readInt é gerado
+  corretamente.  
+  */
+
+class A
+    func m {
+        var Int a, b, c, d, e, f;
+      
+        a = In.readInt;
+        b = In.readInt;
+        c = In.readInt;
+        d = In.readInt;
+        e = In.readInt;
+        f = In.readInt;
+
+        Out.print: a;
+        Out.print: b;
+        Out.print: c;
+        Out.print: d;
+        Out.print: e;
+        Out.print: f;
+    }
+end
+
+
+class Program
+    func run {
+        var A a;
+      
+        Out.println: "";
+        Out.println: "Ok-ger05";
+        Out.println: "The output should be what you give as input.";
+        Out.println: "Type in six numbers";
+        a = A.new;
+        a.m;
+    }   
+end

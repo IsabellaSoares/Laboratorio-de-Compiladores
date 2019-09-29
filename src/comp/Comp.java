@@ -211,6 +211,12 @@ public class Comp {
 			}
 		}
 		report.close();
+		try {
+			reportStream.close();
+		}
+		catch (IOException e) {
+			System.out.println("Error in closing the report file");
+		}
 		System.out.println("Cianeto compiler finished");
 
 	}
@@ -822,11 +828,12 @@ public class Comp {
 			String className = javaFilename.substring(0, javaFilename.length() - dotJavaLength);
 
 			javaFilename = this.dirToJavaOutput + File.separator + javaFilename;
-			PrintWriter printWriter = null;
-			try ( FileOutputStream fos = new FileOutputStream(javaFilename) ) {
-				printWriter = new PrintWriter(fos, true);
+
+			try ( FileOutputStream fos = new FileOutputStream(javaFilename);
+					PrintWriter printWriter = new PrintWriter(fos, true) ) {
 				PW pw = new PW(printWriter);
 				try {
+					program.setMainJavaClassName(className);
 					program.genJava(pw);
 				}
 				catch( Throwable e ) {
@@ -936,8 +943,8 @@ public class Comp {
 						++lineCount;
 					}
 				}
-				String result = removeExtraSpacesFirstLine(firstLine);
-				alloutput = removeExtraSpaces(alloutput);
+				String result = removeExtraSpacesFirstLine(firstLine).trim();
+				alloutput = removeExtraSpaces(alloutput).trim();
 
 
 				if ( result.equals(alloutput) ) {

@@ -40,7 +40,17 @@ public class Program {
 	public ArrayList<CompilationError> getCompilationErrorList() {
 		return compilationErrorList;
 	}
+	
+	public void setMainJavaClassName(String mainJavaClassName) {
+		this.mainJavaClassName = mainJavaClassName;
+	}
 
+	/**
+	the name of the main Java class when the
+	code is generated to Java. This name is equal
+	to the file name (without extension)
+	*/
+	private String mainJavaClassName;
 	
 	private ArrayList<TypeCianetoClass> classList;
 	private ArrayList<MetaobjectAnnotation> metaobjectCallList;

@@ -26,7 +26,7 @@ public class BasicValue extends Factor {
 		this.type = Type.booleanType;
 	}
 	
-	public void genC(PW pw, boolean putParenthesis) {};
+	public void genJava(PW pw, boolean putParenthesis) {};
 	
 	public Type getType() {
 		return this.type;

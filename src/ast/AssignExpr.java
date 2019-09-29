@@ -12,5 +12,5 @@ public class AssignExpr extends Statement {
 		this.right = right;
 	}
 	
-	public void genC( PW pw ) {};
+	public void genJava( PW pw ) {};
 }

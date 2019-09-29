@@ -11,5 +11,5 @@ public class ReadExpr extends PrimaryExpr {
 		return null;
 	};
 	
-	public void genC( PW pw, boolean putParenthesis ) {};
+	public void genJava( PW pw, boolean putParenthesis ) {};
 }

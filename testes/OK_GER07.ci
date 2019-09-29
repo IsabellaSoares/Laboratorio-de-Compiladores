@@ -1,0 +1,30 @@
+@annot("check", "zero")
+@nce
+
+/*
+Matheus da Silva Jesus - 620025
+matheus.jesus@dcomp.sor.ufscar.br
+*/
+
+/*
+  @filename   ok-ger07.ci
+      
+  @comment    Testa se o compilador considera o numero abaixo como zero
+  */
+
+class A
+    func m {
+        Out.println: 000000000000000000000000000000000000000000000000000000000000000000000000000000;
+    }   
+end
+
+
+class Program 
+    func run {
+        var A a;
+      
+        Out.println: "0";
+        a = A.new;
+        a.m;
+    }   
+end

@@ -1,0 +1,65 @@
+@annot("check", "super")
+@nce
+
+/*
+Matheus Saraiva Leão Andrade
+matheus.andrade@dcomp.sor.ufscar.br
+*/
+
+/*
+  @filename   ok-ger12.kra
+
+  @comment    Teste a geracao de codigo para super
+  Deve escrever
+   1 2 1 2 1 2 1 2
+
+  */
+
+open
+class A
+    func m1 {
+        Out.print: 1, " ";
+    }   
+    func m2: Int n {
+        Out.print: n, " ";
+    }   
+end
+
+open
+class B extends A
+    override
+    func m2: Int n {
+        Out.print: n, " ";
+        super.m2: n + 1;
+    }   
+end
+
+class C extends B
+    override
+    func m1 {
+        super.m1;
+        Out.print: 2, " ";
+    }   
+    func m3 {
+        self.m1;
+        Out.print: 1, " ";
+        Out.print: 2, " ";
+    }   
+end
+
+class Program
+    func run {
+        var A a;
+        var B b;
+        var C c;
+        
+        Out.println: "1 2 1 2 1 2 1 2";
+        b = B.new;
+        b.m2: 1;
+        c = C.new;
+        c.m1;
+        c.m3;
+    }   
+end
+
+

@@ -1,0 +1,163 @@
+@annot("check", "privateMethod", "messagePassingPrivateMethod")
+@nce
+
+/*
+Matheus Saraiva Leão Andrade
+matheus.andrade@dcomp.sor.ufscar.br
+*/
+
+/*
+  @filename   ok-ger15.kra
+
+  @comment    Teste se esta correta a geracao de codigo para metodos privados.
+
+
+  */
+
+open
+class A
+    var Int i
+    var Int j
+    
+    private func p {
+        Out.print: self.i, " ";
+    }    
+    
+    private func q {
+        Out.print: self.j, " ";
+    }    
+    
+    func init_A {
+        self.i = 1;
+        self.j = 2;
+    }  
+    
+    func call_p {
+        self.p;
+    }    
+    
+    func call_q {
+        self.q;
+    }    
+    
+    func r {
+        Out.print: self.i, " ";
+    }    
+    
+    func s {
+        Out.print: self.j, " ";
+    }    
+end
+
+
+class B extends A
+    var Int i;
+    var Int j;
+    
+    private func p {
+        Out.print: self.i, " ";
+    }    
+    
+    private func q {
+        Out.print: self.j, " ";
+    }    
+    
+    func init_B {
+        self.i = 3;
+        self.j = 4;
+    }    
+    
+    override
+    func call_p {
+        self.p;
+    }  
+    
+    override
+    func call_q {
+        self.q;
+    }    
+    
+    override
+    func r {
+        Out.print: self.i, " ";
+    }    
+    
+    override
+    func s {
+        Out.print: self.j, " ";
+    }    
+end
+
+
+class C extends A
+    var Int i;
+    var Int j;
+    
+    private func p {
+        Out.print: self.i, " ";
+    }    
+    
+    private func q {
+        Out.print: self.j, " ";
+    }    
+    
+    func init_C {
+        self.i = 5;
+        self.j = 6;
+    }    
+    
+    override
+    func call_p {
+        self.p;
+    }  
+    
+    override
+    func call_q {
+        self.q;
+    }    
+    
+    override
+    func r {
+        Out.print: self.i, " ";
+    }    
+    
+    override
+    func s {
+        Out.print: self.j, " ";
+    }    
+end
+
+
+class Program
+    
+    func run {
+        var A a;
+        var B b;
+        var C c;
+        
+        Out.println: "1 2 1 2 3 4 3 4 5 6 5 6";
+        a = A.new;
+        a.init_A;
+        a.call_p;
+        a.call_q;
+        a.r;
+        a.s;
+        b = B.new;
+        b.init_B;
+        b.init_A;
+        b.call_p;
+        b.call_q;
+        b.r;
+        b.s;
+        c = C.new;
+        c.init_C;
+        c.init_A;
+        c.init_C;
+        c.call_p;
+        c.call_q;
+        c.r;
+        c.s;
+    }    
+end
+
+

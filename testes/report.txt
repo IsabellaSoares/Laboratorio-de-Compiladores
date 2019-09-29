@@ -1,0 +1,41 @@
+Relat�rio do Compilador
+
+Resumo
+_________________________________________________________________________
+MI:  0             I: 0              PI: 1             Exc: 0
+ SSE: 0/1/0%       
+
+MI = muito importante, I = importante, PI = pouco importante, Exc = exce��es
+Dev = deveria ter sinalizado, LE = sinalizou linha errada, SSE = sinalizado sem erro
+_________________________________________________________________________
+
+N�mero de testes 'Muito importantes' em que o compilador falhou: 0
+N�mero de testes 'Importantes' em que o compilador falhou: 0
+N�mero de testes 'Pouco importantes' em que o compilador falhou: 1
+
+O compilador obteve sucesso em testar alguns aspectos (constru��es) de Cianeto. A lista abaixo consiste de entradas da forma 
+    aspecto
+        lists de nomes de arquivos
+Os nomes de arquivos listados s�o aqueles que testam 'aspecto' e nos quais o compilador obteve sucesso e gerou c�digo correto (se op��o -genjava ou -genc foi usada).
+Os testes s�o categorizados por import�ncia: 'Muito importante', 'Importante', 'pouco importante'
+
+Testes 'pouco importantes' em que o compilador falhou:
+    arithmeticOperators
+        testes/OK_GER02.ci
+
+
+_________________________________________________________________________
+
+0 erros foram sinalizados em 1 arquivos sem erro (0%)
+_________________________________________________________________________
+O compilador n�o sinalizou nenhum erro que n�o deveria ter sinalizado
+Para o caso de teste que voc� utilizou, o compilador est� correto
+
+List of Java files with compilation errors: 
+   testes/OK_GER02.java
+
+List of files with correct Java code: 
+
+List of files Java code that compiles but was generated incorrectly: 
+
+The compiler could not create the following .java files:
