@@ -412,9 +412,8 @@ public class Compiler {
 	private WhileStat whileStat() {
 		next();
 		
-		ArrayList<Expr> exprList = exprList();
-		//expr();
-		check(Token.LEFTCURBRACKET, "missing '{' after the 'while' expression");
+		Expr e = expr();
+		
 		next();
 		
 		//ArrayList<Statement> statList = statList();
@@ -434,7 +433,7 @@ public class Compiler {
 		check(Token.RIGHTCURBRACKET, "missing '}' after 'while' body");
 		next();
 		
-		return new WhileStat(exprList, statList);
+		return new WhileStat(e, statList);
 	}
 
 	private IfStat ifStat() {
@@ -523,7 +522,7 @@ public class Compiler {
 		Expr left = null;
 		left = simpleExpr();
 		
-		while (relation(lexer.token)) {			
+		while (relation(lexer.token)) {	
 			Token op = lexer.token;
 			next();
 			
@@ -646,6 +645,7 @@ public class Compiler {
 			next();
 			return new BasicValue(value);
 		} else {
+			System.out.println(lexer.token + " " + lexer.getStringValue());
 			this.error("Basic value expected");
 			return null;
 		}	

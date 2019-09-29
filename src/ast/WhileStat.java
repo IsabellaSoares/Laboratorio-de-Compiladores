@@ -6,10 +6,10 @@ package ast;
 import java.util.ArrayList;
 
 public class WhileStat extends Statement {
-	private ArrayList<Expr> expr = new ArrayList<>();
+	private Expr expr = null;
 	private ArrayList<Statement> statList = new ArrayList<>();
 	
-	public WhileStat (ArrayList<Expr> expr, ArrayList<Statement> statList) {
+	public WhileStat (Expr expr, ArrayList<Statement> statList) {
 		this.expr = expr;
 		this.statList = statList;
 	}
