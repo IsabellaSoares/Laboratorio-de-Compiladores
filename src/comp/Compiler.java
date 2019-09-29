@@ -273,15 +273,15 @@ public class Compiler {
 
 	private ArrayList<Statement> statementList() {
 		
-		ArrayList<Statement> stateList = new ArrayList<>();
+		ArrayList<Statement> statList = new ArrayList<>();
 		
 		// only '}' is necessary in this test
 		while ( lexer.token != Token.RIGHTCURBRACKET && lexer.token != Token.END ) {
 			Statement e = statement();
-			stateList.add(e);
+			statList.add(e);
 		}
 		
-		return stateList;
+		return statList;
 	}
 
 	private Statement statement() {
@@ -301,7 +301,7 @@ public class Compiler {
 			next();
 			break;
 		case WHILE:
-			whileStat();
+			e = whileStat();
 			checkSemiColon = false;
 			break;
 		case RETURN:
@@ -340,7 +340,6 @@ public class Compiler {
 				next();				
 			} else {
 				e = assignExpr();
-				next();
 				
 				if (lexer.token == Token.SEMICOLON) {
 					checkSemiColon = false;
@@ -410,15 +409,32 @@ public class Compiler {
 		expr();
 	}
 
-	private void whileStat() {
+	private WhileStat whileStat() {
 		next();
-		expr();
+		
+		ArrayList<Expr> exprList = exprList();
+		//expr();
 		check(Token.LEFTCURBRACKET, "missing '{' after the 'while' expression");
 		next();
-		while ( lexer.token != Token.RIGHTCURBRACKET && lexer.token != Token.END ) {
-			statement();
+		
+		//ArrayList<Statement> statList = statList();
+		
+		ArrayList<Statement> statList = new ArrayList<>();		
+		statList = statementList();
+		
+		/*while ( lexer.token != Token.RIGHTCURBRACKET && lexer.token != Token.END ) {
+			Statement stat = statement();
+			statList.add(stat);
 		}
+		
+		if ( lexer.token != Token.RIGHTCURBRACKET ) {
+			error("'}' expected");
+		}*/		
+		
 		check(Token.RIGHTCURBRACKET, "missing '}' after 'while' body");
+		next();
+		
+		return new WhileStat(exprList, statList);
 	}
 
 	private IfStat ifStat() {
@@ -657,11 +673,13 @@ public class Compiler {
 				
 				if (lexer.token == Token.ID) {
 					String id2 = lexer.getStringValue();
+					next();
 					return new PrimarySimpleExpr(id, id2);
 				} else if (lexer.token == Token.IDCOLON) {
 					String id2 = lexer.getStringValue();
 					next();
 				} else if (lexer.token == Token.NEW) {
+					next();
 					return new ObjectCreation(id);
 				} else {
 					this.error("Id or IdColon expected");

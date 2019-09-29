@@ -2,8 +2,8 @@ Relat�rio do Compilador
 
 Resumo
 _________________________________________________________________________
-MI:  0             I: 0              PI: 1             Exc: 0
- SSE: 1/1/100%     
+MI:  0             I: 0              PI: 5             Exc: 0
+ SSE: 1/4/25%      
 
 MI = muito importante, I = importante, PI = pouco importante, Exc = exce��es
 Dev = deveria ter sinalizado, LE = sinalizou linha errada, SSE = sinalizado sem erro
@@ -11,7 +11,7 @@ _________________________________________________________________________
 
 N�mero de testes 'Muito importantes' em que o compilador falhou: 0
 N�mero de testes 'Importantes' em que o compilador falhou: 0
-N�mero de testes 'Pouco importantes' em que o compilador falhou: 1
+N�mero de testes 'Pouco importantes' em que o compilador falhou: 5
 
 O compilador falhou em testar alguns aspectos (constru��es) de Cianeto. A lista abaixo consiste de entradas da forma 
     aspecto
@@ -21,22 +21,45 @@ Os testes s�o categorizados por import�ncia: 'Muito importante', 'Importante
 
 Testes 'pouco importantes' em que o compilador falhou:
     while
-        testes/OK_GER04.ci
+        OK_GER04.ci
 
+
+O compilador obteve sucesso em testar alguns aspectos (constru��es) de Cianeto. A lista abaixo consiste de entradas da forma 
+    aspecto
+        lists de nomes de arquivos
+Os nomes de arquivos listados s�o aqueles que testam 'aspecto' e nos quais o compilador obteve sucesso e gerou c�digo correto (se op��o -genjava ou -genc foi usada).
+Os testes s�o categorizados por import�ncia: 'Muito importante', 'Importante', 'pouco importante'
+
+Testes 'pouco importantes' em que o compilador falhou:
+    comparisonOperators
+        OK_GER01.ci
+
+    arithmeticOperators
+        OK_GER02.ci
+
+    if
+        OK_GER01.ci
+        OK_GER03.ci
+
+    logicalOperators
+        OK_GER03.ci
 
 
 _________________________________________________________________________
 
-1 erros foram sinalizados em 1 arquivos sem erro (100%)
+1 erros foram sinalizados em 4 arquivos sem erro (25%)
 _________________________________________________________________________
 ######################################################
 Erros que foram sinalizados mas n�o deveriam ter sido:
 
-testes/OK_GER04.ci, 21, ';' expected
+OK_GER04.ci, 21, Basic value expected
 
 
 List of Java files with compilation errors: 
+   testes/OK_GER02.java
    testes/OK_GER04.java
+   testes/OK_GER01.java
+   testes/OK_GER03.java
 
 List of files with correct Java code: 
 
