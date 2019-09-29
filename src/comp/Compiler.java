@@ -163,26 +163,28 @@ public class Compiler {
 		if ( lexer.token == Token.ID && lexer.getStringValue().equals("open") ) {
 			// open class
 		}
+		
 		if ( lexer.token != Token.CLASS ) error("'class' expected");
+		
 		lexer.nextToken();
 		
-		if ( lexer.token != Token.ID )
-			error("Identifier expected");
+		if ( lexer.token != Token.ID ) error("Identifier expected");
+		
 		String className = lexer.getStringValue();
 		lexer.nextToken();
+		
 		if ( lexer.token == Token.EXTENDS ) {
 			lexer.nextToken();
-			if ( lexer.token != Token.ID )
-				error("Identifier expected");
+			
+			if ( lexer.token != Token.ID ) error("Identifier expected");
+			
 			String superclassName = lexer.getStringValue();
-
 			lexer.nextToken();
 		}
 
 		MemberList memberList = memberList();
 		
-		if ( lexer.token != Token.END)
-			error("'end' expected");
+		if ( lexer.token != Token.END) error("'end' expected");
 		
 		lexer.nextToken();
 	}
@@ -196,6 +198,7 @@ public class Compiler {
 			if (lexer.token != Token.END) {
 				qualifier = qualifier();
 			}
+			
 			if ( lexer.token == Token.VAR ) {
 				fieldDec();
 			} else if ( lexer.token == Token.FUNC ) {
@@ -389,7 +392,9 @@ public class Compiler {
 
 	private void repeatStat() {
 		next();
-		while ( lexer.token != Token.UNTIL && lexer.token != Token.RIGHTCURBRACKET && lexer.token != Token.END ) {
+		while ( lexer.token != Token.UNTIL &&
+				lexer.token != Token.RIGHTCURBRACKET &&
+				lexer.token != Token.END ) {
 			statement();
 		}
 		check(Token.UNTIL, "missing keyword 'until'");
@@ -428,7 +433,8 @@ public class Compiler {
 		ArrayList<Statement> ifState = new ArrayList<>();
 		ArrayList<Statement> elseState = new ArrayList<>();
 		
-		while ( lexer.token != Token.RIGHTCURBRACKET && lexer.token != Token.END && lexer.token != Token.ELSE ) {
+		while ( lexer.token != Token.RIGHTCURBRACKET &&
+				lexer.token != Token.END && lexer.token != Token.ELSE ) {
 			Statement e = statement();
 			ifState.add(e);
 		}
@@ -527,7 +533,9 @@ public class Compiler {
 		Expr left = null;
 		left = term();
 		
-		if (lexer.token == Token.PLUS || lexer.token == Token.MINUS || lexer.token == Token.OR) {
+		if (lexer.token == Token.PLUS || 
+			lexer.token == Token.MINUS || 
+			lexer.token == Token.OR) {
 			Token operator = lexer.token;
 			Expr right = null;
 			right = term();
@@ -542,7 +550,9 @@ public class Compiler {
 		Expr left = null;
 		left = signalFactor();
 		
-		if (lexer.token == Token.MULT || lexer.token == Token.DIV || lexer.token == Token.AND) {
+		if (lexer.token == Token.MULT || 
+			lexer.token == Token.DIV || 
+			lexer.token == Token.AND) {
 			Token operator = lexer.token;
 			next();
 			Expr right = null;
@@ -557,7 +567,9 @@ public class Compiler {
 	private SignalFactor signalFactor() {
 		Token operator = null;
 		
-		if (lexer.token == Token.PLUS || lexer.token == Token.MINUS) {
+		if (lexer.token == Token.PLUS || 
+			lexer.token == Token.MINUS || 
+			lexer.token == Token.OR) {
 			operator = lexer.token;
 			next();
 		}
@@ -591,16 +603,13 @@ public class Compiler {
 					lexer.token == Token.SELF || 
 					lexer.token == Token.READ) {
 			return primaryExpr();
+		} else if (lexer.token == Token.NOT) {
+			next();
+			Factor factor = factor();
+			return new BooleanExpr(Token.NOT, factor);
 		} else {
 			return basicValue();
-		}			
-		
-		//BasicValue |
-		//“(” Expression “)” |
-		//“!” Factor |
-		//“nil” |
-		//ObjectCreation |
-		//PrimaryExpr
+		}
 	}
 	
 	private BasicValue basicValue() {
@@ -639,11 +648,7 @@ public class Compiler {
 	}
 	
 	private Factor primaryExpr() {		
-		if (lexer.token == Token.ID) {
-			//Id |
-			//Id “.” Id |
-			//Id “.” IdColon ExpressionList |
-			
+		if (lexer.token == Token.ID) {			
 			String id = lexer.getStringValue();
 			next();
 			
@@ -726,6 +731,11 @@ public class Compiler {
 
 	private Qualifier qualifier() {		
 		Token q1 = lexer.token, q2 = null, q3 = null, q4 = null;
+		
+		if (q1 == Token.FUNC) {			
+			q1 = Token.PUBLIC;
+			return new Qualifier(q1, q2, q3, q4);
+		}
 		
 		next();
 		
