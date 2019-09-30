@@ -13,6 +13,14 @@ public class Variable extends Member {
 		this.name = name;
 	}
 	
+	public void setName (String name) {
+		this.name = name;
+	}
+	
+	public void setType (Type type) {
+		this.type = type;
+	}
+	
 	public String getName () {
 		return this.name;
 	}

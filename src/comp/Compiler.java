@@ -230,17 +230,19 @@ public class Compiler {
 		
 		lexer.nextToken();
 		
-		String id = null;
-		Type type = Type.nullType;
+		//String id = null;
+		//Type type = Type.nullType;
+		Variable method = new Variable(Type.nullType, null);
+		ArrayList<Variable> paramList = new ArrayList<>();
+		ArrayList<Statement> statList = new ArrayList<>();
 		
 		if ( lexer.token == Token.ID ) {
-			// unary method
-			
-			id = lexer.getStringValue();
+			method.setName(lexer.getStringValue());
 			lexer.nextToken();
 		} else if ( lexer.token == Token.IDCOLON ) {
-			// keyword method. It has parameters
-			//lexer.nextToken();
+			method.setName(lexer.getStringValue());
+			lexer.nextToken();			
+			paramList = paramList();
 		} else {
 			error("An identifier or identifer: was expected after 'func'");
 		}
@@ -248,7 +250,8 @@ public class Compiler {
 		if ( lexer.token == Token.MINUS_GT ) {
 			// method declared a return type
 			lexer.nextToken();
-			type = type();
+			//type = type();
+			method.setType(type());
 		}
 		
 		if ( lexer.token != Token.LEFTCURBRACKET ) {
@@ -256,9 +259,6 @@ public class Compiler {
 		}
 		
 		next();
-		
-		ArrayList<Statement> statList = new ArrayList<>();		
-		//ArrayList<Variable> paramList = new ArrayList<>();
 		
 		statList = statementList();
 		
@@ -268,7 +268,30 @@ public class Compiler {
 		
 		next();
 		
-		return new MethodDec(id, type, statList);
+		return new MethodDec(method, statList, paramList);
+	}
+	
+	private ArrayList<Variable> paramList() {
+		
+		ArrayList<Variable> paramList = new ArrayList<>();
+		
+		while (true) {
+			Variable var = new Variable(Type.nullType, null);
+			var.setType(type());
+			//next();
+			var.setName(lexer.getStringValue());
+			next();
+			
+			paramList.add(var);
+			
+			if (lexer.token == Token.COMMA) {
+				next();
+			} else {
+				break;
+			}
+		}
+		
+		return paramList;
 	}
 
 	private ArrayList<Statement> statementList() {
@@ -298,7 +321,6 @@ public class Compiler {
 		case IF:
 			e = ifStat();
 			checkSemiColon = false;
-			next();
 			break;
 		case WHILE:
 			e = whileStat();
@@ -416,19 +438,8 @@ public class Compiler {
 		
 		next();
 		
-		//ArrayList<Statement> statList = statList();
-		
 		ArrayList<Statement> statList = new ArrayList<>();		
 		statList = statementList();
-		
-		/*while ( lexer.token != Token.RIGHTCURBRACKET && lexer.token != Token.END ) {
-			Statement stat = statement();
-			statList.add(stat);
-		}
-		
-		if ( lexer.token != Token.RIGHTCURBRACKET ) {
-			error("'}' expected");
-		}*/		
 		
 		check(Token.RIGHTCURBRACKET, "missing '}' after 'while' body");
 		next();
@@ -455,6 +466,7 @@ public class Compiler {
 		}
 		
 		check(Token.RIGHTCURBRACKET, "'}' was expected");
+		next();
 		
 		if ( lexer.token == Token.ELSE ) {
 			next();
@@ -465,6 +477,7 @@ public class Compiler {
 				Statement e = statement();
 				elseState.add(e);
 			}
+			
 			check(Token.RIGHTCURBRACKET, "'}' was expected");
 		}
 		
@@ -481,6 +494,9 @@ public class Compiler {
 		check(Token.IDCOLON, "'print:' or 'println:' was expected after 'Out.'");
 		
 		String printName = lexer.getStringValue();
+		
+		next();
+		
 		ArrayList<Expr> exprList = exprList();
 		
 		if (lexer.token != Token.SEMICOLON) {
@@ -494,7 +510,6 @@ public class Compiler {
 		ArrayList<Expr> exprList = new ArrayList<>();
 		
 		Expr e = null;
-		next();
 		e = expr();
 		
 		if (e == null) {
@@ -536,12 +551,20 @@ public class Compiler {
 	}
 	
 	private Expr simpleExpr() {
-		Expr e = null;
-		e = sumSubExpr();
-		//++
-		//sumSubExpr();
+		Expr left = null;
+		left = sumSubExpr();
 		
-		return e;
+		while (lexer.token == Token.CONCAT) {
+			Token operator = lexer.token;
+			next();
+			
+			Expr right = null;
+			right = sumSubExpr();
+			
+			left = new CompositeSimpleExpr(left, operator, right);
+		}
+		
+		return left;
 	}
 	
 	private Expr sumSubExpr() {
@@ -552,6 +575,12 @@ public class Compiler {
 			lexer.token == Token.MINUS || 
 			lexer.token == Token.OR) {
 			Token operator = lexer.token;
+			next();
+			
+			if (lexer.token == Token.PLUS) {
+				return left;
+			}
+			
 			Expr right = null;
 			right = term();
 			
@@ -645,7 +674,6 @@ public class Compiler {
 			next();
 			return new BasicValue(value);
 		} else {
-			System.out.println(lexer.token + " " + lexer.getStringValue());
 			this.error("Basic value expected");
 			return null;
 		}	
@@ -664,6 +692,7 @@ public class Compiler {
 	}
 	
 	private Factor primaryExpr() {		
+		
 		if (lexer.token == Token.ID) {
 			
 			if (lexer.getStringValue().equals("In")) {
@@ -674,18 +703,27 @@ public class Compiler {
 			next();
 			
 			if (lexer.token == Token.DOT ) {
-				next();			
+				next();
 				
 				if (lexer.token == Token.ID) {
+					
 					String id2 = lexer.getStringValue();
 					next();
 					return new PrimarySimpleExpr(id, id2);
+					
 				} else if (lexer.token == Token.IDCOLON) {
 					String id2 = lexer.getStringValue();
 					next();
+					
+					ArrayList<Expr> exprList = exprList();
+					
+					return new PrimarySimpleExpr(id, id2, exprList);
+					
 				} else if (lexer.token == Token.NEW) {
+					
 					next();
 					return new ObjectCreation(id);
+					
 				} else {
 					this.error("Id or IdColon expected");
 				}

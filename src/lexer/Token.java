@@ -14,6 +14,7 @@ public enum Token {
     BREAK("break"),
     CLASS("class"),
     COMMA(","),
+    CONCAT("++"),
     DIV("/"),
     DOT("."),
     ELSE("else"),

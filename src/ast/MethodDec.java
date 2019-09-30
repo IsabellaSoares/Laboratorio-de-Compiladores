@@ -6,16 +6,14 @@ package ast;
 import java.util.ArrayList;
 
 public class MethodDec extends Member {
-	private String id;
-	private Type type = Type.nullType;
+	private Variable method;
 	private ArrayList<Statement> statList = new ArrayList<>();
-	//private ArrayList<Variable> paramList = new ArrayList<>();
+	private ArrayList<Variable> paramList = new ArrayList<>();
 	
-	public MethodDec (String id, Type type, ArrayList<Statement> statList) {
-		this.id = id;
-		this.type = type;
+	public MethodDec (Variable method, ArrayList<Statement> statList, ArrayList<Variable> paramList) {
+		this.method = method;
 		this.statList = statList;
-		//this.paramList = paramList;
+		this.paramList = paramList;
 	}
 	
 	public void genJava( PW pw ) {};
