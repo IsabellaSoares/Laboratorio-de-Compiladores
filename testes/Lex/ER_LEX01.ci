@@ -1,0 +1,28 @@
+/*
+Vitor Mesquita Fogaça
+vitor.fogaca@outlook.com
+*/
+
+class Teste
+    var Int n;
+
+    func get -> Int {
+        return self.n;
+    }
+
+    func set: Int n {
+        self.n = n;
+    }
+end
+
+@cep(4, "type 'Integer' not recognized");
+class Program
+    func run {
+        var Teste t;
+        var Integer a;
+        t = Teste.new;
+        a = In.readInt;
+        t.set: a;
+        Out.println: t.get;
+    }
+end

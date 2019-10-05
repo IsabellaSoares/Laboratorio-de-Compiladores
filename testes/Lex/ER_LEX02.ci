@@ -1,0 +1,28 @@
+/*
+Vitor Mesquita Fogaça
+vitor.fogaca@outlook.com
+*/
+
+class Teste
+    var Int n;
+	
+    func get -> Int {
+        return self.n;
+    }
+	
+	@cep(2, "token 'this' not recognized");
+    func set: Int n {
+        this.n = n;
+    }
+end
+
+class Program
+    func run {
+        var Teste t;
+        var Int a;
+        t = Teste.new;
+        a = In.readInt;
+        t.set: a;
+        Out.println: t.get;
+    }
+end

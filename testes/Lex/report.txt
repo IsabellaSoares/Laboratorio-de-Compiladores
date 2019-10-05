@@ -1,0 +1,95 @@
+Relat�rio do Compilador
+
+Resumo
+_________________________________________________________________________
+MI:  0             I: 0              PI: 0             Exc: 0
+Dev: 0/7/0%        LE: 0/7/0%        SSE: 2/9/22%      
+
+MI = muito importante, I = importante, PI = pouco importante, Exc = exce��es
+Dev = deveria ter sinalizado, LE = sinalizou linha errada, SSE = sinalizado sem erro
+_________________________________________________________________________
+
+N�mero de testes 'Muito importantes' em que o compilador falhou: 0
+N�mero de testes 'Importantes' em que o compilador falhou: 0
+N�mero de testes 'Pouco importantes' em que o compilador falhou: 0
+
+
+_________________________________________________________________________
+
+0 de um total de 7 erros que deveriam ser sinalizados n�o o foram (0%)
+0 erros foram sinalizados na linha errada (0%)
+2 erros foram sinalizados em 9 arquivos sem erro (22%)
+_________________________________________________________________________
+Todos os erros que deveriam ter sido sinalizados o foram
+Um ou mais arquivos de teste tinham erros, mas estes foram sinalizados nos n�meros de linhas corretos
+######################################################
+Erros que foram sinalizados mas n�o deveriam ter sido:
+
+OK_LEX04.ci, 17, literal int out of limits
+
+OK_LEX05.ci, 17, literal int out of limits
+
+######################################################
+Em todos os testes abaixo, o compilador sinalizou o erro na linha correta (quando o teste tinha erros) ou n�o sinalizou o erro (quando o teste N�O tinha erros). Mas � necess�rio conferir se as mensagens emitidas pelo compilador s�o compat�veis com as mensagens de erro sugeridas pelas chamadas aos metaobjetos dos testes. 
+
+A lista abaixo cont�m o nome do arquivo de teste, a mensagem que ele sinalizou e a mensagem sugerida pelo arquivo de teste
+
+ER_LEX04.ci
+The compiler message was: "Unknown character"
+The 'cep' message is:      "Unknown character"
+
+
+ER_LEX03.ci
+The compiler message was: "literal int out of limits"
+The 'cep' message is:      "literal int out of limits"
+
+
+ER_LEX05.ci
+The compiler message was: "Identifier starting with underscore"
+The 'cep' message is:      "Identifier starting with underscore"
+
+
+ER_LEX08.ci
+The compiler message was: "literal int out of limits"
+The 'cep' message is:      "literal int out of limits"
+
+
+ER_LEX_EXTRA01.ci
+The compiler message was: "';' expected"
+The 'cep' message is:      "';' expected"
+
+
+ER_LEX06.ci
+The compiler message was: "';' expected"
+The 'cep' message is:      "Unknown character"
+
+
+ER_LEX07.ci
+The compiler message was: "Comment opened and not closed"
+The 'cep' message is:      "Comment started in line 5 was not closed"
+
+
+
+List of Java files with compilation errors: 
+   testes/Lex/ER_LEX04.java
+   testes/Lex/ER_LEX03.java
+   testes/Lex/ER_LEX02.java
+   testes/Lex/OK_LEX02.java
+   testes/Lex/OK_LEX04.java
+   testes/Lex/OK_LEX10.java
+   testes/Lex/OK_LEX08.java
+   testes/Lex/ER_LEX01.java
+   testes/Lex/ER_LEX05.java
+   testes/Lex/ER_LEX08.java
+   testes/Lex/OK_LEX03.java
+   testes/Lex/ER_LEX_EXTRA01.java
+   testes/Lex/ER_LEX06.java
+   testes/Lex/OK_LEX05.java
+   testes/Lex/OK_LEX06.java
+   testes/Lex/ER_LEX07.java
+
+List of files with correct Java code: 
+
+List of files Java code that compiles but was generated incorrectly: 
+
+The compiler could not create the following .java files:
