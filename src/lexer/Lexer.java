@@ -102,13 +102,8 @@ public class Lexer {
                 	Token value = keywordsTable.get(stringValue);
                 	if ( value == null ) {
                 		token = Token.ID;
-                		
-                		if (input[tokenPos] == '.' && varDeclaration) {
-                    		error.showError("Invalid Character: '" + ch + "'", false);
-                    	}
                 	} else {
                 		token = value;
-                		if (value == Token.VAR) varDeclaration = true;
                 	}
                 }
             }
@@ -197,7 +192,6 @@ public class Lexer {
                       break;
                     case ';' :
                       token = Token.SEMICOLON;
-                      varDeclaration = false;
                       break;
                     case '.' :
                       token = Token.DOT;
@@ -375,8 +369,6 @@ public class Lexer {
 
     // number of current line. Starts with 1
     private int lineNumber;
-    
-    private boolean varDeclaration = false;
 
     private ErrorSignaller error;
 

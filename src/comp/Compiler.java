@@ -192,7 +192,9 @@ public class Compiler {
 	private MemberList memberList() {
 		
 		Qualifier qualifier = null;
-		MethodDec methodDec = null;
+		//MethodDec methodDec = null;
+		//FieldDec fieldDec = null;
+		Member member = null;
 		
 		while ( true ) {
 			if (lexer.token != Token.END &&
@@ -202,15 +204,15 @@ public class Compiler {
 			}
 			
 			if ( lexer.token == Token.VAR ) {
-				fieldDec();
+				member = fieldDec();
 			} else if ( lexer.token == Token.FUNC ) {
-				methodDec = methodDec();
+				member = methodDec();				
 			} else {
 				break;
 			}
 		}
 		
-		return new MemberList(qualifier, methodDec);
+		return new MemberList(qualifier, member);
 	}
 
 	private void error(String msg) {
@@ -232,9 +234,7 @@ public class Compiler {
 		
 		lexer.nextToken();
 		
-		//String id = null;
-		//Type type = Type.nullType;
-		Variable method = new Variable(Type.nullType, null);
+		Variable method = new Variable(Type.undefinedType, null);
 		ArrayList<Variable> paramList = new ArrayList<>();
 		ArrayList<Statement> statList = new ArrayList<>();
 		
@@ -278,7 +278,7 @@ public class Compiler {
 		ArrayList<Variable> paramList = new ArrayList<>();
 		
 		while (true) {
-			Variable var = new Variable(Type.nullType, null);
+			Variable var = new Variable(Type.undefinedType, null);
 			var.setType(type());
 			//next();
 			var.setName(lexer.getStringValue());
@@ -385,7 +385,7 @@ public class Compiler {
 	private LocalDec localDec() {
 		next();
 		
-		Type type = Type.nullType;
+		Type type = Type.undefinedType;
 		type = type();
 		
 		check(Token.ID, "A variable name was expected");
@@ -404,6 +404,10 @@ public class Compiler {
 			} else {
 				break;
 			}
+		}
+		
+		if (lexer.token == Token.DOT) {
+			this.error("Invalid Character: '" + lexer.token.toString() + "'.");
 		}
 		
 		if ( lexer.token == Token.ASSIGN ) {
@@ -846,28 +850,37 @@ public class Compiler {
 		return null;
 	}
 
-	private void fieldDec() {
-		lexer.nextToken();
-		type();
+	private FieldDec fieldDec() {
+		next();
+		
+		ArrayList<String> idList = new ArrayList<>();
+		Type type = Type.undefinedType;
+		type = type();
+		
 		if ( lexer.token != Token.ID ) {
 			this.error("A field name was expected");
-		}
-		else {
+		} else {
 			while ( lexer.token == Token.ID  ) {
-				lexer.nextToken();
+				idList.add(lexer.getStringValue());
+				next();
+				
 				if ( lexer.token == Token.COMMA ) {
 					lexer.nextToken();
-				}
-				else {
+				} else {
 					break;
 				}
 			}
 		}
-
+		
+		if (lexer.token == Token.DOT) {
+			this.error("Invalid Character: '" + lexer.token.toString() + "'.");
+		}	
+		
+		return new FieldDec(type, idList);
 	}
 
 	private Type type() {
-		Type type = Type.nullType;
+		Type type = Type.undefinedType;
 		
 		if ( lexer.token == Token.INT ) {
 			type = Type.intType;
