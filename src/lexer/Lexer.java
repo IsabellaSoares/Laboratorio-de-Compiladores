@@ -23,7 +23,7 @@ public class Lexer {
       }
 
 
-    private static final int MaxValueInteger = 32767;
+    private static final int MaxValueInteger = 2147483647;
       // contains the keywords
     static private Hashtable<String, Token> keywordsTable;
 
@@ -100,10 +100,16 @@ public class Lexer {
                 	stringValue = ident.toString();
                     // if identStr is in the list of keywords, it is a keyword !
                 	Token value = keywordsTable.get(stringValue);
-                	if ( value == null )
+                	if ( value == null ) {
                 		token = Token.ID;
-                	else
+                		
+                		if (input[tokenPos] == '.' && varDeclaration) {
+                    		error.showError("Invalid Character: '" + ch + "'", false);
+                    	}
+                	} else {
                 		token = value;
+                		if (value == Token.VAR) varDeclaration = true;
+                	}
                 }
             }
             else if ( Character.isDigit( ch ) ) {
@@ -117,22 +123,22 @@ public class Lexer {
                 try {
                    numberValue = Integer.valueOf(number.toString()).intValue();
                 } catch ( NumberFormatException e ) {
-                   error.showError("literal int out of limits");
+                   error.showError("Number out of limits");
                 }
                 if ( numberValue > MaxValueInteger )
-                   error.showError("literal int out of limits");
+                   error.showError("Number out of limits");
             }
             else {
                 tokenPos++;
                 switch ( ch ) {
                     case '+' :
-                      if (input[tokenPos] == '+') {
-                    	  tokenPos++;
-                    	  token = Token.CONCAT;
-                      } else {
-                    	  token = Token.PLUS;
-                      }                    	
-                      break;
+                    	if (input[tokenPos] == '+') {
+                      	  tokenPos++;
+                      	  token = Token.CONCAT;
+                        } else {
+                      	  token = Token.PLUS;
+                        }
+                    	break;
                     case '-' :
                       if ( input[tokenPos] == '>' ) {
                           tokenPos++;
@@ -191,6 +197,7 @@ public class Lexer {
                       break;
                     case ';' :
                       token = Token.SEMICOLON;
+                      varDeclaration = false;
                       break;
                     case '.' :
                       token = Token.DOT;
@@ -228,7 +235,7 @@ public class Lexer {
                     	token = Token.ANNOT;
                     	break;
                     case '_' :
-                      error.showError("Identifier starting with underscore");
+                      error.showError("'_' cannot start an indentifier");
                       break;
                     case '"' :
                        StringBuffer s = new StringBuffer();
@@ -264,7 +271,7 @@ public class Lexer {
                        token = Token.LITERALSTRING;
                        break;
                     default :
-                      error.showError("Unknown character", false);
+                      error.showError("Invalid Character: '" + ch + "'", false);
                 }
             }
           }
@@ -368,6 +375,8 @@ public class Lexer {
 
     // number of current line. Starts with 1
     private int lineNumber;
+    
+    private boolean varDeclaration = false;
 
     private ErrorSignaller error;
 
