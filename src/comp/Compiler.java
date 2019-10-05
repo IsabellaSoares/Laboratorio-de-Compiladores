@@ -161,7 +161,7 @@ public class Compiler {
 	private void classDec() {
 		
 		if ( lexer.token == Token.ID && lexer.getStringValue().equals("open") ) {
-			// open class
+			next();
 		}
 		
 		if ( lexer.token != Token.CLASS ) error("'class' expected");
@@ -195,7 +195,9 @@ public class Compiler {
 		MethodDec methodDec = null;
 		
 		while ( true ) {
-			if (lexer.token != Token.END) {
+			if (lexer.token != Token.END &&
+				lexer.token != Token.VAR &&
+				lexer.token != Token.FUNC) {
 				qualifier = qualifier();
 			}
 			
@@ -327,7 +329,8 @@ public class Compiler {
 			checkSemiColon = false;
 			break;
 		case RETURN:
-			returnStat();
+			e = returnStat();
+			checkSemiColon = false;
 			break;
 		case BREAK:
 			breakStat();
@@ -426,9 +429,14 @@ public class Compiler {
 
 	}
 
-	private void returnStat() {
+	private ReturnStat returnStat() {
 		next();
-		expr();
+		Expr expr = expr();
+		
+		check(Token.SEMICOLON, "';' expected");		
+		next();	
+		
+		return new ReturnStat(expr);
 	}
 
 	private WhileStat whileStat() {
@@ -732,9 +740,78 @@ public class Compiler {
 			}
 			
 		} else if (lexer.token == Token.SUPER) {
+			next();
 			
-		} else if (lexer.token == Token.SELF) {
+			if (lexer.token == Token.DOT ) {
+				next();
+				
+				if (lexer.token == Token.ID) {
+					
+					String id = lexer.getStringValue();
+					next();
+					return new PrimarySuperExpr(id);
+					
+				} else if (lexer.token == Token.IDCOLON) {
+					String id = lexer.getStringValue();
+					next();
+					
+					ArrayList<Expr> exprList = exprList();
+					
+					return new PrimarySuperExpr(id, exprList);
+					
+				} else {
+					this.error("Id or IdColon expected");
+				}
+			}
+		} else if (lexer.token == Token.SELF) {			
+			next();
 			
+			if (lexer.token == Token.DOT ) {
+				next();
+				
+				if (lexer.token == Token.ID) {
+					
+					String id = lexer.getStringValue();
+					next();
+					
+					if (lexer.token == Token.DOT) {
+						next();
+						
+						if (lexer.token == Token.ID) {
+							
+							String id2 = lexer.getStringValue();
+							next();
+							return new PrimarySelfExpr(id, id2);
+							
+						} else if (lexer.token == Token.IDCOLON) {
+							String id2 = lexer.getStringValue();
+							next();
+							
+							ArrayList<Expr> exprList = exprList();
+							
+							return new PrimarySelfExpr(id, id2, exprList);
+							
+						} else {
+							this.error("Id or IdColon expected");
+						}
+					}
+					
+					return new PrimarySelfExpr(id);
+					
+				} else if (lexer.token == Token.IDCOLON) {
+					String id = lexer.getStringValue();
+					next();
+					
+					ArrayList<Expr> exprList = exprList();
+					
+					return new PrimarySelfExpr(id, exprList);
+					
+				} else {
+					this.error("Id or IdColon expected");
+				}
+			} else {
+				return new PrimarySelfExpr("self");
+			}		
 		}
 		
 		return null;

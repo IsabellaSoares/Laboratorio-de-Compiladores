@@ -2,14 +2,14 @@ Relat�rio do Compilador
 
 Resumo
 _________________________________________________________________________
-MI:  0             I: 1              PI: 7             Exc: 0
- SSE: 0/8/0%       
+MI:  3             I: 1              PI: 7             Exc: 0
+ SSE: 0/10/0%      
 
 MI = muito importante, I = importante, PI = pouco importante, Exc = exce��es
 Dev = deveria ter sinalizado, LE = sinalizou linha errada, SSE = sinalizado sem erro
 _________________________________________________________________________
 
-N�mero de testes 'Muito importantes' em que o compilador falhou: 0
+N�mero de testes 'Muito importantes' em que o compilador falhou: 3
 N�mero de testes 'Importantes' em que o compilador falhou: 1
 N�mero de testes 'Pouco importantes' em que o compilador falhou: 7
 
@@ -18,6 +18,17 @@ O compilador obteve sucesso em testar alguns aspectos (constru��es) de Ciane
         lists de nomes de arquivos
 Os nomes de arquivos listados s�o aqueles que testam 'aspecto' e nos quais o compilador obteve sucesso e gerou c�digo correto (se op��o -genjava ou -genc foi usada).
 Os testes s�o categorizados por import�ncia: 'Muito importante', 'Importante', 'pouco importante'
+
+Testes 'Muito importantes' em que o compilador acertou:
+    super
+        OK_GER09.ci
+
+    fieldAccess
+        OK_GER10.ci
+
+    self
+        OK_GER09.ci
+
 
 Testes 'importantes' em que o compilador falhou:
     parameterPassing
@@ -51,7 +62,7 @@ Testes 'pouco importantes' em que o compilador falhou:
 
 _________________________________________________________________________
 
-0 erros foram sinalizados em 8 arquivos sem erro (0%)
+0 erros foram sinalizados em 10 arquivos sem erro (0%)
 _________________________________________________________________________
 O compilador n�o sinalizou nenhum erro que n�o deveria ter sinalizado
 Para os casos de teste que voc� utilizou, o compilador est� correto
