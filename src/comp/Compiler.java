@@ -339,7 +339,7 @@ public class Compiler {
 			next();
 			break;
 		case REPEAT:
-			repeatStat();
+			e = repeatStat();
 			break;
 		case VAR:
 			e = localDec();	
@@ -352,7 +352,8 @@ public class Compiler {
 			
 			break;
 		case ASSERT:
-			assertStat();
+			e = assertStat();
+			checkSemiColon = false;
 			break;
 		default:
 			if ( lexer.token == Token.ID && lexer.getStringValue().equals("Out") ) {
@@ -414,14 +415,24 @@ public class Compiler {
 		return new LocalDec(type, idList, expr);
 	}
 
-	private void repeatStat() {
+	private RepeatStat repeatStat() {
 		next();
+		
+		ArrayList<Statement> statList = new ArrayList<>();		
+				
 		while ( lexer.token != Token.UNTIL &&
 				lexer.token != Token.RIGHTCURBRACKET &&
 				lexer.token != Token.END ) {
-			statement();
+			Statement stat = statement();
+			statList.add(stat);
 		}
+		
 		check(Token.UNTIL, "missing keyword 'until'");
+		next();
+		
+		Expr expr = expr();
+		
+		return new RepeatStat(statList, expr);
 	}
 
 	private void breakStat() {
@@ -927,29 +938,24 @@ public class Compiler {
 		
 		return new Qualifier(q1, q2, q3, q4);
 	}
-	/**
-	 * change this method to 'private'.
-	 * uncomment it
-	 * implement the methods it calls
-	 */
-	public Statement assertStat() {
-
-		lexer.nextToken();
-		int lineNumber = lexer.getLineNumber();
-		expr();
-		if ( lexer.token != Token.COMMA ) {
-			this.error("',' expected after the expression of the 'assert' statement");
-		}
-		lexer.nextToken();
-		if ( lexer.token != Token.LITERALSTRING ) {
-			this.error("A literal string expected after the ',' of the 'assert' statement");
-		}
+	
+	private AssertStat assertStat() {
+		next();	
+		
+		Expr expr = expr();
+		
+		check(Token.COMMA, "',' expected after the expression of the 'assert' statement");
+		next();
+		
+		check(Token.LITERALSTRING, "A literal string expected after the ',' of the 'assert' statement");
+		
 		String message = lexer.getLiteralStringValue();
-		lexer.nextToken();
-		if ( lexer.token == Token.SEMICOLON )
-			lexer.nextToken();
+		next();	
+		
+		check(Token.SEMICOLON, "';' expected");
+		next();		
 
-		return null;
+		return new AssertStat(expr, message);
 	}
 
 	private LiteralInt literalInt() {
