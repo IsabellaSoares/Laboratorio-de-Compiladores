@@ -1,0 +1,47 @@
+/*
+    Victor Hide Watanabe
+    victor.watanabe@dcomp.sor.ufscar.br
+*/
+
+@nce
+/*
+    @filename ok-sin14.kra
+
+    @comment    testa se aceita envio de mensagens a variaveis de instancia,
+    como 
+    this.p.set(0, 0);
+*/
+
+class Point 
+
+    var Int x;
+    var Int y;
+    func set: Int x, Int y {
+        self.x = x;
+        self.y = y;
+    }
+
+    func getX -> Int {
+        return self.x;
+    }
+
+    func getY -> Int {
+        return self.y;
+    }
+    
+end
+
+class Program 
+    
+    var Point p;
+
+    func run {
+        self.p = Point.new;
+        self.p.set: 0, 0;
+    }
+
+    func getPoint -> Point {
+        return self.p;
+    }
+    
+end

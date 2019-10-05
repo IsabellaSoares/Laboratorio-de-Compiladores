@@ -1,0 +1,41 @@
+Relat�rio do Compilador
+
+Resumo
+_________________________________________________________________________
+MI:  0             I: 0              PI: 0             Exc: 0
+ SSE: 0/11/0%      
+
+MI = muito importante, I = importante, PI = pouco importante, Exc = exce��es
+Dev = deveria ter sinalizado, LE = sinalizou linha errada, SSE = sinalizado sem erro
+_________________________________________________________________________
+
+N�mero de testes 'Muito importantes' em que o compilador falhou: 0
+N�mero de testes 'Importantes' em que o compilador falhou: 0
+N�mero de testes 'Pouco importantes' em que o compilador falhou: 0
+
+
+_________________________________________________________________________
+
+0 erros foram sinalizados em 11 arquivos sem erro (0%)
+_________________________________________________________________________
+O compilador n�o sinalizou nenhum erro que n�o deveria ter sinalizado
+Para os casos de teste que voc� utilizou, o compilador est� correto
+
+List of Java files with compilation errors: 
+   testes/Sin/OK/OK_SIN11.java
+   testes/Sin/OK/OK_SIN04.java
+   testes/Sin/OK/OK_SIN16.java
+   testes/Sin/OK/OK_SIN09.java
+   testes/Sin/OK/OK_SIN03.java
+   testes/Sin/OK/OK_SIN02.java
+   testes/Sin/OK/OK_SIN13.java
+   testes/Sin/OK/OK_SIN14.java
+   testes/Sin/OK/OK_SIN08.java
+   testes/Sin/OK/OK_SIN12.java
+   testes/Sin/OK/OK_SIN10.java
+
+List of files with correct Java code: 
+
+List of files Java code that compiles but was generated incorrectly: 
+
+The compiler could not create the following .java files:

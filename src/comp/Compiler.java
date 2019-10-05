@@ -192,8 +192,6 @@ public class Compiler {
 	private MemberList memberList() {
 		
 		Qualifier qualifier = null;
-		//MethodDec methodDec = null;
-		//FieldDec fieldDec = null;
 		Member member = null;
 		
 		while ( true ) {
@@ -250,9 +248,7 @@ public class Compiler {
 		}
 		
 		if ( lexer.token == Token.MINUS_GT ) {
-			// method declared a return type
 			lexer.nextToken();
-			//type = type();
 			method.setType(type());
 		}
 		
@@ -264,11 +260,13 @@ public class Compiler {
 		
 		statList = statementList();
 		
-		if ( lexer.token != Token.RIGHTCURBRACKET ) {
+		if ( lexer.token != Token.RIGHTCURBRACKET &&  lexer.token != Token.END) {			
 			error("'}' expected");
 		}
 		
-		next();
+		if (lexer.token != Token.END) {
+			next();
+		}		
 		
 		return new MethodDec(method, statList, paramList);
 	}
@@ -311,9 +309,9 @@ public class Compiler {
 
 	private Statement statement() {
 		
-		if (lexer.token == Token.SEMICOLON) {
+		/*if (lexer.token == Token.SEMICOLON) {
 			next();
-		}
+		}*/
 				
 		boolean checkSemiColon = true;
 		
@@ -336,6 +334,7 @@ public class Compiler {
 			breakStat();
 			break;
 		case SEMICOLON:
+			checkSemiColon = false;
 			next();
 			break;
 		case REPEAT:
@@ -457,8 +456,7 @@ public class Compiler {
 	private WhileStat whileStat() {
 		next();
 		
-		Expr e = expr();
-		
+		Expr e = expr();		
 		next();
 		
 		ArrayList<Statement> statList = new ArrayList<>();		
@@ -476,7 +474,6 @@ public class Compiler {
 		Expr expr = expr();
 		
 		check(Token.LEFTCURBRACKET, "'{' expected after the 'if' expression");
-		
 		next();
 		
 		ArrayList<Statement> ifState = new ArrayList<>();
@@ -502,7 +499,10 @@ public class Compiler {
 			}
 			
 			check(Token.RIGHTCURBRACKET, "'}' was expected");
+			next();
 		}
+		
+		//next();
 		
 		return new IfStat(expr, ifState, elseState);
 	}
@@ -655,8 +655,6 @@ public class Compiler {
 			
 			if (lexer.token != Token.RIGHTPAR) {
 				this.error("')' expected");
-			} else {
-				
 			}
 			
 			if (e == null) {
