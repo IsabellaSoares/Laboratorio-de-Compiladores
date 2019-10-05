@@ -1,0 +1,97 @@
+/* 
+    Matteus Takeshi Dias
+    matteus_cti@hotmail.com
+*/
+
+@annot("check", "inheritance", "polymorphism")
+@nce
+
+ /*
+  @filename   ok-ger16.kra
+
+  @comment    Teste se esta correta a geracao de codigo para heranca e polimorfismo
+
+
+  */
+  
+open 
+class A
+   
+    var Int k;
+   
+    public func get_A -> Int {
+        return self.k;
+    }   
+    public func set: Int k {
+        self.k = k;
+    }   
+    public func print {
+        Out.print: self.get_A, " ";
+    }   
+    public func init {
+        self.set: 0;
+    }   
+
+end
+
+
+class B extends A
+   
+    var Int k;
+   
+    public func get_B -> Int {
+        return self.k;
+    }   
+    override
+    public func init {
+        super.init;
+        self.k = 2;
+    }
+    override
+    public func print {
+        Out.print: self.get_B, " ";
+        Out.print: self.get_A, " ";
+        super.print;
+    }   
+
+end
+
+
+class C extends A
+    override
+    public func get_A -> Int {
+        return 0;
+    }   
+
+end
+
+
+class Program
+   
+    public func run {
+        var A a;
+        var B b;
+        var C c;
+      
+        Out.println: "2 2 0 0 2 0 0 0 0 0 0";
+        b = B.new;
+        b.init;
+        c = C.new;
+        c.init;
+        Out.print: b.get_B, " ";
+        a = b;
+        a.print;
+        b.print;
+        a.init;
+        b.init;
+        Out.print: a.get_A, " ";
+        Out.print: b.get_A, " ";
+        a = c;
+        Out.print: a.get_A, " ";
+        c = C.new;
+        Out.print: c.get_A, " ";
+    }   
+
+end
+
+

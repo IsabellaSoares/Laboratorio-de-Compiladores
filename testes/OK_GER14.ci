@@ -1,0 +1,98 @@
+@annot("check", "fieldAccess", "redefinedField")
+@nce
+
+/*
+Matheus Saraiva Leão Andrade
+matheus.andrade@dcomp.sor.ufscar.br
+*/
+
+/*
+  @filename   ok-ger14.kra
+
+  @comment    Teste se esta correta a geracao de codigo para variaveis de instancia
+  envolvendo varias classes em uma hierarquia.
+  Deve escrever
+
+  4  3  2  1
+
+  */
+
+open
+class A
+    var Int k;
+    
+    func get_A -> Int {
+        return self.k;
+    }    
+    func init {
+        self.k = 1;
+    }    
+end
+
+open
+class B extends A
+    var Int k;
+    
+    func get_B -> Int {
+        return self.k;
+    }    
+    
+    override
+    func init {
+        super.init;
+        self.k = 2;
+    }    
+end
+
+open
+class C extends B
+    var Int k;
+    
+    func get_C -> Int {
+        return self.k;
+    }  
+    
+    override
+    func init {
+        super.init;
+        self.k = 3;
+    }    
+end
+
+class D extends C
+    var Int k;
+    
+    func get_D -> Int {
+        return self.k;
+    }    
+    
+    override
+    func init {
+        super.init;
+        self.k = 4;
+    }    
+end
+
+
+class Program
+    
+    func run {
+        var A a;
+        var B b;
+        var C c;
+        var D d;
+        
+        Out.println: "4 3 2 1";
+        d = D.new;
+        d.init;
+        Out.print: d.get_D, " ";
+        c = d;
+        Out.print: c.get_C, " ";
+        b = c;
+        Out.print: b.get_B, " ";
+        a = b;
+        Out.print: a.get_A, " ";
+    }    
+end
+
+
