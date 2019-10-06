@@ -1,0 +1,28 @@
+/* 
+    Lucca Carvalho
+    luccalafonte97@gmail.com
+*/
+
+@cep(6, "Variável de instância pública",
+   "Attempt to declare public instance variable 'i'",
+   "comp.Compiler.classDec()")
+
+class A
+
+    public var Int i;
+
+    func m {
+    }
+
+end
+
+class Program
+
+    func run {
+        var A a;
+
+        a = A.new;
+        a.m;
+    }
+
+end

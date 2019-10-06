@@ -1,0 +1,370 @@
+Relat�rio do Compilador
+
+Resumo
+_________________________________________________________________________
+MI:  0             I: 0              PI: 0             Exc: 0
+Dev: 0/56/0%       LE: 4/56/7%      
+
+MI = muito importante, I = importante, PI = pouco importante, Exc = exce��es
+Dev = deveria ter sinalizado, LE = sinalizou linha errada, SSE = sinalizado sem erro
+_________________________________________________________________________
+
+N�mero de testes 'Muito importantes' em que o compilador falhou: 0
+N�mero de testes 'Importantes' em que o compilador falhou: 0
+N�mero de testes 'Pouco importantes' em que o compilador falhou: 0
+
+
+_________________________________________________________________________
+
+0 de um total de 56 erros que deveriam ser sinalizados n�o o foram (0%)
+4 erros foram sinalizados na linha errada (7%)
+_________________________________________________________________________
+Todos os erros que deveriam ter sido sinalizados o foram
+######################################################
+Erros que foram sinalizados na linha errada:
+
+ER_SIN21.ci
+    correto:    9, ';' missing 
+    sinalizado: 10, ';' expected
+
+ER_SIN20.ci
+    correto:    6, ';' missing 
+    sinalizado: 7, ';' expected
+
+ER_SIN18.ci
+    correto:    8, ';' expected 
+    sinalizado: 9, ';' expected
+
+ER_SIN22.ci
+    correto:    10, ';' missing 
+    sinalizado: 11, ';' expected
+
+######################################################
+Em todos os testes abaixo, o compilador sinalizou o erro na linha correta (quando o teste tinha erros) ou n�o sinalizou o erro (quando o teste N�O tinha erros). Mas � necess�rio conferir se as mensagens emitidas pelo compilador s�o compat�veis com as mensagens de erro sugeridas pelas chamadas aos metaobjetos dos testes. 
+
+A lista abaixo cont�m o nome do arquivo de teste, a mensagem que ele sinalizou e a mensagem sugerida pelo arquivo de teste
+
+ER_SIN42.ci
+The compiler message was: "Invalid Character: ':'"
+The 'cep' message is:      ""
+
+
+ER_SIN23.ci
+The compiler message was: "Statement expected"
+The 'cep' message is:      "Statement expected"
+
+
+ER_SIN63.ci
+The compiler message was: "';' expected"
+The 'cep' message is:      "';' expected"
+
+
+ER_SIN33.ci
+The compiler message was: "Identifier expected"
+The 'cep' message is:      "Identifier expected"
+
+
+ER_SIN16.ci
+The compiler message was: "Identifier expected"
+The 'cep' message is:      "Identifier expected"
+
+
+ER_SIN43.ci
+The compiler message was: "'public', 'private' or '}' expected"
+The 'cep' message is:      "function or field declaration expected"
+
+
+ER_SIN60.ci
+The compiler message was: "')' unexpected"
+The 'cep' message is:      "')' unexpected"
+
+
+ER_SIN35.ci
+The compiler message was: "'{' expected (func m:)"
+The 'cep' message is:      "'{' expected"
+
+
+ER_SIN25.ci
+The compiler message was: "Expression expected OR Unknown sequence of symbols"
+The 'cep' message is:      "Expression expected OR invalid sequence of symbols"
+
+
+ER_SIN59.ci
+The compiler message was: "missing keyword 'until'"
+The 'cep' message is:      "'until' expected"
+
+
+ER_SIN12.ci
+The compiler message was: "Expression expected"
+The 'cep' message is:      "Expression expected"
+
+
+ER_SIN37.ci
+The compiler message was: "Expression expected"
+The 'cep' message is:      "Expression expected"
+
+
+ER_SIN28.ci
+The compiler message was: "'class' expected"
+The 'cep' message is:      "'class' expected"
+
+
+ER_SIN14.ci
+The compiler message was: "'class' expected"
+The 'cep' message is:      "'class' expected"
+
+
+ER_SIN05.ci
+The compiler message was: "Expression expected"
+The 'cep' message is:      "Expression expected"
+
+
+ER_SIN15.ci
+The compiler message was: "';' expected"
+The 'cep' message is:      "';' expected"
+
+
+ER_SIN40.ci
+The compiler message was: "Attempt to declare public instance variable in line 12"
+The 'cep' message is:      "Attempt to declare public instance variable 'i'"
+
+
+ER_SIN38.ci
+The compiler message was: "'}' expected"
+The 'cep' message is:      "'}' expected"
+
+
+ER_SIN44.ci
+The compiler message was: "Attempt to declare public instance variable in line 16"
+The 'cep' message is:      "Attempt to declare public instance variable 'i'"
+
+
+ER_SIN03.ci
+The compiler message was: "Identifier expected"
+The 'cep' message is:      "Identifier expected"
+
+
+ER_SIN36.ci
+The compiler message was: "Type expected to method in line 11"
+The 'cep' message is:      "Identifier expected"
+
+
+ER_SIN24.ci
+The compiler message was: "Expression expected OR Unknown sequence of symbols"
+The 'cep' message is:      "Expression expected OR Unknown sequence of symbols"
+
+
+ER_SIN31.ci
+The compiler message was: "'public', 'private', '}' or 'end' expected (line 6)"
+The 'cep' message is:      "'public', 'private', or '}' expected"
+
+
+ER_SIN26.ci
+The compiler message was: "Expression expected OR invalid sequence of symbols"
+The 'cep' message is:      "Expression expected OR invalid sequence of symbols"
+
+
+ER_SIN27.ci
+The compiler message was: "Expression expected OR invalid sequence of symbols"
+The 'cep' message is:      "Expression expected OR Unknown sequence of symbols"
+
+
+ER_SIN11.ci
+The compiler message was: "Missing 'Out.'"
+The 'cep' message is:      "Missing 'Out.'"
+
+
+ER_SIN09.ci
+The compiler message was: "'{' expected (line 7)"
+The 'cep' message is:      "'{' expected"
+
+
+ER_SIN58.ci
+The compiler message was: "Constructors do not receive parameters (line: 15)"
+The 'cep' message is:      "')' expected"
+
+
+ER_SIN41.ci
+The compiler message was: "Identifier expected"
+The 'cep' message is:      "Identifier expected"
+
+
+ER_SIN02.ci
+The compiler message was: "Missing identifier"
+The 'cep' message is:      "Missing identifier"
+
+
+ER_SIN10.ci
+The compiler message was: "'readInt' was not declared"
+The 'cep' message is:      "'readInt' was not declared"
+
+
+ER_SIN07.ci
+The compiler message was: "Command 'In.' without arguments"
+The 'cep' message is:      "Command 'In.' without arguments"
+
+
+ER_SIN13.ci
+The compiler message was: "'{' expected (func m)"
+The 'cep' message is:      "'{' expected"
+
+
+ER_SIN01.ci
+The compiler message was: "'{' expected (func run)"
+The 'cep' message is:      "'{' expected"
+
+
+ER_SIN04.ci
+The compiler message was: "Expression expected"
+The 'cep' message is:      "Statement expected"
+
+
+ER_SIN_EXTRA02.ci
+The compiler message was: "'public', 'private', '}' or 'end' expected (line 40)"
+The 'cep' message is:      ""
+
+
+ER_SIN57.ci
+The compiler message was: "'public', 'private' or '}' expected"
+The 'cep' message is:      "'public', 'private' or '}' expected"
+
+
+ER_SIN61.ci
+The compiler message was: "')' expected"
+The 'cep' message is:      "')' expected"
+
+
+ER_SIN17.ci
+The compiler message was: "';' expected"
+The 'cep' message is:      "Missing ';'"
+
+
+ER_SIN06.ci
+The compiler message was: "Expression expected"
+The 'cep' message is:      "Expression expected"
+
+
+ER_SIN100.ci
+The compiler message was: "missing 'return' statement"
+The 'cep' message is:      "missing 'return' statement"
+
+
+ER_SIN32.ci
+The compiler message was: "Type expected to parameter in line 6"
+The 'cep' message is:      "Type expected"
+
+
+ER_SIN30.ci
+The compiler message was: "Invalid Character: '#'"
+The 'cep' message is:      "Unknown character '#'"
+
+
+ER_SIN_EXTRA01.ci
+The compiler message was: "'{' expected (func run)"
+The 'cep' message is:      ""
+
+
+ER_SIN08.ci
+The compiler message was: "Command 'Out.print:' without arguments"
+The 'cep' message is:      "Command ' Out.print' without arguments"
+
+
+ER_SIN_EXTRA.ci
+The compiler message was: "'{' expected (func frear)"
+The 'cep' message is:      "'{' expected"
+
+
+ER_SIN62.ci
+The compiler message was: "missing keyword 'until'"
+The 'cep' message is:      "'}' not expected before 'until'"
+
+
+ER_SIN34.ci
+The compiler message was: "'{' expected (func m)"
+The 'cep' message is:      "'{' expected"
+
+
+ER_SIN19.ci
+The compiler message was: "';' expected"
+The 'cep' message is:      "';' missing"
+
+
+ER_SIN101.ci
+The compiler message was: "Type expected"
+The 'cep' message is:      "Type expected"
+
+
+ER_SIN29.ci
+The compiler message was: "'public', 'private' or '}' expected"
+The 'cep' message is:      " Class member OR 'end' expected"
+
+
+ER_SIN39.ci
+The compiler message was: "'{' expected (func get)"
+The 'cep' message is:      "'{' expected"
+
+
+
+List of Java files with compilation errors: 
+   testes/Sin/ER/ER_SIN42.java
+   testes/Sin/ER/ER_SIN23.java
+   testes/Sin/ER/ER_SIN63.java
+   testes/Sin/ER/ER_SIN33.java
+   testes/Sin/ER/ER_SIN16.java
+   testes/Sin/ER/ER_SIN43.java
+   testes/Sin/ER/ER_SIN60.java
+   testes/Sin/ER/ER_SIN35.java
+   testes/Sin/ER/ER_SIN25.java
+   testes/Sin/ER/ER_SIN59.java
+   testes/Sin/ER/ER_SIN12.java
+   testes/Sin/ER/ER_SIN37.java
+   testes/Sin/ER/ER_SIN28.java
+   testes/Sin/ER/ER_SIN14.java
+   testes/Sin/ER/ER_SIN21.java
+   testes/Sin/ER/ER_SIN05.java
+   testes/Sin/ER/ER_SIN15.java
+   testes/Sin/ER/ER_SIN40.java
+   testes/Sin/ER/ER_SIN38.java
+   testes/Sin/ER/ER_SIN44.java
+   testes/Sin/ER/ER_SIN03.java
+   testes/Sin/ER/ER_SIN36.java
+   testes/Sin/ER/ER_SIN24.java
+   testes/Sin/ER/ER_SIN31.java
+   testes/Sin/ER/ER_SIN26.java
+   testes/Sin/ER/ER_SIN27.java
+   testes/Sin/ER/ER_SIN11.java
+   testes/Sin/ER/ER_SIN09.java
+   testes/Sin/ER/ER_SIN58.java
+   testes/Sin/ER/ER_SIN41.java
+   testes/Sin/ER/ER_SIN02.java
+   testes/Sin/ER/ER_SIN10.java
+   testes/Sin/ER/ER_SIN07.java
+   testes/Sin/ER/ER_SIN13.java
+   testes/Sin/ER/ER_SIN01.java
+   testes/Sin/ER/ER_SIN04.java
+   testes/Sin/ER/ER_SIN_EXTRA02.java
+   testes/Sin/ER/ER_SIN57.java
+   testes/Sin/ER/ER_SIN61.java
+   testes/Sin/ER/ER_SIN20.java
+   testes/Sin/ER/ER_SIN18.java
+   testes/Sin/ER/ER_SIN17.java
+   testes/Sin/ER/ER_SIN22.java
+   testes/Sin/ER/ER_SIN06.java
+   testes/Sin/ER/ER_SIN100.java
+   testes/Sin/ER/ER_SIN32.java
+   testes/Sin/ER/ER_SIN30.java
+   testes/Sin/ER/ER_SIN_EXTRA01.java
+   testes/Sin/ER/ER_SIN08.java
+   testes/Sin/ER/ER_SIN_EXTRA.java
+   testes/Sin/ER/ER_SIN62.java
+   testes/Sin/ER/ER_SIN34.java
+   testes/Sin/ER/ER_SIN19.java
+   testes/Sin/ER/ER_SIN101.java
+   testes/Sin/ER/ER_SIN29.java
+   testes/Sin/ER/ER_SIN39.java
+
+List of files with correct Java code: 
+
+List of files Java code that compiles but was generated incorrectly: 
+
+The compiler could not create the following .java files:

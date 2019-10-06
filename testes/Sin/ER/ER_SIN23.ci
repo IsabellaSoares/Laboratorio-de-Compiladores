@@ -1,0 +1,12 @@
+@cep(6, "'else' sem 'if'", "Statement expected", "comp.Compiler.statement()")
+
+class Program
+  
+    func run {
+
+        else            //#
+            Out.print: 0;
+          
+    }
+
+end

@@ -3,7 +3,7 @@ Relat�rio do Compilador
 Resumo
 _________________________________________________________________________
 MI:  0             I: 0              PI: 0             Exc: 0
- SSE: 0/11/0%      
+ SSE: 4/11/36%     
 
 MI = muito importante, I = importante, PI = pouco importante, Exc = exce��es
 Dev = deveria ter sinalizado, LE = sinalizou linha errada, SSE = sinalizado sem erro
@@ -16,10 +16,19 @@ N�mero de testes 'Pouco importantes' em que o compilador falhou: 0
 
 _________________________________________________________________________
 
-0 erros foram sinalizados em 11 arquivos sem erro (0%)
+4 erros foram sinalizados em 11 arquivos sem erro (36%)
 _________________________________________________________________________
-O compilador n�o sinalizou nenhum erro que n�o deveria ter sinalizado
-Para os casos de teste que voc� utilizou, o compilador est� correto
+######################################################
+Erros que foram sinalizados mas n�o deveriam ter sido:
+
+OK_SIN11.ci, 16, Statement expected
+
+OK_SIN16.ci, 24, Statement expected
+
+OK_SIN02.ci, 31, Statement expected
+
+OK_SIN14.ci, 36, Type expected
+
 
 List of Java files with compilation errors: 
    testes/Sin/OK/OK_SIN11.java
