@@ -3,7 +3,7 @@ Relat�rio do Compilador
 Resumo
 _________________________________________________________________________
 MI:  0             I: 0              PI: 0             Exc: 0
-Dev: 0/1/0%        LE: 1/1/100%     
+Dev: 0/25/0%       LE: 4/25/16%      SSE: 0/5/0%       
 
 MI = muito importante, I = importante, PI = pouco importante, Exc = exce��es
 Dev = deveria ter sinalizado, LE = sinalizou linha errada, SSE = sinalizado sem erro
@@ -16,20 +16,173 @@ N�mero de testes 'Pouco importantes' em que o compilador falhou: 0
 
 _________________________________________________________________________
 
-0 de um total de 1 erros que deveriam ser sinalizados n�o o foram (0%)
-1 erros foram sinalizados na linha errada (100%)
+0 de um total de 25 erros que deveriam ser sinalizados n�o o foram (0%)
+4 erros foram sinalizados na linha errada (16%)
+0 erros foram sinalizados em 5 arquivos sem erro (0%)
 _________________________________________________________________________
 Todos os erros que deveriam ter sido sinalizados o foram
 ######################################################
 Erros que foram sinalizados na linha errada:
 
-testes/Sin/ER/ER_SIN18.ci
+ER_SIN21.ci
+    correto:    9, ';' missing 
+    sinalizado: 10, ';' expected
+
+ER_SIN20.ci
+    correto:    6, ';' missing 
+    sinalizado: 7, ';' expected
+
+ER_SIN18.ci
     correto:    8, ';' expected 
     sinalizado: 9, ';' expected
 
+ER_SIN22.ci
+    correto:    10, ';' missing 
+    sinalizado: 11, ';' expected
+
+O compilador n�o sinalizou nenhum erro que n�o deveria ter sinalizado
+######################################################
+Em todos os testes abaixo, o compilador sinalizou o erro na linha correta (quando o teste tinha erros) ou n�o sinalizou o erro (quando o teste N�O tinha erros). Mas � necess�rio conferir se as mensagens emitidas pelo compilador s�o compat�veis com as mensagens de erro sugeridas pelas chamadas aos metaobjetos dos testes. 
+
+A lista abaixo cont�m o nome do arquivo de teste, a mensagem que ele sinalizou e a mensagem sugerida pelo arquivo de teste
+
+ER_SIN23.ci
+The compiler message was: "Statement expected"
+The 'cep' message is:      "Statement expected"
+
+
+ER_SIN25.ci
+The compiler message was: "Expression expected OR Unknown sequence of symbols"
+The 'cep' message is:      "Expression expected OR invalid sequence of symbols"
+
+
+ER_SIN12.ci
+The compiler message was: "Expression expected"
+The 'cep' message is:      "Expression expected"
+
+
+ER_SIN28.ci
+The compiler message was: "'class' expected"
+The 'cep' message is:      "'class' expected"
+
+
+ER_SIN05.ci
+The compiler message was: "Expression expected"
+The 'cep' message is:      "Expression expected"
+
+
+ER_SIN03.ci
+The compiler message was: "Identifier expected"
+The 'cep' message is:      "Identifier expected"
+
+
+ER_SIN24.ci
+The compiler message was: "Expression expected OR Unknown sequence of symbols"
+The 'cep' message is:      "Expression expected OR Unknown sequence of symbols"
+
+
+ER_SIN26.ci
+The compiler message was: "Expression expected OR invalid sequence of symbols"
+The 'cep' message is:      "Expression expected OR invalid sequence of symbols"
+
+
+ER_SIN27.ci
+The compiler message was: "Expression expected OR invalid sequence of symbols"
+The 'cep' message is:      "Expression expected OR Unknown sequence of symbols"
+
+
+ER_SIN11.ci
+The compiler message was: "Missing 'Out.'"
+The 'cep' message is:      "Missing 'Out.'"
+
+
+ER_SIN09.ci
+The compiler message was: "'{' expected"
+The 'cep' message is:      "'{' expected"
+
+
+ER_SIN02.ci
+The compiler message was: "Missing identifier"
+The 'cep' message is:      "Missing identifier"
+
+
+ER_SIN10.ci
+The compiler message was: "'readInt' was not declared"
+The 'cep' message is:      "'readInt' was not declared"
+
+
+ER_SIN07.ci
+The compiler message was: "Command 'In.' without arguments"
+The 'cep' message is:      "Command 'In.' without arguments"
+
+
+ER_SIN01.ci
+The compiler message was: "'{' expected"
+The 'cep' message is:      "'{' expected"
+
+
+ER_SIN04.ci
+The compiler message was: "Expression expected"
+The 'cep' message is:      "Statement expected"
+
+
+ER_SIN06.ci
+The compiler message was: "Expression expected"
+The 'cep' message is:      "Expression expected"
+
+
+ER_SIN30.ci
+The compiler message was: "Invalid Character: '#'"
+The 'cep' message is:      "Unknown character '#'"
+
+
+ER_SIN08.ci
+The compiler message was: "Command 'Out.print:' without arguments"
+The 'cep' message is:      "Command ' Out.print' without arguments"
+
+
+ER_SIN19.ci
+The compiler message was: "';' expected"
+The 'cep' message is:      "';' missing"
+
+
+ER_SIN29.ci
+The compiler message was: "Class member OR 'end' expected"
+The 'cep' message is:      " Class member OR 'end' expected"
+
+
 
 List of Java files with compilation errors: 
+   testes/Sin/ER/ER_SIN23.java
+   testes/Sin/ER/ER_SIN16.java
+   testes/Sin/ER/ER_SIN25.java
+   testes/Sin/ER/ER_SIN12.java
+   testes/Sin/ER/ER_SIN28.java
+   testes/Sin/ER/ER_SIN14.java
+   testes/Sin/ER/ER_SIN21.java
+   testes/Sin/ER/ER_SIN05.java
+   testes/Sin/ER/ER_SIN15.java
+   testes/Sin/ER/ER_SIN03.java
+   testes/Sin/ER/ER_SIN24.java
+   testes/Sin/ER/ER_SIN26.java
+   testes/Sin/ER/ER_SIN27.java
+   testes/Sin/ER/ER_SIN11.java
+   testes/Sin/ER/ER_SIN09.java
+   testes/Sin/ER/ER_SIN02.java
+   testes/Sin/ER/ER_SIN10.java
+   testes/Sin/ER/ER_SIN07.java
+   testes/Sin/ER/ER_SIN13.java
+   testes/Sin/ER/ER_SIN01.java
+   testes/Sin/ER/ER_SIN04.java
+   testes/Sin/ER/ER_SIN20.java
    testes/Sin/ER/ER_SIN18.java
+   testes/Sin/ER/ER_SIN17.java
+   testes/Sin/ER/ER_SIN22.java
+   testes/Sin/ER/ER_SIN06.java
+   testes/Sin/ER/ER_SIN30.java
+   testes/Sin/ER/ER_SIN08.java
+   testes/Sin/ER/ER_SIN19.java
+   testes/Sin/ER/ER_SIN29.java
 
 List of files with correct Java code: 
 

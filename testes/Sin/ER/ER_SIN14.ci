@@ -2,7 +2,7 @@
 João Paulo Francisco de Paula
 jpsobom@gmail.com
 */
-@cep(12, "Classe esperada", "'class' expected", "comp.Compiler.program()")
+﻿@cep(12, "Classe esperada", "'class' expected", "comp.Compiler.program()")
 
 class Program
 

@@ -1,0 +1,20 @@
+/*
+João Vitor de Sá Medeiros Santos
+jvsms13@gmail.com
+joaovitor.santos@dcomp.sor.ufscar.br
+*/
+
+@cep(8, "Testa se << é aceito como válido",
+  "Expression expected OR Unknown sequence of symbols",
+  "comp.Compiler.expr() OR lexer.Lexer.nextToken()")
+
+class Program
+
+    func run {
+
+       if 3 << 4 {
+       }
+
+    }
+
+end
