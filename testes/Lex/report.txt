@@ -54,7 +54,7 @@ The 'cep' message is:      "';' expected"
 
 
 ER_LEX06.ci
-The compiler message was: "Invalid Character: '.'."
+The compiler message was: "Invalid Character: '.'"
 The 'cep' message is:      "Unknown character"
 
 

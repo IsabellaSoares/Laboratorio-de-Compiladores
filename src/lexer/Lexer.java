@@ -91,6 +91,10 @@ public class Lexer {
                     tokenPos++;
                 }
                 if ( input[tokenPos] == ':' ) {
+                	if (ident.toString().equals("new")) {
+                		error.showError("Constructors do not receive parameters (line: " + getLineNumber() + ")");
+                	}
+                	
                     ident.append(input[tokenPos]);
                     tokenPos++;
                 	stringValue = ident.toString();
@@ -335,6 +339,10 @@ public class Lexer {
         }
         return line.toString();
     }
+    
+    public Integer getLastTokenPos() {
+        return lastTokenPos;
+     }
 
     public String getStringValue() {
        return stringValue;
