@@ -1,0 +1,97 @@
+Relat�rio do Compilador
+
+Resumo
+_________________________________________________________________________
+MI:  0             I: 0              PI: 0             Exc: 0
+Dev: 0/10/0%       LE: 0/10/0%      
+
+MI = muito importante, I = importante, PI = pouco importante, Exc = exce��es
+Dev = deveria ter sinalizado, LE = sinalizou linha errada, SSE = sinalizado sem erro
+_________________________________________________________________________
+
+N�mero de testes 'Muito importantes' em que o compilador falhou: 0
+N�mero de testes 'Importantes' em que o compilador falhou: 0
+N�mero de testes 'Pouco importantes' em que o compilador falhou: 0
+
+
+_________________________________________________________________________
+
+0 de um total de 10 erros que deveriam ser sinalizados n�o o foram (0%)
+0 erros foram sinalizados na linha errada (0%)
+_________________________________________________________________________
+Todos os erros que deveriam ter sido sinalizados o foram
+Um ou mais arquivos de teste tinham erros, mas estes foram sinalizados nos n�meros de linhas corretos
+######################################################
+Em todos os testes abaixo, o compilador sinalizou o erro na linha correta (quando o teste tinha erros) ou n�o sinalizou o erro (quando o teste N�O tinha erros). Mas � necess�rio conferir se as mensagens emitidas pelo compilador s�o compat�veis com as mensagens de erro sugeridas pelas chamadas aos metaobjetos dos testes. 
+
+A lista abaixo cont�m o nome do arquivo de teste, a mensagem que ele sinalizou e a mensagem sugerida pelo arquivo de teste
+
+ER_SIN05.ci
+The compiler message was: "Expression expected"
+The 'cep' message is:      "Expression expected"
+
+
+ER_SIN03.ci
+The compiler message was: "Identifier expected"
+The 'cep' message is:      "Identifier expected"
+
+
+ER_SIN09.ci
+The compiler message was: "'{' expected"
+The 'cep' message is:      "'{' expected"
+
+
+ER_SIN02.ci
+The compiler message was: "Missing identifier"
+The 'cep' message is:      "Missing identifier"
+
+
+ER_SIN10.ci
+The compiler message was: "'readInt' was not declared"
+The 'cep' message is:      "'readInt' was not declared"
+
+
+ER_SIN07.ci
+The compiler message was: "Command 'In.' without arguments"
+The 'cep' message is:      "Command 'In.' without arguments"
+
+
+ER_SIN01.ci
+The compiler message was: "'{' expected"
+The 'cep' message is:      "'{' expected"
+
+
+ER_SIN04.ci
+The compiler message was: "Statement expected"
+The 'cep' message is:      "Statement expected"
+
+
+ER_SIN06.ci
+The compiler message was: "Expression expected"
+The 'cep' message is:      "Expression expected"
+
+
+ER_SIN08.ci
+The compiler message was: "Command 'Out.print:' without arguments"
+The 'cep' message is:      "Command ' Out.print' without arguments"
+
+
+Para os casos de teste que voc� utilizou, o compilador est� correto
+
+List of Java files with compilation errors: 
+   testes/Sin/ER/ER_SIN05.java
+   testes/Sin/ER/ER_SIN03.java
+   testes/Sin/ER/ER_SIN09.java
+   testes/Sin/ER/ER_SIN02.java
+   testes/Sin/ER/ER_SIN10.java
+   testes/Sin/ER/ER_SIN07.java
+   testes/Sin/ER/ER_SIN01.java
+   testes/Sin/ER/ER_SIN04.java
+   testes/Sin/ER/ER_SIN06.java
+   testes/Sin/ER/ER_SIN08.java
+
+List of files with correct Java code: 
+
+List of files Java code that compiles but was generated incorrectly: 
+
+The compiler could not create the following .java files:

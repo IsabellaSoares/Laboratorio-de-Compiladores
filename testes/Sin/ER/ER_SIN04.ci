@@ -1,0 +1,15 @@
+/* 
+Isabela Salmeron Boschi
+isabelasalmeron@msn.com
+*/
+@cep(6, "'i = ' não é uma instrução", "Statement expected", "comp.Compiler.assignExprLocalDec()")
+
+class Program
+  
+    func run {
+        
+        i = ;
+       
+    }
+
+end
