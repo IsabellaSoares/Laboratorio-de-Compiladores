@@ -1,2 +1,0 @@
-comp.Comp
-comp.TupleCheckNameText

@@ -1,3 +1,7 @@
+/*
+ Isabella Soares de Lima             726541
+ Marcelo Augusto Rodrigues da Silva  726565 
+ */
 package comp;
 import java.io.BufferedReader;
 import java.io.File;
@@ -260,27 +264,27 @@ public class Comp {
 		StringBuilder partialReport = new StringBuilder();
 		if ( this.checkNameFilenameListCompilerFailedMap.size() > 0 ) {
 			partialReport.append("\r\n");
-			partialReport.append("O compilador falhou em testar alguns aspectos (constru��es) de Cianeto. "
+			partialReport.append("O compilador falhou em testar alguns aspectos (construções) de Cianeto. "
 					+ "A lista abaixo consiste de entradas da forma \n"
-					+ "    aspecto\n        lists de nomes de arquivos\n");
-			partialReport.append("Os nomes de arquivos listados s�o aqueles que testam 'aspecto' mas em "
-					+ "que o compilador falhou em apontar um erro, apontou um erro inexistente ou gerou c�digo errado (se op��o -genjava ou -genc foi usada).\r\n");
+					+ "    aspecto\n        listas de nomes de arquivos\n");
+			partialReport.append("Os nomes de arquivos listados são aqueles que testam 'aspecto' mas em "
+					+ "que o compilador falhou em apontar um erro, apontou um erro inexistente ou gerou código errado (se opção -genjava ou -genc foi usada).\r\n");
 			if ( ! printReportCheckNameFilenameList(checkNameFilenameListCompilerFailedMap, partialReport, true) ) {
 				return ;
 			}
 		}
 		partialReport.append("\r\n");
 		if ( this.checkNameFilenameListCompilerSucceededMap.size() > 0 ) {
-			partialReport.append("O compilador obteve sucesso em testar alguns aspectos (constru��es) de Cianeto. "
+			partialReport.append("O compilador obteve sucesso em testar alguns aspectos (construções) de Cianeto. "
 					+ "A lista abaixo consiste de entradas da forma \n"
-					+ "    aspecto\n        lists de nomes de arquivos\n");
-			partialReport.append("Os nomes de arquivos listados s�o aqueles que testam 'aspecto' e nos quais "
-					+ "o compilador obteve sucesso e gerou c�digo correto (se op��o -genjava ou -genc foi usada).\r\n");
+					+ "    aspecto\n        listas de nomes de arquivos\n");
+			partialReport.append("Os nomes de arquivos listados são aqueles que testam 'aspecto' e nos quais "
+					+ "o compilador obteve sucesso e gerou código correto (se opção -genjava ou -genc foi usada).\r\n");
 			if ( ! printReportCheckNameFilenameList(checkNameFilenameListCompilerSucceededMap, partialReport, false) ) {
 				return ;
 			}
 		}
-		report.println("Relat�rio do Compilador");
+		report.println("Relatório do Compilador");
 		report.println();
 
 
@@ -310,21 +314,21 @@ public class Comp {
 		report.println("_________________________________________________________________________");
 		report.println(sb.toString());
 		report.println();
-		report.println("MI = muito importante, I = importante, PI = pouco importante, Exc = exce��es");
+		report.println("MI = muito importante, I = importante, PI = pouco importante, Exc = exceções");
 		report.println("Dev = deveria ter sinalizado, LE = sinalizou linha errada, SSE = sinalizado sem erro");
 		report.println("_________________________________________________________________________");
 
 		report.println();
-		report.println("N�mero de testes 'Muito importantes' em que o compilador falhou: " + Comp.numVeryImportantFailed);
-		report.println("N�mero de testes 'Importantes' em que o compilador falhou: " + Comp.numImportantFailed);
-		report.println("N�mero de testes 'Pouco importantes' em que o compilador falhou: " + Comp.numLittleImportantFailed);
+		report.println("Número de testes 'Muito importantes' em que o compilador falhou: " + Comp.numVeryImportantFailed);
+		report.println("Número de testes 'Importantes' em que o compilador falhou: " + Comp.numImportantFailed);
+		report.println("Número de testes 'Pouco importantes' em que o compilador falhou: " + Comp.numLittleImportantFailed);
 
 		report.println(partialReport.toString());
 
 		if ( this.nullPointerAndOtherExceptionsList.size() > 0 ) {
 			report.println( nullPointerAndOtherExceptionsList.size() +
-					" arquivos lan�aram exce��es que n�o foram capturadas pelo compilador ou houve algum problema e o m�todo 'compileProgram' retornou 'null'. "
-					+ "A maioria delas � provavelmente NullPointerException. Estes arquivos s�o:");
+					" arquivos lançaram exceções que não foram capturadas pelo compilador ou houve algum problema e o método 'compileProgram' retornou 'null'. "
+					+ "A maioria delas é provavelmente NullPointerException. Estes arquivos são:");
 			for ( String fn : this.nullPointerAndOtherExceptionsList ) {
 				report.println("    " + fn);
 			}
@@ -334,7 +338,7 @@ public class Comp {
 
 		if ( numSourceFilesWithAnnotCEP > 0 ) {
 			report.println(this.shouldButWereNotList.size() + " de um total de " + numSourceFilesWithAnnotCEP +
-					" erros que deveriam ser sinalizados n�o o foram (" +
+					" erros que deveriam ser sinalizados não o foram (" +
 					(int ) (100.0*this.shouldButWereNotList.size()/this.numSourceFilesWithAnnotCEP) + "%)");
 			report.println(this.wereButWrongLineList.size() + " erros foram sinalizados na linha errada ("
 					+ (int ) (100.0*this.wereButWrongLineList.size()/this.numSourceFilesWithAnnotCEP) + "%)");
@@ -355,7 +359,7 @@ public class Comp {
 			else {
 				compilerOk = false;
 				report.println();
-				report.println("Erros que deveriam ser sinalizados mas n�o foram:");
+				report.println("Erros que deveriam ser sinalizados mas não foram:");
 				report.println();
 				for (String s : this.shouldButWereNotList) {
 					report.println(s);
@@ -364,7 +368,7 @@ public class Comp {
 			}
 
 			if ( wereButWrongLineList.size() == 0 ) {
-				report.println("Um ou mais arquivos de teste tinham erros, mas estes foram sinalizados nos n�meros de linhas corretos");
+				report.println("Um ou mais arquivos de teste tinham erros, mas estes foram sinalizados nos números de linhas corretos");
 			}
 			else {
 				compilerOk = false;
@@ -382,12 +386,12 @@ public class Comp {
 
 		if ( numSourceFiles -  numSourceFilesWithAnnotCEP != 0  ) {
 			if ( wereButShouldNotList.size() == 0 ) {
-				report.println("O compilador n�o sinalizou nenhum erro que n�o deveria ter sinalizado");
+				report.println("O compilador não sinalizou nenhum erro que não deveria ter sinalizado");
 			}
 			else {
 				compilerOk = false;
 				report.println("######################################################");
-				report.println("Erros que foram sinalizados mas n�o deveriam ter sido:");
+				report.println("Erros que foram sinalizados mas não deveriam ter sido:");
 				report.println();
 				for (String s : this.wereButShouldNotList) {
 					report.println(s);
@@ -399,12 +403,12 @@ public class Comp {
 		if ( correctList.size() > 0 ) {
 			report.println("######################################################");
 			report.print("Em todos os testes abaixo, o compilador sinalizou o erro na linha correta (quando o teste tinha erros) ");
-			report.print("ou n�o sinalizou o erro (quando o teste N�O tinha erros). Mas � necess�rio conferir se as ");
-			report.print("mensagens emitidas pelo compilador s�o compat�veis com as mensagens de erro sugeridas pelas chamadas aos ");
+			report.print("ou não sinalizou o erro (quando o teste NÃO tinha erros). Mas é necessário conferir se as ");
+			report.print("mensagens emitidas pelo compilador são compatíveis com as mensagens de erro sugeridas pelas chamadas aos ");
 			report.print("metaobjetos dos testes. ");
 			report.println();
 			report.println();
-			report.println("A lista abaixo cont�m o nome do arquivo de teste, a mensagem que ele sinalizou e a mensagem sugerida pelo arquivo de teste");
+			report.println("A lista abaixo contém o nome do arquivo de teste, a mensagem que ele sinalizou e a mensagem sugerida pelo arquivo de teste");
 			report.println();
 			for (String s : this.correctList ) {
 				report.println(s);
@@ -413,9 +417,9 @@ public class Comp {
 		}
 		if ( compilerOk ) {
 			if ( numSourceFiles == 1 )
-				report.println("Para o caso de teste que voc� utilizou, o compilador est� correto");
+				report.println("Para o caso de teste que você utilizou, o compilador está correto");
 			else
-				report.println("Para os casos de teste que voc� utilizou, o compilador est� correto");
+				report.println("Para os casos de teste que você utilizou, o compilador está correto");
 
 		}
 
@@ -443,15 +447,15 @@ public class Comp {
 //	}
 
 
+
 	private static boolean printReportCheckNameFilenameList(Map<String, String> checkNameFilenameList,
-			StringBuilder partialReport, boolean succeeded ) {
+			StringBuilder partialReport, boolean compilerFailed ) {
 		ArrayList<TupleCheckNameText> ta = new ArrayList<>();
 		for ( Entry<String, String> entry : checkNameFilenameList.entrySet() ) {
 			String checkName = entry.getKey();
+			int numFiles = 0;
 			Integer importance = Comp.testNameWeightMap.get(checkName);
 			if ( importance == null ) {
-//				report.println("*******************************\nFailed to produce report: check name '" +
-//			       checkName + "' is not allowed");
 				partialReport.append("*******************************\nFailed to produce report: check name '" +
 					       checkName + "' is not allowed" + "\r\n");
 				return false;
@@ -461,50 +465,51 @@ public class Comp {
 			s.append("    " + checkName + "\r\n");
 			if ( filenameListStr.indexOf(" ") < 0 ) {
 				s.append("        " + filenameListStr + "\r\n");
+				++numFiles;
 			}
 			else {
 				String []filenameList = filenameListStr.split(" ");
 				for ( String filename : filenameList ) {
 					s.append("        " + filename + "\r\n");
+					++numFiles;
 				}
 			}
-			ta.add(new TupleCheckNameText(checkName, importance, s.toString()));
+			ta.add(new TupleCheckNameText(checkName, importance, s.toString(), numFiles));
 		}
 		Collections.sort(ta);
-		//report.println("Os testes s�o categorizados por import�ncia: 'Muito importante', 'Importante', 'pouco importante'");
-		partialReport.append("Os testes s�o categorizados por import�ncia: 'Muito importante', 'Importante', 'pouco importante'\r\n");
+		partialReport.append("Os testes são categorizados por importância: 'Muito importante', 'Importante', 'pouco importante'\r\n");
 		if ( ta.get(0).importance >= 5 ) {
 			//report.println("\nTestes 'Muito importantes' em que o compilador falhou:");
-			partialReport.append("\nTestes 'Muito importantes' em que o compilador " + (succeeded ? "falhou" : "acertou") + ":\r\n");
+			partialReport.append("\nTestes 'Muito importantes' em que o compilador " + (compilerFailed ? "falhou" : "acertou") + ":\r\n");
 		}
 		boolean alreadPrintMessage3 = false;
 		boolean alreadPrintMessage2 = false;
 		for ( TupleCheckNameText t : ta ) {
-			if ( t.importance >= 5 ) {
-				++Comp.numVeryImportantFailed;
-			}
-			else if ( t.importance > 1 ) {
-				++Comp.numImportantFailed;
-			}
-			else {
-				++Comp.numLittleImportantFailed;
+			if ( compilerFailed ) {
+				if ( t.importance >= 5 ) {
+					Comp.numVeryImportantFailed += t.numFiles;
+				}
+				else if ( t.importance > 1 ) {
+					Comp.numImportantFailed += t.numFiles;
+				}
+				else {
+					Comp.numLittleImportantFailed += t.numFiles;
+				}
 			}
 			if ( !alreadPrintMessage3 && t.importance < 5 && t.importance > 1 ) {
 				alreadPrintMessage3 = true;
-				//report.println("\nTestes 'importantes' em que o compilador falhou:");
-				partialReport.append("\nTestes 'importantes' em que o compilador falhou:\r\n");
+				partialReport.append("\nTestes 'importantes' em que o compilador " +
+				    (compilerFailed ? "falhou" : "acertou") + ":\r\n");
 			}
 			if ( !alreadPrintMessage2 && t.importance < 3  ) {
 				alreadPrintMessage2 = true;
-				// report.println("\nTestes 'pouco importantes' em que o compilador falhou:");
-				partialReport.append("\nTestes 'pouco importantes' em que o compilador falhou:\r\n");
+				partialReport.append("\nTestes 'pouco importantes' em que o compilador " +
+				    (compilerFailed ? "falhou" : "acertou") + "\r\n");
 			}
-			//report.append(t.text);
 			partialReport.append(t.text + "\r\n");
 		}
 		return true;
 	}
-
 	/**
 	   @param args
 	   @param stream
@@ -1063,10 +1068,11 @@ public class Comp {
 
 
 class TupleCheckNameText implements Comparable<TupleCheckNameText> {
-	public TupleCheckNameText(String checkName, int importance, String text) {
+	public TupleCheckNameText(String checkName, int importance, String text, int numFiles) {
 		this.checkName = checkName;
 		this.importance = importance;
 		this.text = text;
+		this.numFiles = numFiles;
 	}
 
 	@Override
@@ -1085,4 +1091,6 @@ class TupleCheckNameText implements Comparable<TupleCheckNameText> {
 	String checkName;
 	int importance;
 	String text;
+	int numFiles;
+
 }
