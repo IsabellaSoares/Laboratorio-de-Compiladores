@@ -49,6 +49,11 @@ public class Comp {
 
 	public void run( String []args ) {
 
+		
+		for(String str : args) {
+			System.out.println(str);
+		}
+		
 		File file;
 		if ( args.length == 3 && args[1].equalsIgnoreCase("-genjava") ) {
 			this.genJava  = true;
@@ -185,7 +190,8 @@ public class Comp {
 
 		}
 
-		if ( this.genJava ) {
+		//if ( this.genJava ) {
+		if(true) {
 			if ( this.filesWithCorrectlyGeneratedJavaClasses != null &&
 					this.filesWithWrongGeneratedJavaClasses != null &&
 					this.filesWithJavaClassesWithCompilationErrors != null &&

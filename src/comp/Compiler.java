@@ -375,6 +375,7 @@ public class Compiler {
 			breakStat();
 			break;
 		case SEMICOLON:
+			e = new SemicolonStatement();
 			checkSemiColon = false;
 			next();
 			break;
@@ -952,7 +953,7 @@ public class Compiler {
 		Type type = Type.undefinedType;
 		type = type();
 		
-		if (type != Type.booleanType && type != Type.intType && type != Type.stringType) 
+		if (type == null) 
 			error("Type expected");
 		
 		if ( lexer.token != Token.ID ) {

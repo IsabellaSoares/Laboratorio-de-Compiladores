@@ -1,17 +1,17 @@
-Relat�rio do Compilador
+Relatório do Compilador
 
 Resumo
 _________________________________________________________________________
 MI:  0             I: 0              PI: 0             Exc: 0
  SSE: 4/11/36%     
 
-MI = muito importante, I = importante, PI = pouco importante, Exc = exce��es
+MI = muito importante, I = importante, PI = pouco importante, Exc = exceções
 Dev = deveria ter sinalizado, LE = sinalizou linha errada, SSE = sinalizado sem erro
 _________________________________________________________________________
 
-N�mero de testes 'Muito importantes' em que o compilador falhou: 0
-N�mero de testes 'Importantes' em que o compilador falhou: 0
-N�mero de testes 'Pouco importantes' em que o compilador falhou: 0
+Número de testes 'Muito importantes' em que o compilador falhou: 0
+Número de testes 'Importantes' em que o compilador falhou: 0
+Número de testes 'Pouco importantes' em que o compilador falhou: 0
 
 
 _________________________________________________________________________
@@ -19,29 +19,29 @@ _________________________________________________________________________
 4 erros foram sinalizados em 11 arquivos sem erro (36%)
 _________________________________________________________________________
 ######################################################
-Erros que foram sinalizados mas n�o deveriam ter sido:
-
-OK_SIN11.ci, 16, Statement expected
-
-OK_SIN16.ci, 24, Statement expected
+Erros que foram sinalizados mas não deveriam ter sido:
 
 OK_SIN02.ci, 31, Statement expected
 
+OK_SIN11.ci, 16, Statement expected
+
 OK_SIN14.ci, 36, Type expected
+
+OK_SIN16.ci, 24, Statement expected
 
 
 List of Java files with compilation errors: 
-   testes/Sin/OK/OK_SIN11.java
-   testes/Sin/OK/OK_SIN04.java
-   testes/Sin/OK/OK_SIN16.java
-   testes/Sin/OK/OK_SIN09.java
-   testes/Sin/OK/OK_SIN03.java
-   testes/Sin/OK/OK_SIN02.java
-   testes/Sin/OK/OK_SIN13.java
-   testes/Sin/OK/OK_SIN14.java
-   testes/Sin/OK/OK_SIN08.java
-   testes/Sin/OK/OK_SIN12.java
-   testes/Sin/OK/OK_SIN10.java
+   C:\Users\marce\Downloads\UFSCar\Laboratorio_de_compiladores\Laboratorio-de-Compiladores\testes\Sin\OK\OK_SIN02.java
+   C:\Users\marce\Downloads\UFSCar\Laboratorio_de_compiladores\Laboratorio-de-Compiladores\testes\Sin\OK\OK_SIN03.java
+   C:\Users\marce\Downloads\UFSCar\Laboratorio_de_compiladores\Laboratorio-de-Compiladores\testes\Sin\OK\OK_SIN04.java
+   C:\Users\marce\Downloads\UFSCar\Laboratorio_de_compiladores\Laboratorio-de-Compiladores\testes\Sin\OK\OK_SIN08.java
+   C:\Users\marce\Downloads\UFSCar\Laboratorio_de_compiladores\Laboratorio-de-Compiladores\testes\Sin\OK\OK_SIN09.java
+   C:\Users\marce\Downloads\UFSCar\Laboratorio_de_compiladores\Laboratorio-de-Compiladores\testes\Sin\OK\OK_SIN10.java
+   C:\Users\marce\Downloads\UFSCar\Laboratorio_de_compiladores\Laboratorio-de-Compiladores\testes\Sin\OK\OK_SIN11.java
+   C:\Users\marce\Downloads\UFSCar\Laboratorio_de_compiladores\Laboratorio-de-Compiladores\testes\Sin\OK\OK_SIN12.java
+   C:\Users\marce\Downloads\UFSCar\Laboratorio_de_compiladores\Laboratorio-de-Compiladores\testes\Sin\OK\OK_SIN13.java
+   C:\Users\marce\Downloads\UFSCar\Laboratorio_de_compiladores\Laboratorio-de-Compiladores\testes\Sin\OK\OK_SIN14.java
+   C:\Users\marce\Downloads\UFSCar\Laboratorio_de_compiladores\Laboratorio-de-Compiladores\testes\Sin\OK\OK_SIN16.java
 
 List of files with correct Java code: 
 
