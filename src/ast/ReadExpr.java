@@ -7,7 +7,8 @@ package ast;
 public class ReadExpr extends PrimaryExpr {
 	private Type type;
 	
-	public ReadExpr (Type type) {
+	public ReadExpr (Type type, int t) {
+		super(t);
 		this.type = type;
 	}
 	

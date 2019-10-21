@@ -10,11 +10,13 @@ public class PrimarySuperExpr extends PrimaryExpr {
 	private String id = null;
 	private ArrayList<Expr> exprList = new ArrayList<>();
 	
-	public PrimarySuperExpr (String id) {
+	public PrimarySuperExpr (String id, int type) {
+		super(type);
 		this.id = id;
 	}
 	
-	public PrimarySuperExpr (String id, ArrayList<Expr> exprList) {
+	public PrimarySuperExpr (String id, ArrayList<Expr> exprList, int type) {
+		super(type);
 		this.id = id;
 		this.exprList = exprList;
 	}

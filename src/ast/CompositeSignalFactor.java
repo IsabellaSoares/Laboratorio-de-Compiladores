@@ -10,7 +10,8 @@ public class CompositeSignalFactor extends SignalFactor {
 	private Token operator;
 	private Factor factor;
 	
-	public CompositeSignalFactor (Token operator, Factor factor) {
+	public CompositeSignalFactor (Token operator, Factor factor, int type) {
+		super(type);
 		this.operator = operator;
 		this.factor = factor;
 	}

@@ -6,7 +6,8 @@ package ast;
 
 public class LiteralString extends Expr {
     
-    public LiteralString( String literalString ) { 
+    public LiteralString( String literalString , int type) {
+    	super(type);
         this.literalString = literalString;
     }
     

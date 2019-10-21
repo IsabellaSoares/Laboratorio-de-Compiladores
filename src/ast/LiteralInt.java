@@ -6,7 +6,8 @@ package ast;
 
 public class LiteralInt extends Expr {
     
-    public LiteralInt( int value ) { 
+    public LiteralInt( int value , int type) {
+    	super(type);
         this.value = value;
     }
     

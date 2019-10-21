@@ -10,21 +10,25 @@ public class PrimarySelfExpr extends PrimaryExpr {
 	private String id1 = "self", id2 = null;
 	private ArrayList<Expr> exprList = new ArrayList<>();
 	
-	public PrimarySelfExpr (String id) {
+	public PrimarySelfExpr (String id, int type) {
+		super(type);
 		this.id1 = id;
 	}
 	
-	public PrimarySelfExpr (String id, ArrayList<Expr> exprList) {
+	public PrimarySelfExpr (String id, ArrayList<Expr> exprList, int type) {
+		super(type);
 		this.id1 = id;
 		this.exprList = exprList;
 	}
 	
-	public PrimarySelfExpr (String id1, String id2) {
+	public PrimarySelfExpr (String id1, String id2, int type) {
+		super(type);
 		this.id1 = id1;
 		this.id2 = id2;
 	}
 	
-	public PrimarySelfExpr (String id1, String id2, ArrayList<Expr> exprList) {
+	public PrimarySelfExpr (String id1, String id2, ArrayList<Expr> exprList, int type) {
+		super(type);
 		this.id1 = id1;
 		this.id2 = id2;
 		this.exprList = exprList;

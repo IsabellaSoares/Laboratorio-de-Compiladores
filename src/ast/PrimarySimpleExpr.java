@@ -10,16 +10,19 @@ public class PrimarySimpleExpr extends PrimaryExpr {
 	private String id1 = null, id2 = null;
 	private ArrayList<Expr> exprList = new ArrayList<>();
 	
-	public PrimarySimpleExpr (String id1) {
+	public PrimarySimpleExpr (String id1, int type) {
+		super(type);
 		this.id1 = id1;
 	}
 	
-	public PrimarySimpleExpr (String id1, String id2) {
+	public PrimarySimpleExpr (String id1, String id2, int type) {
+		super(type);
 		this.id1 = id1;
 		this.id2 = id2;
 	}
 	
-	public PrimarySimpleExpr (String id1, String id2, ArrayList<Expr> exprList) {
+	public PrimarySimpleExpr (String id1, String id2, ArrayList<Expr> exprList, int type) {
+		super(type);
 		this.id1 = id1;
 		this.id2 = id2;
 		this.exprList = exprList;

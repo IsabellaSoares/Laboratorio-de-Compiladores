@@ -3,7 +3,7 @@ Relatório do Compilador
 Resumo
 _________________________________________________________________________
 MI:  0             I: 0              PI: 0             Exc: 0
-Dev: 0/56/0%       LE: 4/56/7%      
+Dev: 0/7/0%        LE: 0/7/0%        SSE: 0/2/0%       
 
 MI = muito importante, I = importante, PI = pouco importante, Exc = exceções
 Dev = deveria ter sinalizado, LE = sinalizou linha errada, SSE = sinalizado sem erro
@@ -16,293 +16,53 @@ Número de testes 'Pouco importantes' em que o compilador falhou: 0
 
 _________________________________________________________________________
 
-0 de um total de 56 erros que deveriam ser sinalizados não o foram (0%)
-4 erros foram sinalizados na linha errada (7%)
+0 de um total de 7 erros que deveriam ser sinalizados não o foram (0%)
+0 erros foram sinalizados na linha errada (0%)
+0 erros foram sinalizados em 2 arquivos sem erro (0%)
 _________________________________________________________________________
 Todos os erros que deveriam ter sido sinalizados o foram
-######################################################
-Erros que foram sinalizados na linha errada:
-
-ER_SIN18.ci
-    correto:    8, ';' expected 
-    sinalizado: 9, ';' expected
-
-ER_SIN20.ci
-    correto:    6, ';' missing 
-    sinalizado: 7, ';' expected
-
-ER_SIN21.ci
-    correto:    9, ';' missing 
-    sinalizado: 10, ';' expected
-
-ER_SIN22.ci
-    correto:    10, ';' missing 
-    sinalizado: 11, ';' expected
-
+Um ou mais arquivos de teste tinham erros, mas estes foram sinalizados nos números de linhas corretos
+O compilador não sinalizou nenhum erro que não deveria ter sinalizado
 ######################################################
 Em todos os testes abaixo, o compilador sinalizou o erro na linha correta (quando o teste tinha erros) ou não sinalizou o erro (quando o teste NÃO tinha erros). Mas é necessário conferir se as mensagens emitidas pelo compilador são compatíveis com as mensagens de erro sugeridas pelas chamadas aos metaobjetos dos testes. 
 
 A lista abaixo contém o nome do arquivo de teste, a mensagem que ele sinalizou e a mensagem sugerida pelo arquivo de teste
 
-ER_SIN01.ci
-The compiler message was: "'{' expected (func run)"
-The 'cep' message is:      "'{' expected"
+ER_LEX03.ci
+The compiler message was: "Number out of limits"
+The 'cep' message is:      "literal int out of limits"
 
 
-ER_SIN02.ci
-The compiler message was: "Missing identifier"
-The 'cep' message is:      "Missing identifier"
-
-
-ER_SIN03.ci
-The compiler message was: "Identifier expected"
-The 'cep' message is:      "Identifier expected"
-
-
-ER_SIN04.ci
-The compiler message was: "Expression expected"
-The 'cep' message is:      "Statement expected"
-
-
-ER_SIN05.ci
-The compiler message was: "Expression expected"
-The 'cep' message is:      "Expression expected"
-
-
-ER_SIN06.ci
-The compiler message was: "Expression expected"
-The 'cep' message is:      "Expression expected"
-
-
-ER_SIN07.ci
-The compiler message was: "Command 'In.' without arguments"
-The 'cep' message is:      "Command 'In.' without arguments"
-
-
-ER_SIN08.ci
-The compiler message was: "Command 'Out.print:' without arguments"
-The 'cep' message is:      "Command ' Out.print' without arguments"
-
-
-ER_SIN09.ci
-The compiler message was: "'{' expected (line 7)"
-The 'cep' message is:      "'{' expected"
-
-
-ER_SIN10.ci
-The compiler message was: "'readInt' was not declared"
-The 'cep' message is:      "'readInt' was not declared"
-
-
-ER_SIN100.ci
-The compiler message was: "missing 'return' statement"
-The 'cep' message is:      "missing 'return' statement"
-
-
-ER_SIN101.ci
-The compiler message was: "A field name was expected"
-The 'cep' message is:      "Type expected"
-
-
-ER_SIN11.ci
-The compiler message was: "Missing 'Out.'"
-The 'cep' message is:      "Missing 'Out.'"
-
-
-ER_SIN12.ci
-The compiler message was: "Expression expected"
-The 'cep' message is:      "Expression expected"
-
-
-ER_SIN13.ci
-The compiler message was: "'{' expected (func m)"
-The 'cep' message is:      "'{' expected"
-
-
-ER_SIN14.ci
-The compiler message was: "'class' expected"
-The 'cep' message is:      "'class' expected"
-
-
-ER_SIN15.ci
-The compiler message was: "';' expected"
-The 'cep' message is:      "';' expected"
-
-
-ER_SIN16.ci
-The compiler message was: "Identifier expected"
-The 'cep' message is:      "Identifier expected"
-
-
-ER_SIN17.ci
-The compiler message was: "';' expected"
-The 'cep' message is:      "Missing ';'"
-
-
-ER_SIN19.ci
-The compiler message was: "';' expected"
-The 'cep' message is:      "';' missing"
-
-
-ER_SIN23.ci
-The compiler message was: "Statement expected"
-The 'cep' message is:      "Statement expected"
-
-
-ER_SIN24.ci
-The compiler message was: "Expression expected OR Unknown sequence of symbols"
-The 'cep' message is:      "Expression expected OR Unknown sequence of symbols"
-
-
-ER_SIN25.ci
-The compiler message was: "Expression expected OR Unknown sequence of symbols"
-The 'cep' message is:      "Expression expected OR invalid sequence of symbols"
-
-
-ER_SIN26.ci
-The compiler message was: "Expression expected OR invalid sequence of symbols"
-The 'cep' message is:      "Expression expected OR invalid sequence of symbols"
-
-
-ER_SIN27.ci
-The compiler message was: "Expression expected OR invalid sequence of symbols"
-The 'cep' message is:      "Expression expected OR Unknown sequence of symbols"
-
-
-ER_SIN28.ci
-The compiler message was: "'class' expected"
-The 'cep' message is:      "'class' expected"
-
-
-ER_SIN29.ci
-The compiler message was: "'public', 'private' or '}' expected"
-The 'cep' message is:      " Class member OR 'end' expected"
-
-
-ER_SIN30.ci
+ER_LEX04.ci
 The compiler message was: "Invalid Character: '#'"
-The 'cep' message is:      "Unknown character '#'"
+The 'cep' message is:      "Unknown character"
 
 
-ER_SIN31.ci
-The compiler message was: "'public', 'private', '}' or 'end' expected (line 6)"
-The 'cep' message is:      "'public', 'private', or '}' expected"
+ER_LEX05.ci
+The compiler message was: "'_' cannot start an indentifier"
+The 'cep' message is:      "Identifier starting with underscore"
 
 
-ER_SIN32.ci
-The compiler message was: "Type expected to parameter in line 6"
-The 'cep' message is:      "Type expected"
+ER_LEX06.ci
+The compiler message was: "Invalid Character: '.'"
+The 'cep' message is:      "Unknown character"
 
 
-ER_SIN33.ci
-The compiler message was: "Identifier expected"
-The 'cep' message is:      "Identifier expected"
+ER_LEX07.ci
+The compiler message was: "Comment opened and not closed"
+The 'cep' message is:      "Comment started in line 5 was not closed"
 
 
-ER_SIN34.ci
-The compiler message was: "'{' expected (func m)"
-The 'cep' message is:      "'{' expected"
+ER_LEX08.ci
+The compiler message was: "Number out of limits"
+The 'cep' message is:      "literal int out of limits"
 
 
-ER_SIN35.ci
-The compiler message was: "'{' expected (func m:)"
-The 'cep' message is:      "'{' expected"
-
-
-ER_SIN36.ci
-The compiler message was: "Type expected to method in line 11"
-The 'cep' message is:      "Identifier expected"
-
-
-ER_SIN37.ci
-The compiler message was: "Expression expected"
-The 'cep' message is:      "Expression expected"
-
-
-ER_SIN38.ci
-The compiler message was: "'}' expected"
-The 'cep' message is:      "'}' expected"
-
-
-ER_SIN39.ci
-The compiler message was: "'{' expected (func get)"
-The 'cep' message is:      "'{' expected"
-
-
-ER_SIN40.ci
-The compiler message was: "Attempt to declare public instance variable in line 12"
-The 'cep' message is:      "Attempt to declare public instance variable 'i'"
-
-
-ER_SIN41.ci
-The compiler message was: "Identifier expected"
-The 'cep' message is:      "Identifier expected"
-
-
-ER_SIN42.ci
-The compiler message was: "Invalid Character: ':'"
-The 'cep' message is:      ""
-
-
-ER_SIN43.ci
-The compiler message was: "'public', 'private' or '}' expected"
-The 'cep' message is:      "function or field declaration expected"
-
-
-ER_SIN44.ci
-The compiler message was: "Attempt to declare public instance variable in line 16"
-The 'cep' message is:      "Attempt to declare public instance variable 'i'"
-
-
-ER_SIN57.ci
-The compiler message was: "'public', 'private' or '}' expected"
-The 'cep' message is:      "'public', 'private' or '}' expected"
-
-
-ER_SIN58.ci
-The compiler message was: "Constructors do not receive parameters (line: 15)"
-The 'cep' message is:      "')' expected"
-
-
-ER_SIN59.ci
-The compiler message was: "missing keyword 'until'"
-The 'cep' message is:      "'until' expected"
-
-
-ER_SIN60.ci
-The compiler message was: "')' unexpected"
-The 'cep' message is:      "')' unexpected"
-
-
-ER_SIN61.ci
-The compiler message was: "')' expected"
-The 'cep' message is:      "')' expected"
-
-
-ER_SIN62.ci
-The compiler message was: "missing keyword 'until'"
-The 'cep' message is:      "'}' not expected before 'until'"
-
-
-ER_SIN63.ci
+ER_LEX_EXTRA01.ci
 The compiler message was: "';' expected"
 The 'cep' message is:      "';' expected"
 
 
-ER_SIN_EXTRA.ci
-The compiler message was: "'{' expected (func frear)"
-The 'cep' message is:      "'{' expected"
-
-
-ER_SIN_EXTRA01.ci
-The compiler message was: "'{' expected (func run)"
-The 'cep' message is:      ""
-
-
-ER_SIN_EXTRA02.ci
-The compiler message was: "'public', 'private', '}' or 'end' expected (line 40)"
-The 'cep' message is:      ""
-
-
+Para os casos de teste que você utilizou, o compilador está correto
 
 Something wrong: null list of files that generate correct or wrong code

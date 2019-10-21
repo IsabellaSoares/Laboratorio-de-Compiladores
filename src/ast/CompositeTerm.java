@@ -9,7 +9,8 @@ public class CompositeTerm extends Term {
 	private Token operator;
 	private Expr left, right;
 	
-	public CompositeTerm (Expr left, Token operator, Expr right) {
+	public CompositeTerm (Expr left, Token operator, Expr right, int type) {
+		super(type);
 		this.operator = operator;
 		this.left = left;
 		this.right = right;

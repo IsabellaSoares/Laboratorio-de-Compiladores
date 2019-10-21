@@ -136,6 +136,7 @@ public class Comp {
 
 			for ( File f : fileList ) {
 				String filename = f.getName();
+				System.out.println("filename: " + filename);
 				int lastIndexDot = filename.lastIndexOf('.');
 				String ext = filename.substring(lastIndexDot + 1);
 				if ( ext.equalsIgnoreCase("ci") ) {
@@ -190,8 +191,7 @@ public class Comp {
 
 		}
 
-		//if ( this.genJava ) {
-		if(true) {
+		if ( this.genJava ) {
 			if ( this.filesWithCorrectlyGeneratedJavaClasses != null &&
 					this.filesWithWrongGeneratedJavaClasses != null &&
 					this.filesWithJavaClassesWithCompilationErrors != null &&

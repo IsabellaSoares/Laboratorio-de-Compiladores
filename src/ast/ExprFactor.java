@@ -7,7 +7,8 @@ package ast;
 public class ExprFactor extends Factor {
 	private Expr expr;
 	
-	public ExprFactor (Expr expr) {
+	public ExprFactor (Expr expr, int type) {
+		super(type);
 		this.expr = expr;
 	}
 	

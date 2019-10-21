@@ -5,5 +5,10 @@ Marcelo Augusto Rodrigues da Silva  726565
 package ast;
 
 public abstract class Term extends SumSubExpr {
+	
+	public Term(int type) {
+		super(type);
+	}
+	
 	abstract public Type getType();
 }

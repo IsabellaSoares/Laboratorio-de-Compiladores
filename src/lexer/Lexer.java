@@ -280,6 +280,10 @@ public class Lexer {
     public int getLineNumber() {
         return lineNumber;
     }
+    
+    public void setLineNumber(int lineNumber) {
+		this.lineNumber = lineNumber;
+	}
 
     public int getLineNumberBeforeLastToken() {
         return getLineNumber( lastTokenPos );
@@ -342,7 +346,11 @@ public class Lexer {
     
     public Integer getLastTokenPos() {
         return lastTokenPos;
-     }
+    }
+    
+    public void setTokenPos(int tokenPos) {
+		this.tokenPos = tokenPos;
+	}
 
     public String getStringValue() {
        return stringValue;

@@ -11,17 +11,20 @@ public class BasicValue extends Factor {
 	private String stringValue;
 	private boolean boolValue;
 	
-	public BasicValue (Integer value) {
+	public BasicValue (Integer value, int type) {
+		super(type);
 		this.intValue = value;
 		this.type = Type.intType;
 	}
 	
-	public BasicValue (String value) {
+	public BasicValue (String value, int type) {
+		super(type);
 		this.stringValue = value;
 		this.type = Type.stringType;
 	}
 	
-	public BasicValue (boolean value) {
+	public BasicValue (boolean value, int type) {
+		super(type);
 		this.boolValue = value;
 		this.type = Type.booleanType;
 	}

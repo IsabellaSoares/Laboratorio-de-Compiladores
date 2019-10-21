@@ -9,7 +9,8 @@ public class CompositeSumSubExpr extends SumSubExpr {
 	private Token operator;
 	private Expr left, right;
 	
-	public CompositeSumSubExpr (Expr left, Token operator, Expr right) {
+	public CompositeSumSubExpr (Expr left, Token operator, Expr right, int type) {
+		super(type);
 		this.operator = operator;
 		this.left = left;
 		this.right = right;

@@ -9,7 +9,8 @@ public class CompositeSimpleExpr extends SimpleExpr {
 	private Token operator;
 	private Expr left, right;
 	
-	public CompositeSimpleExpr (Expr left, Token operator, Expr right) {
+	public CompositeSimpleExpr (Expr left, Token operator, Expr right, int type) {
+		super(type);
 		this.operator = operator;
 		this.left = left;
 		this.right = right;

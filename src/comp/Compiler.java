@@ -580,7 +580,7 @@ public class Compiler {
 		}
 		
 		String printName = lexer.getStringValue();
-		
+		int lineNumber = lexer.getLineNumber();
 		next();
 		
 		ArrayList<Expr> exprList = exprList();
@@ -590,7 +590,11 @@ public class Compiler {
 		}
 		
 		if (lexer.token != Token.SEMICOLON) {
+			System.out.println("linha: " + lineNumber);
+			int line = lexer.getLineNumber();
+			lexer.setLineNumber(lineNumber);
 			this.error("';' expected");
+			lexer.setLineNumber(line);
 		}
 		
 		return new WriteStat(exprList, printName);
@@ -635,8 +639,13 @@ public class Compiler {
 			
 			if (right == null)
 				this.error("Expression expected OR Unknown sequence of symbols");
-						
-			left = new CompositeExpr(left, op, right);
+			
+			if(left!=null && right!=null) {
+				System.out.println("left type: " + left.getType());
+				System.out.println("right type: " + right.getType());
+			}
+			
+			left = new CompositeExpr(left, op, right, 0);
 		}
 		
 		if (left == null) {
@@ -657,7 +666,7 @@ public class Compiler {
 			Expr right = null;
 			right = sumSubExpr();
 			
-			left = new CompositeSimpleExpr(left, operator, right);
+			left = new CompositeSimpleExpr(left, operator, right, 0);
 		}
 		
 		if (left == null) {
@@ -684,7 +693,7 @@ public class Compiler {
 			Expr right = null;
 			right = term();
 			
-			left = new CompositeSumSubExpr(left, operator, right);
+			left = new CompositeSumSubExpr(left, operator, right, 0);
 		}
 		
 		if (left == null) {
@@ -706,7 +715,7 @@ public class Compiler {
 			Expr right = null;
 			right = signalFactor();
 			
-			left = new CompositeTerm(left, operator, right);
+			left = new CompositeTerm(left, operator, right, 0);
 		}
 		
 		if (left == null) {
@@ -732,7 +741,7 @@ public class Compiler {
 			return null;
 		}
 		
-		return new CompositeSignalFactor(operator, factor);
+		return new CompositeSignalFactor(operator, factor, 0);
 	}
 	
 	private Factor factor() {
@@ -749,7 +758,7 @@ public class Compiler {
 			if (e == null) return null;
 						
 			next();
-			return new ExprFactor(e);
+			return new ExprFactor(e, 0);
 		} else if (lexer.token == Token.ID || 
 					lexer.token == Token.SUPER || 
 					lexer.token == Token.SELF || 
@@ -758,7 +767,7 @@ public class Compiler {
 		} else if (lexer.token == Token.NOT) {
 			next();
 			Factor factor = factor();
-			return new BooleanExpr(Token.NOT, factor);
+			return new BooleanExpr(Token.NOT, factor, 0);
 		} else {
 			return basicValue();
 		}
@@ -768,19 +777,19 @@ public class Compiler {
 		if (lexer.token == Token.LITERALINT) {
 			Integer value = lexer.getNumberValue();
 			next();
-			return new BasicValue(value);
+			return new BasicValue(value, 0);
 		} else if (lexer.token == Token.LITERALSTRING) {
 			String value = lexer.getLiteralStringValue();
 			next();
-			return new BasicValue(value);
+			return new BasicValue(value, 0);
 		} else if (lexer.token == Token.TRUE) {
 			boolean value = true;
 			next();
-			return new BasicValue(value);
+			return new BasicValue(value, 0);
 		} else if (lexer.token == Token.FALSE) {
 			boolean value = false;
 			next();
-			return new BasicValue(value);
+			return new BasicValue(value, 0);
 		} else {
 			return null;
 		}	
@@ -788,11 +797,13 @@ public class Compiler {
 	
 	private AssignExpr assignExpr () {
 		Expr left = null, right = null;
+		int lineNumber = lexer.getLineNumber();
 		left = expr();
 		
 		if (left == null) return null;
-				
+		
 		if (lexer.token == Token.ASSIGN) {
+			lineNumber = lexer.getLineNumber();
 			next();
 			
 			//Se é um identificador, precisa verificar se já foi declarado
@@ -806,7 +817,14 @@ public class Compiler {
 			if (right == null) this.error("Expression expected");			
 		}
 		
-		check(Token.SEMICOLON, "';' expected");
+		//check(Token.SEMICOLON, "';' expected");
+		if ( lexer.token != Token.SEMICOLON ) {
+			System.out.println("linha: " + lineNumber);
+			int line = lexer.getLineNumber();
+			lexer.setLineNumber(lineNumber);
+			error("';' expected");
+			lexer.setLineNumber(line);
+		}
 		
 		return new AssignExpr(left, right);
 	}
@@ -829,7 +847,7 @@ public class Compiler {
 					
 					String id2 = lexer.getStringValue();
 					next();
-					return new PrimarySimpleExpr(id, id2);
+					return new PrimarySimpleExpr(id, id2, 0);
 					
 				} else if (lexer.token == Token.IDCOLON) {
 					String id2 = lexer.getStringValue();
@@ -837,17 +855,17 @@ public class Compiler {
 					
 					ArrayList<Expr> exprList = exprList();
 					
-					return new PrimarySimpleExpr(id, id2, exprList);
+					return new PrimarySimpleExpr(id, id2, exprList, 0);
 					
 				} else if (lexer.token == Token.NEW) {
 					next();
-					return new ObjectCreation(id);
+					return new ObjectCreation(id, 0);
 					
 				} else {
 					this.error("Id or IdColon expected");
 				}
 			} else {
-				return new PrimarySimpleExpr(id);
+				return new PrimarySimpleExpr(id, 0);
 			}
 			
 		} else if (lexer.token == Token.SUPER) {
@@ -860,7 +878,7 @@ public class Compiler {
 					
 					String id = lexer.getStringValue();
 					next();
-					return new PrimarySuperExpr(id);
+					return new PrimarySuperExpr(id, 0);
 					
 				} else if (lexer.token == Token.IDCOLON) {
 					String id = lexer.getStringValue();
@@ -868,7 +886,7 @@ public class Compiler {
 					
 					ArrayList<Expr> exprList = exprList();
 					
-					return new PrimarySuperExpr(id, exprList);
+					return new PrimarySuperExpr(id, exprList, 0);
 					
 				} else {
 					this.error("Id or IdColon expected");
@@ -892,7 +910,7 @@ public class Compiler {
 							
 							String id2 = lexer.getStringValue();
 							next();
-							return new PrimarySelfExpr(id, id2);
+							return new PrimarySelfExpr(id, id2, 0);
 							
 						} else if (lexer.token == Token.IDCOLON) {
 							String id2 = lexer.getStringValue();
@@ -900,14 +918,14 @@ public class Compiler {
 							
 							ArrayList<Expr> exprList = exprList();
 							
-							return new PrimarySelfExpr(id, id2, exprList);
+							return new PrimarySelfExpr(id, id2, exprList, 0);
 							
 						} else {
 							this.error("Id or IdColon expected");
 						}
 					}
 					
-					return new PrimarySelfExpr(id);
+					return new PrimarySelfExpr(id, 0);
 					
 				} else if (lexer.token == Token.IDCOLON) {
 					String id = lexer.getStringValue();
@@ -915,13 +933,13 @@ public class Compiler {
 					
 					ArrayList<Expr> exprList = exprList();
 					
-					return new PrimarySelfExpr(id, exprList);
+					return new PrimarySelfExpr(id, exprList, 0);
 					
 				} else {
 					this.error("Id or IdColon expected");
 				}
 			} else {
-				return new PrimarySelfExpr("self");
+				return new PrimarySelfExpr("self", 0);
 			}		
 		}
 		
@@ -935,10 +953,10 @@ public class Compiler {
 		
 		if (lexer.getStringValue().equals("readInt")) {
 			next();
-			return new ReadExpr(Type.intType);
+			return new ReadExpr(Type.intType, 0);
 		} else if (lexer.getStringValue().equals("readString")) {
 			next();
-			return new ReadExpr(Type.stringType);
+			return new ReadExpr(Type.stringType, 0);
 		} else {
 			this.error("Command 'In.' without arguments");
 		}
@@ -1089,7 +1107,7 @@ public class Compiler {
 		// Method intValue returns that value as an value of type int.
 		int value = lexer.getNumberValue();
 		lexer.nextToken();
-		return new LiteralInt(value);
+		return new LiteralInt(value, 0);
 	}
 
 	private static boolean startExpr(Token token) {

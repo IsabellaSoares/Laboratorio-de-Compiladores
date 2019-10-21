@@ -7,7 +7,8 @@ package ast;
 public class ObjectCreation extends Factor {
 	String id;
 	
-	public ObjectCreation (String id) {
+	public ObjectCreation (String id, int type) {
+		super(type);
 		this.id = id;
 	}
 

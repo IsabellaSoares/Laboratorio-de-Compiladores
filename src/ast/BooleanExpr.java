@@ -11,7 +11,8 @@ public class BooleanExpr extends Factor {
 	private Token operator;
 	private Factor factor;
 	
-	public BooleanExpr (Token operator, Factor factor) {
+	public BooleanExpr (Token operator, Factor factor, int type) {
+		super(type);
 		this.operator = operator;
 		this.factor = factor;
 	}
