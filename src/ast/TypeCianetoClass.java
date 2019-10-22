@@ -24,6 +24,10 @@ public class TypeCianetoClass extends Type {
    public String getCname() {
       return getName();
    }
+   
+   public MemberList getMemberList () {
+	   return this.memberList;
+   }
 
    private boolean openClass = false;
    private String name;

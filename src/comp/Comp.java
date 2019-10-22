@@ -191,7 +191,7 @@ public class Comp {
 
 		}
 
-		if ( this.genJava ) {
+		if ( true ) {
 			if ( this.filesWithCorrectlyGeneratedJavaClasses != null &&
 					this.filesWithWrongGeneratedJavaClasses != null &&
 					this.filesWithJavaClassesWithCompilationErrors != null &&

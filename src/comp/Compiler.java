@@ -58,10 +58,22 @@ public class Compiler {
 					}
 				}*/
 			}
-			catch ( RuntimeException e ) {
+			/*catch ( RuntimeException e ) {
 				e.printStackTrace();
 				thereWasAnError = true;
-			}
+			}*/
+			catch ( Throwable e ) {
+	            e.printStackTrace();
+	            thereWasAnError = true;
+	            // adicione as linhas abaixo
+	            try {
+	                error("Exception '" + e.getClass().getName() + "' was thrown and not caught. "
+	                        + "Its message is '" + e.getMessage() + "'");
+	            }
+	            catch( CompilerError ee) {
+	            }
+	            return program; // add this line
+	        }
 
 		}
 		
@@ -255,7 +267,7 @@ public class Compiler {
 		
 		lexer.nextToken();
 		
-		Variable method = new Variable(Type.undefinedType, null);
+		Variable method = new Variable(Type.nullType, null);
 		ArrayList<Variable> paramList = new ArrayList<>();
 		ArrayList<Statement> statList = new ArrayList<>();
 		
@@ -1013,7 +1025,7 @@ public class Compiler {
 			next();
 		}
 		else if ( lexer.token == Token.ID ) {
-			type = Type.undefinedType;
+			type = Type.nullType;
 			next();
 		}
 		else {
