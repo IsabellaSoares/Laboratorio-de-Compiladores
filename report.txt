@@ -1,0 +1,32 @@
+Relatório do Compilador
+
+Resumo
+_________________________________________________________________________
+MI:  0             I: 0              PI: 0             Exc: 0
+ SSE: 0/1/0%       
+
+MI = muito importante, I = importante, PI = pouco importante, Exc = exceções
+Dev = deveria ter sinalizado, LE = sinalizou linha errada, SSE = sinalizado sem erro
+_________________________________________________________________________
+
+Número de testes 'Muito importantes' em que o compilador falhou: 0
+Número de testes 'Importantes' em que o compilador falhou: 0
+Número de testes 'Pouco importantes' em que o compilador falhou: 0
+
+O compilador obteve sucesso em testar alguns aspectos (construções) de Cianeto. A lista abaixo consiste de entradas da forma 
+    aspecto
+        listas de nomes de arquivos
+Os nomes de arquivos listados são aqueles que testam 'aspecto' e nos quais o compilador obteve sucesso e gerou código correto (se opção -genjava ou -genc foi usada).
+Os testes são categorizados por importância: 'Muito importante', 'Importante', 'pouco importante'
+
+Testes 'Muito importantes' em que o compilador acertou:
+    supertypeAssignSelf
+        C:\Users\marce\Downloads\UFSCar\Laboratorio_de_compiladores\tudo\student-made-tests\student-made-tests\OK_SEM\OK_SEM15.ci
+
+
+_________________________________________________________________________
+
+0 erros foram sinalizados em 1 arquivos sem erro (0%)
+_________________________________________________________________________
+O compilador não sinalizou nenhum erro que não deveria ter sinalizado
+Para o caso de teste que você utilizou, o compilador está correto

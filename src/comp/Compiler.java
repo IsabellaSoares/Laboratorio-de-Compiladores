@@ -7,6 +7,7 @@ package comp;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import ast.*;
 import lexer.Lexer;
@@ -208,25 +209,27 @@ public class Compiler {
 			lexer.nextToken();
 		}
 
-		MemberList memberList = memberList();
+		List<MemberList> list = memberList();
 		
-		if (memberList == null) this.error("Class member OR 'end' expected");
+		if (list == null || list.isEmpty()) this.error("Class member OR 'end' expected");
 		
 		if (lexer.token != Token.END) error("'end' expected");
 		
 		lexer.nextToken();
 		
-		TypeCianetoClass c = new TypeCianetoClass(openClass, className, superclassName, superClass, memberList);
+		TypeCianetoClass c = new TypeCianetoClass(openClass, className, superclassName, superClass, list);
 		hashClasses.put(className, c);
 		return c;
 	}
 
-	private MemberList memberList() {
+	private List<MemberList> memberList() {
 		
-		Qualifier qualifier = null;
-		Member member = null;
+		List<MemberList> list = new ArrayList<MemberList>();
 		
-		while ( true ) {			
+		while ( true ) { 
+			Qualifier qualifier = null;
+			Member member = null;
+			
 			if (lexer.token != Token.END &&
 				lexer.token != Token.VAR &&
 				lexer.token != Token.FUNC) {
@@ -243,17 +246,20 @@ public class Compiler {
 			} else {
 				break;
 			}
+			
+			if (qualifier == null && member == null)
+				this.error("'public', 'private' or '}' expected");
+			
+			//if (member == null) return null;
+			
+			MemberList memberList = new MemberList(qualifier, member);
+			list.add(memberList);
 		}
-		
-		if (qualifier == null && member == null)
-			this.error("'public', 'private' or '}' expected");
-		
-		if (member == null) return null;
 		
 		if (lexer.token != Token.END && lexer.token != Token.LEFTCURBRACKET)
 			this.error("'public', 'private', '}' or 'end' expected (line " + lexer.getLineNumber() + ")");
 				
-		return new MemberList(qualifier, member);
+		return list;
 	}
 
 	private void error(String msg) {
