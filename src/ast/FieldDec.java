@@ -20,6 +20,10 @@ public class FieldDec extends Member {
         this.idList = idList;
     }
     
+    public Type getType() {
+		return type;
+	}
+    
     public void genJava( PW pw ) {
 		pw.println("TESTE");
 	};

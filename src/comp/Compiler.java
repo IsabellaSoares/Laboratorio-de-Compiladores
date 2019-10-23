@@ -225,11 +225,12 @@ public class Compiler {
 	private List<MemberList> memberList() {
 		
 		List<MemberList> list = new ArrayList<MemberList>();
+		hashLocalVariables.clear();
 		
 		while ( true ) { 
 			Qualifier qualifier = null;
 			Member member = null;
-			
+			boolean isVar = false;
 			if (lexer.token != Token.END &&
 				lexer.token != Token.VAR &&
 				lexer.token != Token.FUNC) {
@@ -241,6 +242,7 @@ public class Compiler {
 					this.error("Attempt to declare public instance variable in line " + lexer.getLineNumber());
 								
 				member = fieldDec();
+				isVar = true;
 			} else if ( lexer.token == Token.FUNC ) {
 				member = methodDec();				
 			} else {
@@ -1020,8 +1022,12 @@ public class Compiler {
 		
 		if (lexer.token == Token.DOT)
 			this.error("Invalid Character: '" + lexer.token.toString() + "'");
-				
-		return new FieldDec(type, idList);
+
+		FieldDec field = new FieldDec(type, idList);
+		for(String id : idList) {
+			hashLocalVariables.put(id, field);
+		}
+		return field;
 	}
 
 	private Type type() {
@@ -1160,5 +1166,6 @@ public class Compiler {
 	private boolean returnRequired = false;
 	
 	private HashMap<String, TypeCianetoClass> hashClasses = new HashMap<String, TypeCianetoClass>();
+	private HashMap<String, FieldDec> hashLocalVariables = new HashMap<String, FieldDec>();
 
 }
