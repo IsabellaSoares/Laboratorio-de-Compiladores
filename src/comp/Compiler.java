@@ -6,6 +6,8 @@ package comp;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
+
 import ast.*;
 import lexer.Lexer;
 import lexer.Token;
@@ -176,6 +178,7 @@ public class Compiler {
 
 	private TypeCianetoClass classDec() {
 		boolean openClass = false;
+		TypeCianetoClass superClass = null;
 		
 		if ( lexer.token == Token.ID && lexer.getStringValue().equals("open") ) {
 			openClass = true;
@@ -199,6 +202,9 @@ public class Compiler {
 			if ( lexer.token != Token.ID ) error("Identifier expected");
 			
 			superclassName = lexer.getStringValue();
+			
+			superClass = hashClasses.get(superclassName);
+			
 			lexer.nextToken();
 		}
 
@@ -210,7 +216,9 @@ public class Compiler {
 		
 		lexer.nextToken();
 		
-		return new TypeCianetoClass(openClass, className, superclassName, memberList);
+		TypeCianetoClass c = new TypeCianetoClass(openClass, className, superclassName, superClass, memberList);
+		hashClasses.put(className, c);
+		return c;
 	}
 
 	private MemberList memberList() {
@@ -1145,8 +1153,6 @@ public class Compiler {
 	
 	private boolean returnRequired = false;
 	
-	private void teste() {
-		System.out.println("somente teste para commit");
-	}
+	private HashMap<String, TypeCianetoClass> hashClasses = new HashMap<String, TypeCianetoClass>();
 
 }

@@ -19,6 +19,15 @@ public class TypeCianetoClass extends Type {
 		this.superName = superName;
 		this.memberList = memberList;
 	}
+	
+	public TypeCianetoClass(boolean openClass, String name, String superName, TypeCianetoClass superclass, MemberList memberList) {
+	    super(name);
+		this.openClass = openClass;
+		this.name = name;
+		this.superName = superName;
+		this.superclass = superclass;
+		this.memberList = memberList;
+	}
 
    @Override
    public String getCname() {
