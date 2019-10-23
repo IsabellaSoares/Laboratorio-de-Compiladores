@@ -23,7 +23,7 @@ class Program
         n = 10;
         var Boolean b;
         b = false;
-        repeat n = n + 1; until ( false );
+        repeat n = n + 1; until true;
         assert n == 11, "'repeat-until' statement with 'false' as expression'";
         n = 10;
         var Int sum;

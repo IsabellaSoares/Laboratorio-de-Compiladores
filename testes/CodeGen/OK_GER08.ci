@@ -27,7 +27,7 @@ class A
         Out.print: n, " ";
     }   
    
-    func m3: Int n, Int p, String q, Int r, boolean falseBool {
+    func m3: Int n, Int p, String q, Int r, Boolean falseBool {
         Out.print: 3, " ";
         Out.print: n, " ";
         Out.print: p, " ";

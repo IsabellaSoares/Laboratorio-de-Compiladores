@@ -21,6 +21,18 @@ public class MethodDec extends Member {
 			pw.print("void " + this.method.getName());
 		} else {
 			pw.print(this.method.getType().getName() + " " + this.method.getName());
-		}		
+		}
+		
+		pw.println(" () {");
+		
+		if (statList != null) {
+			pw.add();
+			for (int i = 0; i < statList.size(); i++) {
+				statList.get(i).genJava(pw);							
+			}
+			pw.sub();
+		}
+		
+		pw.printlnIdent("}");
 	};
 }

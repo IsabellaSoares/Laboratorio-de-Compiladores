@@ -9,12 +9,15 @@ public class OK_GER01 {
    }
 
    private static class A {
-      public void m() {
+      public void m () {
+         System.out.print();
       }
    }
 
    private static class Program {
-      public void run() {
+      public void run () {
+         A a;
+         System.out.println("7 0 1 2 3 4 5 6 7");
       }
    }
 

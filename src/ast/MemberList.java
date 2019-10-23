@@ -22,4 +22,9 @@ public class MemberList {
 	public Member getMember () {
 		return this.member;
 	}
+	
+	public void genJava(PW pw) {
+		pw.printIdent(qualifier.getToken1() + " ");
+		member.genJava(pw);
+	}
 }

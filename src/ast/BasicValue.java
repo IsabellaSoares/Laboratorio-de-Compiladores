@@ -29,7 +29,15 @@ public class BasicValue extends Factor {
 		this.type = Type.booleanType;
 	}
 	
-	public void genJava(PW pw, boolean putParenthesis) {};
+	public void genJava(PW pw, boolean putParenthesis) {
+		if (type == Type.booleanType) {
+			pw.print(Boolean.toString(boolValue));
+		} else if (type == Type.intType) {
+			pw.print(Integer.toString(intValue));
+		} else {
+			pw.print("\"" + stringValue + "\"");
+		}
+	};
 	
 	public Type getType() {
 		return this.type;

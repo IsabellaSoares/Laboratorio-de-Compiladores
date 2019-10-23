@@ -17,5 +17,15 @@ public class LocalDec extends Statement {
 		this.expr = expr;
 	}
 	
-	public void genJava(PW pw) {};
+	public void genJava(PW pw) {
+		pw.printIdent(this.type.getName());
+		
+		if (idList != null) {
+			for (int i = 0; i < idList.size(); i++) {
+				pw.print(" " + idList.get(i).getName());
+			}
+			
+			pw.println(";");
+		}
+	};
 }

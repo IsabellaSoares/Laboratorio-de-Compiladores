@@ -441,7 +441,7 @@ public class Compiler {
 	private LocalDec localDec() {
 		next();
 		
-		Type type = Type.undefinedType;
+		Type type = Type.undefinedType;		
 		type = type();
 		
 		check(Token.ID, "Identifier expected");
@@ -595,14 +595,14 @@ public class Compiler {
 		int lineNumber = lexer.getLineNumber();
 		next();
 		
-		ArrayList<Expr> exprList = exprList();
+		ArrayList<Expr> exprList = exprList();		
 		
 		if (exprList == null) {
 			this.error("Command 'Out." + printName + "' without arguments");
 		}
 		
 		if (lexer.token != Token.SEMICOLON) {
-			System.out.println("linha: " + lineNumber);
+			//System.out.println("linha: " + lineNumber);
 			int line = lexer.getLineNumber();
 			lexer.setLineNumber(lineNumber);
 			this.error("';' expected");
@@ -653,8 +653,8 @@ public class Compiler {
 				this.error("Expression expected OR Unknown sequence of symbols");
 			
 			if(left!=null && right!=null) {
-				System.out.println("left type: " + left.getType());
-				System.out.println("right type: " + right.getType());
+				//System.out.println("left type: " + left.getType());
+				//System.out.println("right type: " + right.getType());
 			}
 			
 			left = new CompositeExpr(left, op, right, 0);
@@ -831,7 +831,7 @@ public class Compiler {
 		
 		//check(Token.SEMICOLON, "';' expected");
 		if ( lexer.token != Token.SEMICOLON ) {
-			System.out.println("linha: " + lineNumber);
+			//System.out.println("linha: " + lineNumber);
 			int line = lexer.getLineNumber();
 			lexer.setLineNumber(lineNumber);
 			error("';' expected");
@@ -981,7 +981,8 @@ public class Compiler {
 		
 		ArrayList<String> idList = new ArrayList<>();
 		Type type = Type.undefinedType;
-		type = type();
+		type.setName(lexer.getStringValue());
+		type = type();		
 		
 		if (type == null) 
 			error("Type expected");
@@ -1026,6 +1027,7 @@ public class Compiler {
 		}
 		else if ( lexer.token == Token.ID ) {
 			type = Type.nullType;
+			type.setName(lexer.getStringValue());
 			next();
 		}
 		else {

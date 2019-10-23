@@ -9,22 +9,25 @@ public class OK_GER16 {
    }
 
    private static class A {
-      public void init() {
+      public void init () {
       }
    }
 
    private static class B {
-      override void print() {
+      override void print () {
       }
    }
 
    private static class C {
-      override int get_A() {
+      override int get_A () {
       }
    }
 
    private static class Program {
-      public void run() {
+      public void run () {
+         NullType
+         NullType
+         NullType
       }
    }
 

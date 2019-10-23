@@ -28,6 +28,19 @@ public class TypeCianetoClass extends Type {
    public MemberList getMemberList () {
 	   return this.memberList;
    }
+   
+   public void genJava (PW pw) {
+	   pw.printlnIdent("private static class " + this.getCname() + " {");
+		
+		if (memberList != null) {
+			pw.add();			
+			memberList.genJava(pw);									
+			pw.sub();
+		}
+		
+		pw.printlnIdent("}");
+		pw.println();
+   }
 
    private boolean openClass = false;
    private String name;

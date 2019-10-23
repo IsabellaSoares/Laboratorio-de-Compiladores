@@ -12,7 +12,7 @@ public class LiteralString extends Expr {
     }
     
     public void genJava( PW pw, boolean putParenthesis ) {
-        pw.print(literalString);
+        pw.print(literalString + "literalstring");
     }
 
     

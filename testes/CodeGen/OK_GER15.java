@@ -9,17 +9,17 @@ public class OK_GER15 {
    }
 
    private static class A {
-      private void s() {
+      private void s () {
       }
    }
 
    private static class B {
-      override void s() {
+      override void s () {
       }
    }
 
    private static class C {
-      override void s() {
+      override void s () {
       }
    }
 

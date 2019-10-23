@@ -14,5 +14,20 @@ public class WriteStat extends Statement {
 		this.printName = printName;
 	}
 	
-	public void genJava( PW pw ) {};
+	public void genJava( PW pw ) {
+		if (printName.equals("println:")) {
+			pw.printIdent("System.out.println(");
+			
+			if (expr != null) {
+				for (int i = 0; i < expr.size(); i++) {
+					System.out.println(expr.get(i));
+					expr.get(i).genJava(pw, false);
+				}
+			}
+			
+			pw.println(");");
+		} else {
+			pw.printlnIdent("System.out.print();");
+		}		
+	};
 }

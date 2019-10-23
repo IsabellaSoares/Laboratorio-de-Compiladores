@@ -22,7 +22,10 @@ public class CompositeSignalFactor extends SignalFactor {
 
 	@Override
 	public void genJava(PW pw, boolean putParenthesis) {
-		// TODO Auto-generated method stub
-		
+		if (operator != null) {
+			pw.print(operator.toString());
+		}
+		//pw.print("eu sou um teste");
+		factor.genJava(pw);
 	};
 }

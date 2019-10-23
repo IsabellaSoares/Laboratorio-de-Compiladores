@@ -1,123 +1,44 @@
-Relatório do Compilador
+Relat�rio do Compilador
 
 Resumo
 _________________________________________________________________________
 MI:  0             I: 0              PI: 0             Exc: 0
- SSE: 0/18/0%      
+ SSE: 0/1/0%       
 
-MI = muito importante, I = importante, PI = pouco importante, Exc = exceções
+MI = muito importante, I = importante, PI = pouco importante, Exc = exce��es
 Dev = deveria ter sinalizado, LE = sinalizou linha errada, SSE = sinalizado sem erro
 _________________________________________________________________________
 
-Número de testes 'Muito importantes' em que o compilador falhou: 0
-Número de testes 'Importantes' em que o compilador falhou: 0
-Número de testes 'Pouco importantes' em que o compilador falhou: 0
+N�mero de testes 'Muito importantes' em que o compilador falhou: 0
+N�mero de testes 'Importantes' em que o compilador falhou: 0
+N�mero de testes 'Pouco importantes' em que o compilador falhou: 0
 
-O compilador obteve sucesso em testar alguns aspectos (construções) de Cianeto. A lista abaixo consiste de entradas da forma 
+O compilador obteve sucesso em testar alguns aspectos (constru��es) de Cianeto. A lista abaixo consiste de entradas da forma 
     aspecto
         listas de nomes de arquivos
-Os nomes de arquivos listados são aqueles que testam 'aspecto' e nos quais o compilador obteve sucesso e gerou código correto (se opção -genjava ou -genc foi usada).
-Os testes são categorizados por importância: 'Muito importante', 'Importante', 'pouco importante'
-
-Testes 'Muito importantes' em que o compilador acertou:
-    inheritance
-        OK_GER16.ci
-
-    polymorphism
-        OK_GER16.ci
-
-    messageToself
-        OK_GER11.ci
-
-    fieldAccess
-        OK_GER10.ci
-        OK_GER14.ci
-
-    messagePassingPrivateMethod
-        OK_GER15.ci
-
-    super
-        OK_GER12.ci
-        OK_GER09.ci
-
-    self
-        OK_GER09.ci
-
-
-Testes 'importantes' em que o compilador acertou:
-    parameterPassing
-        OK_GER08.ci
-
-    privateMethod
-        OK_GER15.ci
-
-    privateMethodRedefinedAsPublic
-        OK_GER13.ci
-
-    redefinedField
-        OK_GER14.ci
-
+Os nomes de arquivos listados s�o aqueles que testam 'aspecto' e nos quais o compilador obteve sucesso e gerou c�digo correto (se op��o -genjava ou -genc foi usada).
+Os testes s�o categorizados por import�ncia: 'Muito importante', 'Importante', 'pouco importante'
 
 Testes 'pouco importantes' em que o compilador acertou
     comparisonOperators
-        OK_GER01.ci
-
-    arithmeticOperators
-        OK_GER06.ci
-        OK_GER02.ci
-
-    runNotFirstMethodOfProgram
-        OK_GER21.ci
-
-    repeatUntil
-        OK_GER22.ci
-
-    while
-        OK_GER04.ci
-
-    logicalOperators
-        OK_GER03.ci
-
-    zero
-        OK_GER07.ci
-
-    readInt
-        OK_GER05.ci
+        testes/CodeGen/OK_GER01.ci
 
     if
-        OK_GER01.ci
-        OK_GER03.ci
+        testes/CodeGen/OK_GER01.ci
 
 
 _________________________________________________________________________
 
-0 erros foram sinalizados em 18 arquivos sem erro (0%)
+0 erros foram sinalizados em 1 arquivos sem erro (0%)
 _________________________________________________________________________
-O compilador não sinalizou nenhum erro que não deveria ter sinalizado
-Para os casos de teste que você utilizou, o compilador está correto
+O compilador n�o sinalizou nenhum erro que n�o deveria ter sinalizado
+Para o caso de teste que voc� utilizou, o compilador est� correto
 
 List of Java files with compilation errors: 
-   testes/CodeGen/OK_GER16.java
+   testes/CodeGen/OK_GER01.java
 
 List of files with correct Java code: 
-   testes/CodeGen/OK_GER02.java
-   testes/CodeGen/OK_GER01.java
-   testes/CodeGen/OK_GER22.java
 
 List of files Java code that compiles but was generated incorrectly: 
 
 The compiler could not create the following .java files:
-   testes/CodeGen/OK_GER11.java
-   testes/CodeGen/OK_GER06.java
-   testes/CodeGen/OK_GER15.java
-   testes/CodeGen/OK_GER08.java
-   testes/CodeGen/OK_GER12.java
-   testes/CodeGen/OK_GER07.java
-   testes/CodeGen/OK_GER21.java
-   testes/CodeGen/OK_GER04.java
-   testes/CodeGen/OK_GER13.java
-   testes/CodeGen/OK_GER03.java
-   testes/CodeGen/OK_GER09.java
-   testes/CodeGen/OK_GER05.java
-   testes/CodeGen/OK_GER10.java
-   testes/CodeGen/OK_GER14.java

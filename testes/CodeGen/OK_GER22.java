@@ -9,7 +9,10 @@ public class OK_GER22 {
    }
 
    private static class Program {
-      public void run() {
+      public void run () {
+         int
+         boolean
+         int
       }
    }
 

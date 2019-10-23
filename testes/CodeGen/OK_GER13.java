@@ -9,12 +9,12 @@ public class OK_GER13 {
    }
 
    private static class A {
-      private void print() {
+      private void print () {
       }
    }
 
    private static class B {
-      override void print() {
+      override void print () {
       }
    }
 

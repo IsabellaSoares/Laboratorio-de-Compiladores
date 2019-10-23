@@ -32,23 +32,11 @@ public class Program {
 		pw.printlnIdent("new Program().run();");
 		pw.sub();
 		pw.printlnIdent("}");
-		pw.println();
+		pw.println();		
 		
 		if (this.classList != null) {
 			for (int i = 0; i < classList.size(); i++) {
-				pw.printlnIdent("private static class " + classList.get(i).getName() + " {");
-				
-				if (classList.get(i).getMemberList() != null) {
-					pw.add();
-					pw.printIdent(classList.get(i).getMemberList().getQualifier().toString() + " ");
-					classList.get(i).getMemberList().getMember().genJava(pw);
-					pw.println("() {");					
-					pw.printlnIdent("}");										
-					pw.sub();
-				}
-				
-				pw.printlnIdent("}");
-				pw.println();			
+				classList.get(i).genJava(pw);							
 			}
 		}
 		

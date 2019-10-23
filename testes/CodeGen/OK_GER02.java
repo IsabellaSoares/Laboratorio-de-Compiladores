@@ -9,12 +9,13 @@ public class OK_GER02 {
    }
 
    private static class A {
-      public void m() {
+      public void m () {
       }
    }
 
    private static class Program {
-      public void run() {
+      public void run () {
+         NullType
       }
    }
 
