@@ -20,14 +20,23 @@ public class WriteStat extends Statement {
 			
 			if (expr != null) {
 				for (int i = 0; i < expr.size(); i++) {
-					System.out.println(expr.get(i));
+					if (i > 0) pw.print(" + ");
 					expr.get(i).genJava(pw, false);
 				}
 			}
 			
 			pw.println(");");
 		} else {
-			pw.printlnIdent("System.out.print();");
+			pw.printIdent("System.out.print(");
+			
+			if (expr != null) {
+				for (int i = 0; i < expr.size(); i++) {
+					if (i > 0) pw.print(" + ");
+					expr.get(i).genJava(pw, false);					
+				}
+			}
+			
+			pw.println(");");
 		}		
 	};
 }

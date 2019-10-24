@@ -23,7 +23,10 @@ public class Program {
 		pw.println("Isabella Soares de Lima             726541");
 		pw.println("Marcelo Augusto Rodrigues da Silva  726565");
 		pw.println("*/");
-		pw.println();		
+		pw.println();
+		
+		pw.println("import java.util.*;");
+		pw.println();
 		
 		pw.println("public class " + this.mainJavaClassName + " {");
 		pw.add();

@@ -20,5 +20,20 @@ public class CompositeExpr extends Expr {
 		return null;
 	};
 	
-	public void genJava( PW pw, boolean putParenthesis ) {};
+	public void genJava( PW pw, boolean putParenthesis ) {
+		if (putParenthesis) 
+			pw.print("(");
+		
+		if (left != null) 
+			left.genJava(pw, putParenthesis);
+		
+		if (op != null) 
+			pw.print(" " + op.toString() + " ");
+		
+		if (right != null) 
+			right.genJava(pw, putParenthesis);
+		
+		if (putParenthesis) 
+			pw.print(")");
+	};
 }

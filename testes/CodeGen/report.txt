@@ -35,9 +35,9 @@ O compilador n�o sinalizou nenhum erro que n�o deveria ter sinalizado
 Para o caso de teste que voc� utilizou, o compilador est� correto
 
 List of Java files with compilation errors: 
-   testes/CodeGen/OK_GER01.java
 
 List of files with correct Java code: 
+   testes/CodeGen/OK_GER01.java
 
 List of files Java code that compiles but was generated incorrectly: 
 

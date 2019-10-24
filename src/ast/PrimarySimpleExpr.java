@@ -32,5 +32,21 @@ public class PrimarySimpleExpr extends PrimaryExpr {
 		return null;
 	};
 	
-	public void genJava( PW pw, boolean putParenthesis ) {};
+	public void genJava( PW pw, boolean putParenthesis ) {
+		if (id1 != null)
+			pw.printIdent(id1);
+		
+		if (id2 != null) {
+			pw.print("." + id2 + "(");
+			
+			if (exprList != null) {
+				for (var i = 0; i < exprList.size(); i++) {
+					exprList.get(i).genJava(pw);
+				}
+			}
+			
+			pw.print(")");
+		}
+			
+	};
 }

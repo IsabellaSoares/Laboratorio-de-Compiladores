@@ -28,7 +28,7 @@ public class MethodDec extends Member {
 		if (statList != null) {
 			pw.add();
 			for (int i = 0; i < statList.size(); i++) {
-				statList.get(i).genJava(pw);							
+				statList.get(i).genJava(pw);
 			}
 			pw.sub();
 		}
