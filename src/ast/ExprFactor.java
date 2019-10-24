@@ -17,6 +17,6 @@ public class ExprFactor extends Factor {
 	};
 	
 	public void genJava( PW pw, boolean putParenthesis ) {
-		expr.genJava(pw, putParenthesis);
+		expr.genJava(pw, true);
 	};
 }

@@ -22,7 +22,21 @@ public class CompositeSumSubExpr extends SumSubExpr {
 
 	@Override
 	public void genJava(PW pw, boolean putParenthesis) {
-		// TODO Auto-generated method stub
+		if (left != null) {
+			if (putParenthesis)
+				pw.print("(");
+			
+			left.genJava(pw, putParenthesis);
+		}
 		
+		if (operator != null) {
+			pw.print(" " + operator.toString() + " ");
+			
+			if (right != null)
+				right.genJava(pw, putParenthesis);
+		}
+		
+		if (putParenthesis)
+			pw.print(")");
 	}
 }

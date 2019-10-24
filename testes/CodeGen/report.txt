@@ -20,11 +20,8 @@ Os nomes de arquivos listados s�o aqueles que testam 'aspecto' e nos quais o c
 Os testes s�o categorizados por import�ncia: 'Muito importante', 'Importante', 'pouco importante'
 
 Testes 'pouco importantes' em que o compilador acertou
-    comparisonOperators
-        testes/CodeGen/OK_GER01.ci
-
-    if
-        testes/CodeGen/OK_GER01.ci
+    arithmeticOperators
+        testes/CodeGen/OK_GER02.ci
 
 
 _________________________________________________________________________
@@ -37,7 +34,7 @@ Para o caso de teste que voc� utilizou, o compilador est� correto
 List of Java files with compilation errors: 
 
 List of files with correct Java code: 
-   testes/CodeGen/OK_GER01.java
+   testes/CodeGen/OK_GER02.java
 
 List of files Java code that compiles but was generated incorrectly: 
 
