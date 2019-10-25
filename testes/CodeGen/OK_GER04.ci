@@ -16,7 +16,7 @@ class A
    func m {
       var Int i;
       var Boolean b;
-      Out.print: 6;
+      Out.print: 6, " ";
       i = 1;
       while i <= 5 {
          Out.print: i, " ";

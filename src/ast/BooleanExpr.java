@@ -22,7 +22,13 @@ public class BooleanExpr extends Factor {
 			pw.print("(");
 		
 		pw.print(operator.toString());
+		
+		int indent = pw.get();
+		pw.set(0);
+		
 		factor.genJava(pw, putParenthesis);
+		
+		pw.set(indent);
 		
 		if (putParenthesis)
 			pw.print(")");

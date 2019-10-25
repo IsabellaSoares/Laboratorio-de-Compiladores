@@ -27,6 +27,10 @@ public class PW {
 	public void set( int indent ) {
 		currentIndent = indent;
 	}
+	
+	public int get () {
+		return this.currentIndent;
+	}
 
 	public void printIdent( String s ) {
 		out.print( space.substring(0, currentIndent) );

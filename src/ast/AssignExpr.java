@@ -18,7 +18,13 @@ public class AssignExpr extends Statement {
 		
 		if (right != null) {
 			pw.print(" = ");
-			right.genJava(pw);			
+			
+			int indent = pw.get();
+			pw.set(0);
+			
+			right.genJava(pw);
+			
+			pw.set(indent);
 		}			
 		
 		pw.println(";");
