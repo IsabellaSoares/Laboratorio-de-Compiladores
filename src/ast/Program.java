@@ -30,12 +30,14 @@ public class Program {
 		
 		pw.println("public class " + this.mainJavaClassName + " {");
 		pw.add();
+		pw.printlnIdent("public static Scanner input = new Scanner(System.in);");
+		pw.println();
 		pw.printlnIdent("public static void main(String []args) {");
 		pw.add();
 		pw.printlnIdent("new Program().run();");
 		pw.sub();
 		pw.printlnIdent("}");
-		pw.println();		
+		pw.println();
 		
 		if (this.classList != null) {
 			for (int i = 0; i < classList.size(); i++) {

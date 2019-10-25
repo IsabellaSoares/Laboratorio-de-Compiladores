@@ -22,6 +22,9 @@ public class LocalDec extends Statement {
 		
 		if (idList != null) {
 			for (int i = 0; i < idList.size(); i++) {
+				if (i > 0)
+					pw.print(",");
+				
 				pw.print(" " + idList.get(i).getName());
 			}
 			
