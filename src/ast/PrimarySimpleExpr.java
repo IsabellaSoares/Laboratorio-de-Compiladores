@@ -40,7 +40,7 @@ public class PrimarySimpleExpr extends PrimaryExpr {
 			pw.print("." + id2 + "(");
 			
 			if (exprList != null) {
-				for (var i = 0; i < exprList.size(); i++) {
+				for (int i = 0; i < exprList.size(); i++) {
 					exprList.get(i).genJava(pw);
 				}
 			}

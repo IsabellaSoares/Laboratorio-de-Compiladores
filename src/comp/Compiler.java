@@ -889,10 +889,11 @@ public class Compiler {
 			
 			String id = lexer.getStringValue();
 			
+			TypeCianetoClass cianetoClass = hashClasses.get(id);
 			FieldDec fieldDec = hashGlobalVariables.get(id);
 			LocalDec localDec = hashLocalVariables.get(id);
 			Variable parameter = hashParameters.get(id);
-			if(fieldDec==null && localDec==null && parameter==null) {
+			if(cianetoClass==null && fieldDec==null && localDec==null && parameter==null) {
 				this.error(id+" was not declared");
 			}
 			
