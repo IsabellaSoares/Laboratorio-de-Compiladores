@@ -242,6 +242,9 @@ public class Compiler {
 								
 				member = fieldDec();
 			} else if ( lexer.token == Token.FUNC ) {
+				if (qualifier == null)
+					qualifier = new Qualifier(Token.PUBLIC, null, null, null);
+				
 				member = methodDec();				
 			} else {
 				break;

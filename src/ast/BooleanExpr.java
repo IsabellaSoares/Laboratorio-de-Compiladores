@@ -17,7 +17,22 @@ public class BooleanExpr extends Factor {
 		this.factor = factor;
 	}
 	
-	public void genJava(PW pw, boolean putParenthesis) {};
+	public void genJava(PW pw, boolean putParenthesis) {
+		if (putParenthesis)
+			pw.print("(");
+		
+		pw.print(operator.toString());
+		
+		int indent = pw.get();
+		pw.set(0);
+		
+		factor.genJava(pw, putParenthesis);
+		
+		pw.set(indent);
+		
+		if (putParenthesis)
+			pw.print(")");
+	};
 	
 	public Type getType() {
 		return this.type;

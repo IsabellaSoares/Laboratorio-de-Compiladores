@@ -16,5 +16,10 @@ public class ReadExpr extends PrimaryExpr {
 		return this.type;
 	};
 	
-	public void genJava( PW pw, boolean putParenthesis ) {};
+	public void genJava( PW pw, boolean putParenthesis ) {		
+		if (type == Type.intType)
+			pw.print("input.nextInt()");
+		else
+			pw.print("input.nextLine()");
+	};
 }

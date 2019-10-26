@@ -12,5 +12,21 @@ public class AssignExpr extends Statement {
 		this.right = right;
 	}
 	
-	public void genJava( PW pw ) {};
+	public void genJava( PW pw ) {
+		if (left != null)
+			left.genJava(pw);		
+		
+		if (right != null) {
+			pw.print(" = ");
+			
+			int indent = pw.get();
+			pw.set(0);
+			
+			right.genJava(pw);
+			
+			pw.set(indent);
+		}			
+		
+		pw.println(";");
+	};
 }

@@ -16,5 +16,29 @@ public class IfStat extends Statement {
 		this.elseState = elseState;
 	}
 	
-	public void genJava( PW pw ) {};
+	public void genJava( PW pw ) {
+		if (ifState != null) {
+			pw.println();
+			pw.printIdent("if ");
+			
+			if (expr != null)
+				expr.genJava(pw, true);
+			
+			pw.println(" {");
+			
+			pw.add();
+			
+			for (var i = 0; i < ifState.size(); i++) {
+				ifState.get(i).genJava(pw);
+			}
+			
+			pw.sub();
+			
+			pw.printlnIdent("}");
+		}
+		
+		if (elseState != null) {
+			
+		}
+	};
 }

@@ -14,5 +14,29 @@ public class WhileStat extends Statement {
 		this.statList = statList;
 	}
 	
-	public void genJava( PW pw ) {};
+	public void genJava( PW pw ) {
+		pw.printIdent("while (");
+		
+		int indent = pw.get();
+		pw.set(0);
+		
+		if (expr != null)
+			expr.genJava(pw);
+		
+		pw.println(") {");
+		
+		pw.set(indent);
+		
+		pw.add();
+		
+		if (statList != null) {
+			for (var i = 0; i < statList.size(); i++) {
+				statList.get(i).genJava(pw);
+			}
+		}
+		
+		pw.sub();
+		
+		pw.printlnIdent("}");
+	};
 }
