@@ -30,7 +30,7 @@ public class WhileStat extends Statement {
 		pw.add();
 		
 		if (statList != null) {
-			for (var i = 0; i < statList.size(); i++) {
+			for (int i = 0; i < statList.size(); i++) {
 				statList.get(i).genJava(pw);
 			}
 		}

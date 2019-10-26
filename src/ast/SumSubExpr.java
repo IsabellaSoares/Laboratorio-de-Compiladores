@@ -6,9 +6,9 @@ package ast;
 
 public abstract class SumSubExpr extends SimpleExpr {
 	
-	public SumSubExpr(int type) {
+	public SumSubExpr(Type type) {
 		super(type);
 	}
 	
-	public abstract Type getType();
+	/* public abstract Type getType(); */
 }

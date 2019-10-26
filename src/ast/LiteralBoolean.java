@@ -6,7 +6,7 @@ package ast;
 
 public class LiteralBoolean extends Expr {
 
-    public LiteralBoolean( boolean value , int type) {
+    public LiteralBoolean( boolean value , Type type) {
     	super(type);
         this.value = value;
     }
@@ -17,13 +17,12 @@ public class LiteralBoolean extends Expr {
     }
 
 
-    @Override
-	public Type getType() {
-        return Type.booleanType;
-    }
+	/*
+	 * @Override public Type getType() { return Type.booleanType; }
+	 */
 
-    public static LiteralBoolean True  = new LiteralBoolean(true, 0);
-    public static LiteralBoolean False = new LiteralBoolean(false, 0);
+    public static LiteralBoolean True  = new LiteralBoolean(true, Type.booleanType);
+    public static LiteralBoolean False = new LiteralBoolean(false, Type.booleanType);
 
     private boolean value;
 

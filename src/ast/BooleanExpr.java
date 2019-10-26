@@ -7,11 +7,10 @@ import lexer.Token;
 
 public class BooleanExpr extends Factor {
 	
-	private Type type;
 	private Token operator;
 	private Factor factor;
 	
-	public BooleanExpr (Token operator, Factor factor, int type) {
+	public BooleanExpr (Token operator, Factor factor, Type type) {
 		super(type);
 		this.operator = operator;
 		this.factor = factor;
@@ -34,7 +33,7 @@ public class BooleanExpr extends Factor {
 			pw.print(")");
 	};
 	
-	public Type getType() {
-		return this.type;
-	};
+	/*
+	 * public Type getType() { return this.type; };
+	 */
 }

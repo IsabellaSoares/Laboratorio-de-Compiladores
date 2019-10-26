@@ -7,14 +7,14 @@ package ast;
 public class ExprFactor extends Factor {
 	private Expr expr;
 	
-	public ExprFactor (Expr expr, int type) {
+	public ExprFactor (Expr expr, Type type) {
 		super(type);
 		this.expr = expr;
 	}
 	
-	public Type getType() {
-		return expr.getType();
-	};
+	/*
+	 * public Type getType() { return expr.getType(); };
+	 */
 	
 	public void genJava( PW pw, boolean putParenthesis ) {
 		expr.genJava(pw, true);

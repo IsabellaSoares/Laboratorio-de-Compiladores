@@ -9,16 +9,12 @@ public class CompositeExpr extends Expr {
 	private Expr left, right;
 	private Token op;
 	
-	public CompositeExpr (Expr left, Token op, Expr right, int type) {
+	public CompositeExpr (Expr left, Token op, Expr right, Type type) {
 		super(type);
 		this.left = left;
 		this.op = op;
 		this.right = right;
 	}
-	
-	public Type getType() {
-		return null;
-	};
 	
 	public void genJava( PW pw, boolean putParenthesis ) {
 		if (putParenthesis) 

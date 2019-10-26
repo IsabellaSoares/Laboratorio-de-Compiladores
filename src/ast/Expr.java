@@ -6,9 +6,9 @@ package ast;
 
 abstract public class Expr extends Statement {
     
-	private int type;
+	private Type type;
 	
-	public Expr(int type) {
+	public Expr(Type type) {
 		this.type = type;
 	}
 	
@@ -19,5 +19,7 @@ abstract public class Expr extends Statement {
 	}
 
       // new method: the type of the expression
-    abstract public Type getType();
+    public Type getType() {
+    	return type;
+    }
 }

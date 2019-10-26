@@ -28,7 +28,7 @@ public class IfStat extends Statement {
 			
 			pw.add();
 			
-			for (var i = 0; i < ifState.size(); i++) {
+			for (int i = 0; i < ifState.size(); i++) {
 				ifState.get(i).genJava(pw);
 			}
 			

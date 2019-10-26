@@ -6,7 +6,7 @@ package ast;
 
 public class LiteralString extends Expr {
     
-    public LiteralString( String literalString , int type) {
+    public LiteralString( String literalString , Type type) {
     	super(type);
         this.literalString = literalString;
     }
@@ -16,9 +16,9 @@ public class LiteralString extends Expr {
     }
 
     
-    public Type getType() {
-        return Type.stringType;
-    }
+	/*
+	 * public Type getType() { return Type.stringType; }
+	 */
     
     private String literalString;
 }

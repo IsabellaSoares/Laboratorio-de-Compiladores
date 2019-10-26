@@ -17,6 +17,10 @@ public class LocalDec extends Statement {
 		this.expr = expr;
 	}
 	
+	public Type getType() {
+		return type;
+	}
+	
 	public void genJava(PW pw) {
 		pw.printIdent(this.type.getName());
 		

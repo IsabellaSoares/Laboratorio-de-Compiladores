@@ -6,9 +6,9 @@ package ast;
 
 public abstract class SimpleExpr extends Expr {
 	
-	public SimpleExpr(int type) {
+	public SimpleExpr(Type type) {
 		super(type);
 	}
 	
-	public abstract Type getType();
+	/* public abstract Type getType(); */
 }

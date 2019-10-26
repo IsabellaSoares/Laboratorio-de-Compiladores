@@ -6,9 +6,9 @@ package ast;
 
 abstract public class SignalFactor extends Term {
 	
-	public SignalFactor(int type) {
+	public SignalFactor(Type type) {
 		super(type);
 	}
 	
-	abstract public Type getType();
+	/* abstract public Type getType(); */
 }

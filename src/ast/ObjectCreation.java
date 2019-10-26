@@ -7,16 +7,15 @@ package ast;
 public class ObjectCreation extends Factor {
 	String id;
 	
-	public ObjectCreation (String id, int type) {
+	public ObjectCreation (String id, Type type) {
 		super(type);
 		this.id = id;
 	}
 
-	@Override
-	public Type getType() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	/*
+	 * @Override public Type getType() { // TODO Auto-generated method stub return
+	 * null; }
+	 */
 
 	@Override
 	public void genJava(PW pw, boolean putParenthesis) {

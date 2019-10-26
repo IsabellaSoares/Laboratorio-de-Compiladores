@@ -7,14 +7,14 @@ package ast;
 public class ReadExpr extends PrimaryExpr {
 	private Type type;
 	
-	public ReadExpr (Type type, int t) {
-		super(t);
+	public ReadExpr (Type type) {
+		super(type);
 		this.type = type;
 	}
 	
-	public Type getType() {
-		return this.type;
-	};
+	/*
+	 * public Type getType() { return this.type; };
+	 */
 	
 	public void genJava( PW pw, boolean putParenthesis ) {		
 		if (type == Type.intType)
