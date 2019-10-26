@@ -225,12 +225,11 @@ public class Compiler {
 	private List<MemberList> memberList() {
 		
 		List<MemberList> list = new ArrayList<MemberList>();
-		hashLocalVariables.clear();
+		hashGlobalVariables.clear();
 		
 		while ( true ) { 
 			Qualifier qualifier = null;
 			Member member = null;
-			boolean isVar = false;
 			if (lexer.token != Token.END &&
 				lexer.token != Token.VAR &&
 				lexer.token != Token.FUNC) {
@@ -242,7 +241,6 @@ public class Compiler {
 					this.error("Attempt to declare public instance variable in line " + lexer.getLineNumber());
 								
 				member = fieldDec();
-				isVar = true;
 			} else if ( lexer.token == Token.FUNC ) {
 				member = methodDec();				
 			} else {
@@ -286,6 +284,8 @@ public class Compiler {
 		Variable method = new Variable(Type.nullType, null);
 		ArrayList<Variable> paramList = new ArrayList<>();
 		ArrayList<Statement> statList = new ArrayList<>();
+		hashParameters.clear();
+		hashLocalVariables.clear();
 		
 		if ( lexer.token == Token.ID ) {
 			method.setName(lexer.getStringValue());
@@ -352,9 +352,21 @@ public class Compiler {
 				this.error("Identifier expected");
 			}
 			
-			var.setName(lexer.getStringValue());
+			String name = lexer.getStringValue();
+			
+			LocalDec localDec = hashLocalVariables.get(name);
+			Variable parameter = hashParameters.get(name);
+			
+			if (localDec!=null) {
+				this.error(name+" is already declared as local variable");
+			} else if (parameter!=null) {
+				this.error(name+" is already declared as a parameter");
+			}
+			
+			var.setName(name);
 			next();
 			
+			hashParameters.put(name, var);
 			paramList.add(var);
 			
 			if (lexer.token == Token.COMMA) {
@@ -466,7 +478,10 @@ public class Compiler {
 		Expr expr = null;
 		
 		while ( lexer.token == Token.ID ) {
-			Variable var = new Variable(type, lexer.getStringValue());
+			String name = lexer.getStringValue();
+			checkVariable(name);
+			
+			Variable var = new Variable(type, name);
 			idList.add(var);
 			
 			next();
@@ -489,7 +504,11 @@ public class Compiler {
 			expr = expr();
 		}
 		
-		return new LocalDec(type, idList, expr);
+		LocalDec localDec = new LocalDec(type, idList, expr);
+		for(Variable var : idList) {
+			hashLocalVariables.put(var.getName(), localDec);
+		}
+		return localDec;
 	}
 
 	private RepeatStat repeatStat() {
@@ -866,6 +885,14 @@ public class Compiler {
 			}
 			
 			String id = lexer.getStringValue();
+			
+			FieldDec fieldDec = hashGlobalVariables.get(id);
+			LocalDec localDec = hashLocalVariables.get(id);
+			Variable parameter = hashParameters.get(id);
+			if(fieldDec==null && localDec==null && parameter==null) {
+				this.error(id+" was not declared");
+			}
+			
 			next();
 			
 			if (lexer.token == Token.DOT ) {
@@ -1007,7 +1034,9 @@ public class Compiler {
 			this.error("A field name was expected");
 		} else {
 			while ( lexer.token == Token.ID  ) {
-				idList.add(lexer.getStringValue());
+				String name = lexer.getStringValue();
+				checkVariable(name);
+				idList.add(name);
 				next();
 				
 				if ( lexer.token == Token.COMMA ) {
@@ -1025,7 +1054,7 @@ public class Compiler {
 
 		FieldDec field = new FieldDec(type, idList);
 		for(String id : idList) {
-			hashLocalVariables.put(id, field);
+			hashGlobalVariables.put(id, field);
 		}
 		return field;
 	}
@@ -1159,6 +1188,20 @@ public class Compiler {
 				|| token == Token.LE || token == Token.GE || token == Token.NEQ;
 	}
 
+	private void checkVariable(String identifier) {
+		FieldDec fieldDec = hashGlobalVariables.get(identifier);
+		LocalDec localDec = hashLocalVariables.get(identifier);
+		Variable parameter = hashParameters.get(identifier);
+		
+		if(fieldDec!=null) {
+			this.error(identifier+" is already declared as global variable");
+		} else if (localDec!=null) {
+			this.error(identifier+" is already declared as local variable");
+		} else if (parameter!=null) {
+			this.error(identifier+" is already declared as a parameter");
+		}
+	}
+	
 	private SymbolTable		symbolTable;
 	private Lexer			lexer;
 	private ErrorSignaller	signalError;
@@ -1166,6 +1209,8 @@ public class Compiler {
 	private boolean returnRequired = false;
 	
 	private HashMap<String, TypeCianetoClass> hashClasses = new HashMap<String, TypeCianetoClass>();
-	private HashMap<String, FieldDec> hashLocalVariables = new HashMap<String, FieldDec>();
+	private HashMap<String, FieldDec> hashGlobalVariables = new HashMap<String, FieldDec>();
+	private HashMap<String, LocalDec> hashLocalVariables = new HashMap<String, LocalDec>();
+	private HashMap<String, Variable> hashParameters = new HashMap<String, Variable>();
 
 }
