@@ -4,6 +4,8 @@ Marcelo Augusto Rodrigues da Silva  726565
 */
 package ast;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /*
@@ -30,6 +32,14 @@ public class TypeCianetoClass extends Type {
 		this.memberList = memberList;
 	}
 
+	public void setMethodList(HashMap<String, MethodDec> methodList) {
+		this.methodList.putAll(methodList);
+	}
+	
+	public MethodDec getMethod(String id) {
+		return methodList.get(id);
+	}
+	
    @Override
    public String getCname() {
       return getName();
@@ -55,6 +65,7 @@ public class TypeCianetoClass extends Type {
    private String superName;
    private List<MemberList> memberList;
    private TypeCianetoClass superclass;
+   private HashMap<String, MethodDec> methodList = new HashMap<String, MethodDec>();
    // private FieldList fieldList;
    // private MethodList publicMethodList, privateMethodList;
    // m�todos p�blicos get e set para obter e iniciar as vari�veis acima,

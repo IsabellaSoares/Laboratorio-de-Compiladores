@@ -6,7 +6,7 @@ package ast;
 
 public class LiteralInt extends Expr {
     
-    public LiteralInt( int value , int type) {
+    public LiteralInt( int value , Type type) {
     	super(type);
         this.value = value;
     }
@@ -18,9 +18,9 @@ public class LiteralInt extends Expr {
         pw.printIdent("" + value);
     }
     
-    public Type getType() {
-        return Type.intType;
-    }
+	/*
+	 * public Type getType() { return Type.intType; }
+	 */
     
     private int value;
 }

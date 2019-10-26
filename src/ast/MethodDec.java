@@ -16,6 +16,18 @@ public class MethodDec extends Member {
 		this.paramList = paramList;
 	}
 	
+	public String getMethodName() {
+		return method.getName();
+	}
+	
+	public Type getType() {
+		return method.getType();
+	}
+	
+	public ArrayList<Variable> getParamList() {
+		return paramList;
+	}
+	
 	public void genJava( PW pw ) {
 		if (this.method.getType().getCname().equals("NULL")) {
 			pw.print("void " + this.method.getName());

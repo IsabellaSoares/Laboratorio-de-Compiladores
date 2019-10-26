@@ -6,7 +6,7 @@ package ast;
 
 abstract public class PrimaryExpr extends Factor {
 	
-	public PrimaryExpr(int type) {
+	public PrimaryExpr(Type type) {
 		super(type);
 	}
 }

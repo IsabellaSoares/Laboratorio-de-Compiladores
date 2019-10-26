@@ -6,7 +6,7 @@ package ast;
 
 public class NullExpr extends Expr {
 	
-	public NullExpr(int type) {
+	public NullExpr(Type type) {
 		super(type);
 	}
 	
@@ -14,8 +14,7 @@ public class NullExpr extends Expr {
       pw.printIdent("NULL");
    }
    
-   public Type getType() {
-      //# corrija
-      return null;
-   }
+	/*
+	 * public Type getType() { //# corrija return null; }
+	 */
 }

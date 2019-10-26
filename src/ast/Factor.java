@@ -6,9 +6,9 @@ package ast;
 
 abstract public class Factor extends SignalFactor {
 	
-	public Factor(int type) {
+	public Factor(Type type) {
 		super(type);
 	}
 	
-	abstract public Type getType();
+	/* abstract public Type getType(); */
 }

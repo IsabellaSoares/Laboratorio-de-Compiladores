@@ -6,9 +6,9 @@ package ast;
 
 public abstract class Term extends SumSubExpr {
 	
-	public Term(int type) {
+	public Term(Type type) {
 		super(type);
 	}
 	
-	abstract public Type getType();
+	/* abstract public Type getType(); */
 }

@@ -9,16 +9,16 @@ public class CompositeTerm extends Term {
 	private Token operator;
 	private Expr left, right;
 	
-	public CompositeTerm (Expr left, Token operator, Expr right, int type) {
+	public CompositeTerm (Expr left, Token operator, Expr right, Type type) {
 		super(type);
 		this.operator = operator;
 		this.left = left;
 		this.right = right;
 	}
 	
-	public Type getType() {
-		return Type.undefinedType;
-	}
+	/*
+	 * public Type getType() { return Type.undefinedType; }
+	 */
 
 	@Override
 	public void genJava(PW pw, boolean putParenthesis) {
