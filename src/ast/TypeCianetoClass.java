@@ -37,7 +37,13 @@ public class TypeCianetoClass extends Type {
 	}
 	
 	public MethodDec getMethod(String id) {
-		return methodList.get(id);
+		MethodDec methodDec = methodList.get(id);
+		if(methodDec!=null) {
+			return methodDec;
+		} else if (superclass!=null) {
+			return superclass.getMethod(id);
+		}
+		return null;
 	}
 	
    @Override

@@ -179,7 +179,7 @@ public class Compiler {
 
 	private TypeCianetoClass classDec() {
 		boolean openClass = false;
-		TypeCianetoClass superClass = null;
+		superClass = null;
 		
 		if ( lexer.token == Token.ID && lexer.getStringValue().equals("open") ) {
 			openClass = true;
@@ -929,11 +929,18 @@ public class Compiler {
 					next();
 					
 					Type t1 = getTypeOfId(id);
-					Type t2 = getTypeOfId(id2);
-					if(!t1.getName().equals(t2.getName())) {
-						this.error("Type not equals");
+					
+					TypeCianetoClass cClass = hashClasses.get(t1.getName());
+					if(cClass==null) {
+						this.error("The class of "+t1.getName()+" is not declared");
 					}
-					return new PrimarySimpleExpr(id, id2, t1);
+					
+					MethodDec method = cClass.getMethod(id2);
+					if(method==null) {
+						this.error("method "+id2+" is not declared in "+t1.getName());
+					}
+					
+					return new PrimarySimpleExpr(id, id2, method.getType());
 					
 				} else if (lexer.token == Token.IDCOLON) {
 					String id2 = lexer.getStringValue();
@@ -965,8 +972,18 @@ public class Compiler {
 				if (lexer.token == Token.ID) {
 					
 					String id = lexer.getStringValue();
+					
+					if(superClass==null) {
+						this.error("cannot call super, the class "+currentClassName+" has not super class");
+					}
+					
+					MethodDec methodDec = superClass.getMethod(id);
+					if(methodDec==null) {
+						this.error(id+" is not declared");
+					}
+					
 					next();
-					return new PrimarySuperExpr(id, getTypeOfId(id));
+					return new PrimarySuperExpr(id, methodDec.getType());
 					
 				} else if (lexer.token == Token.IDCOLON) {
 					String id = lexer.getStringValue();
@@ -974,12 +991,16 @@ public class Compiler {
 					
 					ArrayList<Expr> exprList = exprList();
 					
-					Type t = getTypeOfId(id);
-					for(Expr expr : exprList) {
-						if(!t.getName().equals(expr.getType().getName())) {
-							this.error("Type not equals");
-						}
+					if(superClass==null) {
+						this.error("cannot call super, the class "+currentClassName+" has not super class");
 					}
+					
+					MethodDec methodDec = superClass.getMethod(id);
+					if(methodDec==null) {
+						this.error(id+" is not declared");
+					}
+					Type t = verifyArgumentsOfSendMessage(id, methodDec, exprList);
+					
 					return new PrimarySuperExpr(id, exprList, t);
 					
 				} else {
@@ -1018,26 +1039,31 @@ public class Compiler {
 							
 							ArrayList<Expr> exprList = exprList();
 							
-							Type t1 = getTypeOfId(id);
-							Type t2 = getTypeOfId(id2);
-							if(!t1.getName().equals(t2.getName())) {
-								this.error("Type not equals");
-							} else {
-								for(Expr expr : exprList) {
-									if(!t1.getName().equals(expr.getType().getName())) {
-										this.error("Type not equals");
-									}
-								}
-							}
+							Type t = verifySendMessage(id, id2, exprList);
 							
-							return new PrimarySelfExpr(id, id2, exprList, t1);
+							return new PrimarySelfExpr(id, id2, exprList, t);
 							
 						} else {
 							this.error("Id or IdColon expected");
 						}
 					}
 					
-					return new PrimarySelfExpr(id, getTypeOfId(id));
+					FieldDec fieldDec = hashGlobalVariables.get(id);
+					MethodDec methodDec = hashMethodsList.get(id);
+					if(methodDec==null && superClass!=null) {
+						methodDec = superClass.getMethod(id);
+					}
+					Type type = Type.undefinedType;
+					if(fieldDec==null && methodDec==null) {
+						this.error(id+" is not declared");
+					}
+					
+					if(fieldDec!=null) {
+						type = fieldDec.getType();
+					} else if (methodDec!=null) {
+						type = methodDec.getType();
+					}
+					return new PrimarySelfExpr(id, type);
 					
 				} else if (lexer.token == Token.IDCOLON) {
 					String id = lexer.getStringValue();
@@ -1045,12 +1071,7 @@ public class Compiler {
 					
 					ArrayList<Expr> exprList = exprList();
 					
-					Type t = getTypeOfId(id);
-					for(Expr expr : exprList) {
-						if(!t.getName().equals(expr.getType().getName())) {
-							this.error("Type not equals");
-						}
-					}
+					Type t = verifySendMessage("self", id, exprList);
 					
 					return new PrimarySelfExpr(id, exprList, t);
 					
@@ -1239,19 +1260,11 @@ public class Compiler {
 		return new LiteralInt(value, Type.intType);
 	}
 
-	private static boolean startExpr(Token token) {
 
-		return token == Token.FALSE || token == Token.TRUE
-				|| token == Token.NOT || token == Token.SELF
-				|| token == Token.LITERALINT || token == Token.SUPER
-				|| token == Token.LEFTPAR || token == Token.NULL
-				|| token == Token.ID || token == Token.LITERALSTRING;
-
-	}
 	
 	private static boolean relation (Token token) {
 		return token == Token.EQ || token == Token.LT || token == Token.GT
-				|| token == Token.LE || token == Token.GE || token == Token.NEQ;
+				|| token == Token.LE || token == Token.GE || token == Token.NEQ || token == Token.AND;
 	}
 
 	private void checkVariable(String identifier) {
@@ -1265,6 +1278,18 @@ public class Compiler {
 			this.error(identifier+" is already declared as local variable");
 		} else if (parameter!=null) {
 			this.error(identifier+" is already declared as a parameter");
+		}
+	}
+	
+	private boolean isVariable(String identifier) {
+		FieldDec fieldDec = hashGlobalVariables.get(identifier);
+		LocalDec localDec = hashLocalVariables.get(identifier);
+		Variable parameter = hashParameters.get(identifier);
+		
+		if(fieldDec!=null || localDec!=null || parameter!=null) {
+			return true;
+		} else {
+			return false;
 		}
 	}
 	
@@ -1298,32 +1323,59 @@ public class Compiler {
 	
 	private Type verifySendMessage(String variableName, String methodName, ArrayList<Expr> exprList) {
 		System.out.println(variableName+"."+methodName);
-		String className = "";
-		FieldDec fieldDec = hashGlobalVariables.get(variableName);
-		if(fieldDec==null) {
-			LocalDec localDec = hashLocalVariables.get(variableName);
-			if(localDec==null) {
-				Variable variable = hashParameters.get(variableName);
-				if(variable==null) {
-					this.error("erro ao procurar variavel");
+		
+		MethodDec method;
+		if(!variableName.equals("self")) {
+			String className = "";
+			FieldDec fieldDec = hashGlobalVariables.get(variableName);
+			if(fieldDec==null) {
+				LocalDec localDec = hashLocalVariables.get(variableName);
+				if(localDec==null) {
+					Variable variable = hashParameters.get(variableName);
+					if(variable==null) {
+						this.error("erro ao procurar variavel");
+					} else {
+						className = variable.getName();
+					}
 				} else {
-					className = variable.getName();
+					className = localDec.getType().getName();
 				}
 			} else {
-				className = localDec.getType().getName();
+				className = fieldDec.getType().getName();
 			}
+			
+			TypeCianetoClass cianetoClass = hashClasses.get(className);
+			if(cianetoClass==null) {
+				this.error("erro ao obter classe: " + className);
+			}
+			
+			method = cianetoClass.getMethod(methodName);
 		} else {
-			className = fieldDec.getType().getName();
+			method = hashMethodsList.get(methodName);
 		}
-		
-		TypeCianetoClass cianetoClass = hashClasses.get(className);
-		if(cianetoClass==null) {
-			this.error("erro ao obter classe: " + className);
-		}
-		
-		MethodDec method = cianetoClass.getMethod(methodName);
 		if(method==null) {
-			this.error("method not declared");
+			this.error("method "+methodName+" is not declared");
+		}
+		
+		ArrayList<Variable> paramList = method.getParamList();
+		int sizeParam = paramList.size();
+		int sizeExpr = exprList.size();
+		if(sizeParam!=sizeExpr) {
+			this.error("wrong amount of parameters");
+		}
+		for(int i=0; i<sizeParam; i++) {
+			Variable var = paramList.get(i);
+			Expr expr = exprList.get(i);
+			if(!var.getType().getName().equals(expr.getType().getName())) {
+				this.error("wrong type of parameter");
+			}
+		}
+		return method.getType();
+	}
+	
+	private Type verifyArgumentsOfSendMessage(String methodName, MethodDec method, ArrayList<Expr> exprList) {
+		if(method==null) {
+			this.error("method "+methodName+" is not declared");
 		}
 		
 		ArrayList<Variable> paramList = method.getParamList();
@@ -1354,5 +1406,6 @@ public class Compiler {
 	private HashMap<String, Variable> hashParameters = new HashMap<String, Variable>();
 	private HashMap<String, MethodDec> hashMethodsList = new HashMap<String, MethodDec>();
 	private String currentClassName = "";
+	private TypeCianetoClass superClass;
 
 }
