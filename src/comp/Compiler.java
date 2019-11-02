@@ -1373,6 +1373,8 @@ public class Compiler {
 		return method.getType();
 	}
 	
+	private void funcaoPraTestarCommit() {}
+	
 	private Type verifyArgumentsOfSendMessage(String methodName, MethodDec method, ArrayList<Expr> exprList) {
 		if(method==null) {
 			this.error("method "+methodName+" is not declared");
