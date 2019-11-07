@@ -12,6 +12,7 @@ import java.util.List;
 import ast.*;
 import lexer.Lexer;
 import lexer.Token;
+import semanticchecking.SemanticChecking;
 
 public class Compiler {
 
@@ -179,7 +180,6 @@ public class Compiler {
 
 	private TypeCianetoClass classDec() {
 		boolean openClass = false;
-		superClass = null;
 		
 		if ( lexer.token == Token.ID && lexer.getStringValue().equals("open") ) {
 			openClass = true;
@@ -193,7 +193,7 @@ public class Compiler {
 		if ( lexer.token != Token.ID ) error("Identifier expected");
 		
 		String className = lexer.getStringValue();
-		currentClassName = className;
+		semanticChecking.setCurrentClassName(className);
 		lexer.nextToken();
 		
 		String superclassName = "";
@@ -204,31 +204,33 @@ public class Compiler {
 			if ( lexer.token != Token.ID ) error("Identifier expected");
 			
 			superclassName = lexer.getStringValue();
-			
-			superClass = hashClasses.get(superclassName);
-			
+		
+			semanticChecking.setSuperClass(semanticChecking.getTypeCianetoClass(superclassName));
 			lexer.nextToken();
 		}
 
-		hashMethodsList.clear();
-		List<MemberList> list = memberList();
-		
-		if (list == null || list.isEmpty()) this.error("Class member OR 'end' expected");
-		
-		if (lexer.token != Token.END) error("'end' expected");
+		List<MemberList> list = new ArrayList<MemberList>();
+		if (lexer.token != Token.END) {
+			semanticChecking.clearHashMethodList();
+			list = memberList();
+			
+			if (list == null || list.isEmpty()) this.error("Class member OR 'end' expected");
+			
+			if (lexer.token != Token.END) error("'end' expected");
+		}
 		
 		lexer.nextToken();
 		
-		TypeCianetoClass c = new TypeCianetoClass(openClass, className, superclassName, superClass, list);
-		c.setMethodList(hashMethodsList);
-		hashClasses.put(className, c);
+		TypeCianetoClass c = new TypeCianetoClass(openClass, className, superclassName, semanticChecking.getSuperClass(), list);
+		c.setMethodList(semanticChecking.getHashMethodsList());
+		semanticChecking.putInHashClasses(className, c);
 		return c;
 	}
 
 	private List<MemberList> memberList() {
 		
 		List<MemberList> list = new ArrayList<MemberList>();
-		hashGlobalVariables.clear();
+		semanticChecking.clearHashGlobalVariables();
 		
 		while ( true ) { 
 			Qualifier qualifier = null;
@@ -249,7 +251,7 @@ public class Compiler {
 					qualifier = new Qualifier(Token.PUBLIC, null, null, null);
 				
 				MethodDec methodDec = methodDec();
-				hashMethodsList.put(methodDec.getMethodName(), methodDec);
+				semanticChecking.putInHashMethodsList(methodDec.getMethodName(), methodDec);
 				member = methodDec;
 			} else {
 				break;
@@ -292,8 +294,9 @@ public class Compiler {
 		Variable method = new Variable(Type.nullType, null);
 		ArrayList<Variable> paramList = new ArrayList<>();
 		ArrayList<Statement> statList = new ArrayList<>();
-		hashParameters.clear();
-		hashLocalVariables.clear();
+		
+		semanticChecking.clearHashParameters();
+		semanticChecking.clearHashLocalVariables();
 		
 		if ( lexer.token == Token.ID ) {
 			method.setName(lexer.getStringValue());
@@ -362,19 +365,16 @@ public class Compiler {
 			
 			String name = lexer.getStringValue();
 			
-			LocalDec localDec = hashLocalVariables.get(name);
-			Variable parameter = hashParameters.get(name);
-			
-			if (localDec!=null) {
+			if (semanticChecking.getLocalDec(name)!=null) {
 				this.error(name+" is already declared as local variable");
-			} else if (parameter!=null) {
+			} else if (semanticChecking.getParamVariable(name)!=null) {
 				this.error(name+" is already declared as a parameter");
 			}
 			
 			var.setName(name);
 			next();
 			
-			hashParameters.put(name, var);
+			semanticChecking.putInHashParameter(name, var);
 			paramList.add(var);
 			
 			if (lexer.token == Token.COMMA) {
@@ -420,7 +420,7 @@ public class Compiler {
 			checkSemiColon = false;
 			break;
 		case BREAK:
-			breakStat();
+			e = breakStat();
 			break;
 		case SEMICOLON:
 			e = new SemicolonStatement();
@@ -487,7 +487,13 @@ public class Compiler {
 		
 		while ( lexer.token == Token.ID ) {
 			String name = lexer.getStringValue();
-			checkVariable(name);
+			
+			if (semanticChecking.getLocalDec(name)!=null) {
+				this.error(name+" is already declared as local variable");
+			} else if (semanticChecking.getParamVariable(name)!=null) {
+				this.error(name+" is already declared as a parameter");
+			}
+			
 			
 			Variable var = new Variable(type, name);
 			idList.add(var);
@@ -514,7 +520,7 @@ public class Compiler {
 		
 		LocalDec localDec = new LocalDec(type, idList, expr);
 		for(Variable var : idList) {
-			hashLocalVariables.put(var.getName(), localDec);
+			semanticChecking.putInLocalVariables(var.getName(), localDec);
 		}
 		return localDec;
 	}
@@ -545,9 +551,9 @@ public class Compiler {
 		return new RepeatStat(statList, expr);
 	}
 
-	private void breakStat() {
+	private BreakStat breakStat() {
 		next();
-
+		return new BreakStat();
 	}
 
 	private ReturnStat returnStat() {
@@ -701,7 +707,9 @@ public class Compiler {
 			}
 			
 			if(!left.getType().getName().equals(right.getType().getName())) {
-				this.error("Type not equals");
+				if( !(left.getType().getName().equals("NullType")) && !(right.getType().getName().equals("NullType"))  ) {
+					this.error("Type not equals");
+				}
 			}
 			
 			left = new CompositeExpr(left, op, right, Type.booleanType);
@@ -774,7 +782,7 @@ public class Compiler {
 		Expr left = null;
 		left = signalFactor();
 		
-		if (lexer.token == Token.MULT || 
+		while (lexer.token == Token.MULT || 
 			lexer.token == Token.DIV || 
 			lexer.token == Token.AND) {
 			Token operator = lexer.token;
@@ -839,6 +847,9 @@ public class Compiler {
 			next();
 			Factor factor = factor();
 			return new BooleanExpr(Token.NOT, factor, factor.getType());
+		} else if(lexer.token == Token.NULL) {
+			next();
+			return new NullExpr(Type.nullType);
 		} else {
 			return basicValue();
 		}
@@ -910,12 +921,14 @@ public class Compiler {
 			
 			String id = lexer.getStringValue();
 			
-			TypeCianetoClass cianetoClass = hashClasses.get(id);
-			FieldDec fieldDec = hashGlobalVariables.get(id);
-			LocalDec localDec = hashLocalVariables.get(id);
-			Variable parameter = hashParameters.get(id);
-			if(cianetoClass==null && fieldDec==null && localDec==null && parameter==null) {
-				this.error(id+" was not declared");
+			if(semanticChecking.getTypeCianetoClass(id)==null 
+					&& semanticChecking.getFieldDec(id)==null 
+					&& semanticChecking.getLocalDec(id)==null 
+					&& semanticChecking.getParamVariable(id)==null) {
+				
+				if(!id.equals(semanticChecking.getCurrentClassName())) {
+					this.error(id+" was not declared");
+				}
 			}
 			
 			next();
@@ -930,7 +943,8 @@ public class Compiler {
 					
 					Type t1 = getTypeOfId(id);
 					
-					TypeCianetoClass cClass = hashClasses.get(t1.getName());
+					//TypeCianetoClass cClass = hashClasses.get(t1.getName());
+					TypeCianetoClass cClass = semanticChecking.getTypeCianetoClass(t1.getName());
 					if(cClass==null) {
 						this.error("The class of "+t1.getName()+" is not declared");
 					}
@@ -973,11 +987,11 @@ public class Compiler {
 					
 					String id = lexer.getStringValue();
 					
-					if(superClass==null) {
-						this.error("cannot call super, the class "+currentClassName+" has not super class");
+					if(semanticChecking.getSuperClass()==null) {
+						this.error("cannot call super, the class "+semanticChecking.getCurrentClassName()+" has not super class");
 					}
 					
-					MethodDec methodDec = superClass.getMethod(id);
+					MethodDec methodDec = semanticChecking.getSuperClass().getMethod(id);
 					if(methodDec==null) {
 						this.error(id+" is not declared");
 					}
@@ -991,11 +1005,11 @@ public class Compiler {
 					
 					ArrayList<Expr> exprList = exprList();
 					
-					if(superClass==null) {
-						this.error("cannot call super, the class "+currentClassName+" has not super class");
+					if(semanticChecking.getSuperClass()==null) {
+						this.error("cannot call super, the class "+semanticChecking.getCurrentClassName()+" has not super class");
 					}
 					
-					MethodDec methodDec = superClass.getMethod(id);
+					MethodDec methodDec = semanticChecking.getSuperClass().getMethod(id);
 					if(methodDec==null) {
 						this.error(id+" is not declared");
 					}
@@ -1048,10 +1062,12 @@ public class Compiler {
 						}
 					}
 					
-					FieldDec fieldDec = hashGlobalVariables.get(id);
-					MethodDec methodDec = hashMethodsList.get(id);
-					if(methodDec==null && superClass!=null) {
-						methodDec = superClass.getMethod(id);
+					//FieldDec fieldDec = hashGlobalVariables.get(id);
+					//MethodDec methodDec = hashMethodsList.get(id);
+					FieldDec fieldDec = semanticChecking.getFieldDec(id);
+					MethodDec methodDec = semanticChecking.getMethodDec(id);
+					if(methodDec==null && semanticChecking.getSuperClass()!=null) {
+						methodDec = semanticChecking.getSuperClass().getMethod(id);
 					}
 					Type type = Type.undefinedType;
 					if(fieldDec==null && methodDec==null) {
@@ -1080,7 +1096,7 @@ public class Compiler {
 				}
 			} else {
 				Type type = Type.nullType;
-				type.setName(currentClassName);
+				type.setName(semanticChecking.getCurrentClassName());
 				return new PrimarySelfExpr("self", type);
 			}		
 		}
@@ -1141,7 +1157,7 @@ public class Compiler {
 
 		FieldDec field = new FieldDec(type, idList);
 		for(String id : idList) {
-			hashGlobalVariables.put(id, field);
+			semanticChecking.putInHashGlobalVariables(id, field);
 		}
 		return field;
 	}
@@ -1260,17 +1276,15 @@ public class Compiler {
 		return new LiteralInt(value, Type.intType);
 	}
 
-
-	
 	private static boolean relation (Token token) {
 		return token == Token.EQ || token == Token.LT || token == Token.GT
 				|| token == Token.LE || token == Token.GE || token == Token.NEQ || token == Token.AND;
 	}
 
 	private void checkVariable(String identifier) {
-		FieldDec fieldDec = hashGlobalVariables.get(identifier);
-		LocalDec localDec = hashLocalVariables.get(identifier);
-		Variable parameter = hashParameters.get(identifier);
+		FieldDec fieldDec = semanticChecking.getFieldDec(identifier);
+		LocalDec localDec = semanticChecking.getLocalDec(identifier);
+		Variable parameter = semanticChecking.getParamVariable(identifier);
 		
 		if(fieldDec!=null) {
 			this.error(identifier+" is already declared as global variable");
@@ -1282,9 +1296,9 @@ public class Compiler {
 	}
 	
 	private boolean isVariable(String identifier) {
-		FieldDec fieldDec = hashGlobalVariables.get(identifier);
-		LocalDec localDec = hashLocalVariables.get(identifier);
-		Variable parameter = hashParameters.get(identifier);
+		FieldDec fieldDec = semanticChecking.getFieldDec(identifier);
+		LocalDec localDec = semanticChecking.getLocalDec(identifier);
+		Variable parameter = semanticChecking.getParamVariable(identifier);
 		
 		if(fieldDec!=null || localDec!=null || parameter!=null) {
 			return true;
@@ -1295,24 +1309,24 @@ public class Compiler {
 	
 	private Type getTypeOfId(String id) {
 		
-		TypeCianetoClass cianetoClass = hashClasses.get(id);
+		TypeCianetoClass cianetoClass = semanticChecking.getTypeCianetoClass(id);
 		if(cianetoClass!=null) {
 			Type type = Type.nullType;
 			type.setName(cianetoClass.getName());
 			return type;
 		}
 		
-		FieldDec fieldDec = hashGlobalVariables.get(id);
+		FieldDec fieldDec = semanticChecking.getFieldDec(id);
 		if(fieldDec!=null) {
 			return fieldDec.getType();
 		} 
 
-		LocalDec localDec = hashLocalVariables.get(id);
+		LocalDec localDec = semanticChecking.getLocalDec(id);
 		if (localDec!=null) {
 			return localDec.getType();
 		} 
 
-		Variable parameter = hashParameters.get(id);
+		Variable parameter = semanticChecking.getParamVariable(id);
 		if (parameter!=null) {
 			return parameter.getType();
 		}
@@ -1324,18 +1338,18 @@ public class Compiler {
 	private Type verifySendMessage(String variableName, String methodName, ArrayList<Expr> exprList) {
 		System.out.println(variableName+"."+methodName);
 		
-		MethodDec method;
+		MethodDec method = null;
 		if(!variableName.equals("self")) {
 			String className = "";
-			FieldDec fieldDec = hashGlobalVariables.get(variableName);
+			FieldDec fieldDec = semanticChecking.getFieldDec(variableName);
 			if(fieldDec==null) {
-				LocalDec localDec = hashLocalVariables.get(variableName);
+				LocalDec localDec = semanticChecking.getLocalDec(variableName);
 				if(localDec==null) {
-					Variable variable = hashParameters.get(variableName);
+					Variable variable = semanticChecking.getParamVariable(variableName);
 					if(variable==null) {
 						this.error("erro ao procurar variavel");
 					} else {
-						className = variable.getName();
+						className = variable.getType().getName();
 					}
 				} else {
 					className = localDec.getType().getName();
@@ -1344,20 +1358,37 @@ public class Compiler {
 				className = fieldDec.getType().getName();
 			}
 			
-			TypeCianetoClass cianetoClass = hashClasses.get(className);
+			TypeCianetoClass cianetoClass = semanticChecking.getTypeCianetoClass(className);
 			if(cianetoClass==null) {
-				this.error("erro ao obter classe: " + className);
+				
+				if(className.equals(semanticChecking.getCurrentClassName())) {
+					method = semanticChecking.getMethodDec(methodName);
+					if(method==null) {
+						if(methodName.equals(semanticChecking.getCurrentMethodVariable().getName())) {
+							//verifyMethodsParams(paramList, exprList);
+							return semanticChecking.getCurrentMethodVariable().getType();
+						} else {
+							this.error("method "+methodName+" is not declared");
+						}
+					}
+				} else {
+					this.error("erro ao obter classe: " + className);
+				}
+			} else {
+				method = cianetoClass.getMethod(methodName);
 			}
-			
-			method = cianetoClass.getMethod(methodName);
 		} else {
-			method = hashMethodsList.get(methodName);
+			method = semanticChecking.getMethodDec(methodName);
 		}
 		if(method==null) {
 			this.error("method "+methodName+" is not declared");
 		}
 		
-		ArrayList<Variable> paramList = method.getParamList();
+		verifyMethodsParams(method.getParamList(), exprList);
+		return method.getType();
+	}
+	
+	private void verifyMethodsParams(ArrayList<Variable> paramList, ArrayList<Expr> exprList) {
 		int sizeParam = paramList.size();
 		int sizeExpr = exprList.size();
 		if(sizeParam!=sizeExpr) {
@@ -1370,10 +1401,7 @@ public class Compiler {
 				this.error("wrong type of parameter");
 			}
 		}
-		return method.getType();
 	}
-	
-	private void funcaoPraTestarCommit() {}
 	
 	private Type verifyArgumentsOfSendMessage(String methodName, MethodDec method, ArrayList<Expr> exprList) {
 		if(method==null) {
@@ -1402,12 +1430,5 @@ public class Compiler {
 	
 	private boolean returnRequired = false;
 	
-	private HashMap<String, TypeCianetoClass> hashClasses = new HashMap<String, TypeCianetoClass>();
-	private HashMap<String, FieldDec> hashGlobalVariables = new HashMap<String, FieldDec>();
-	private HashMap<String, LocalDec> hashLocalVariables = new HashMap<String, LocalDec>();
-	private HashMap<String, Variable> hashParameters = new HashMap<String, Variable>();
-	private HashMap<String, MethodDec> hashMethodsList = new HashMap<String, MethodDec>();
-	private String currentClassName = "";
-	private TypeCianetoClass superClass;
-
+	private SemanticChecking semanticChecking = new SemanticChecking();
 }

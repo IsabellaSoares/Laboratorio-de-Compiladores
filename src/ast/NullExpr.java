@@ -4,7 +4,7 @@ Marcelo Augusto Rodrigues da Silva  726565
 */
 package ast;
 
-public class NullExpr extends Expr {
+public class NullExpr extends Factor {
 	
 	public NullExpr(Type type) {
 		super(type);

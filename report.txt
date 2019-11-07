@@ -2,16 +2,16 @@ Relatório do Compilador
 
 Resumo
 _________________________________________________________________________
-MI:  6             I: 2              PI: 4             Exc: 0
- SSE: 11/16/68%    
+MI:  1             I: 1              PI: 2             Exc: 0
+ SSE: 4/16/25%     
 
 MI = muito importante, I = importante, PI = pouco importante, Exc = exceções
 Dev = deveria ter sinalizado, LE = sinalizou linha errada, SSE = sinalizado sem erro
 _________________________________________________________________________
 
-Número de testes 'Muito importantes' em que o compilador falhou: 6
-Número de testes 'Importantes' em que o compilador falhou: 2
-Número de testes 'Pouco importantes' em que o compilador falhou: 4
+Número de testes 'Muito importantes' em que o compilador falhou: 1
+Número de testes 'Importantes' em que o compilador falhou: 1
+Número de testes 'Pouco importantes' em que o compilador falhou: 2
 
 O compilador falhou em testar alguns aspectos (construções) de Cianeto. A lista abaixo consiste de entradas da forma 
     aspecto
@@ -20,6 +20,30 @@ Os nomes de arquivos listados são aqueles que testam 'aspecto' mas em que o comp
 Os testes são categorizados por importância: 'Muito importante', 'Importante', 'pouco importante'
 
 Testes 'Muito importantes' em que o compilador falhou:
+    supertypeAssignSelf
+        OK_SEM15.ci
+
+
+Testes 'importantes' em que o compilador falhou:
+    localVarSameClassName
+        OK_SEM12.ci
+
+
+Testes 'pouco importantes' em que o compilador falhou
+    assert
+        OK_SEM17.ci
+
+    selfAsExpression
+        OK_SEM09.ci
+
+
+O compilador obteve sucesso em testar alguns aspectos (construções) de Cianeto. A lista abaixo consiste de entradas da forma 
+    aspecto
+        listas de nomes de arquivos
+Os nomes de arquivos listados são aqueles que testam 'aspecto' e nos quais o compilador obteve sucesso e gerou código correto (se opção -genjava ou -genc foi usada).
+Os testes são categorizados por importância: 'Muito importante', 'Importante', 'pouco importante'
+
+Testes 'Muito importantes' em que o compilador acertou:
     typeErrorAssignRightSideNotSubtypeLeftSide
         OK_SEM05.ci
 
@@ -30,52 +54,25 @@ Testes 'Muito importantes' em que o compilador falhou:
     nilAssign
         OK_SEM14.ci
 
-    supertypeAssignSelf
-        OK_SEM15.ci
+    methodSearchSuperclass
+        OK_SEM10.ci
 
     nilEqualEqualNotEqual
         OK_SEM14.ci
-
-
-Testes 'importantes' em que o compilador falhou:
-    scopeLocalVarField
-        OK_SEM06.ci
-
-    localVarSameClassName
-        OK_SEM12.ci
-
-
-Testes 'pouco importantes' em que o compilador falhou
-    whileBreak
-        OK_SEM07.ci
-
-    assert
-        OK_SEM17.ci
-
-    selfAsExpression
-        OK_SEM09.ci
-
-    repeatUntilBreak
-        OK_SEM16.ci
-
-
-O compilador obteve sucesso em testar alguns aspectos (construções) de Cianeto. A lista abaixo consiste de entradas da forma 
-    aspecto
-        listas de nomes de arquivos
-Os nomes de arquivos listados são aqueles que testam 'aspecto' e nos quais o compilador obteve sucesso e gerou código correto (se opção -genjava ou -genc foi usada).
-Os testes são categorizados por importância: 'Muito importante', 'Importante', 'pouco importante'
-
-Testes 'Muito importantes' em que o compilador acertou:
-    methodSearchSuperclass
-        OK_SEM10.ci
 
 
 Testes 'importantes' em que o compilador acertou:
     localVarSameMethodName
         OK_SEM13.ci
 
+    scopeLocalVarField
+        OK_SEM06.ci
+
 
 Testes 'pouco importantes' em que o compilador acertou
+    whileBreak
+        OK_SEM07.ci
+
     openAsIdentifier
         OK_SEM11.ci
 
@@ -85,33 +82,22 @@ Testes 'pouco importantes' em que o compilador acertou
     methodOverridingSameSignature
         OK_SEM08.ci
 
+    repeatUntilBreak
+        OK_SEM16.ci
+
 
 _________________________________________________________________________
 
-11 erros foram sinalizados em 16 arquivos sem erro (68%)
+4 erros foram sinalizados em 16 arquivos sem erro (25%)
 _________________________________________________________________________
 ######################################################
 Erros que foram sinalizados mas não deveriam ter sido:
 
-OK_SEM03.ci, 24, ')' expected
+OK_SEM09.ci, 18, Exception 'java.lang.NullPointerException' was thrown and not caught. Its message is 'null'
 
-OK_SEM04.ci, 23, '{' expected (line 23)
-
-OK_SEM05.ci, 43, erro ao obter classe: a
-
-OK_SEM06.ci, 16, n is already declared as global variable
-
-OK_SEM07.ci, 17, Statement expected
-
-OK_SEM09.ci, 18, erro ao obter classe: A
-
-OK_SEM12.ci, 23, B was not declared
-
-OK_SEM14.ci, 18, Class member OR 'end' expected
+OK_SEM12.ci, 23, B is not declared
 
 OK_SEM15.ci, 23, The class of A is not declared
-
-OK_SEM16.ci, 9, Statement expected
 
 OK_SEM17.ci, 15, n was not declared
 
