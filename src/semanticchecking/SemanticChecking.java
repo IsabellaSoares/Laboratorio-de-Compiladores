@@ -41,6 +41,10 @@ public class SemanticChecking {
 		return currentMethod;
 	}
 	
+	public void setCurrentMethod(Variable currentMethod) {
+		this.currentMethod = currentMethod;
+	}
+	
 	public String getCurrentClassName() {
 		return currentClassName;
 	}

@@ -326,6 +326,7 @@ public class Compiler {
 			error("'{' expected (func " + method.getName() + ")");
 		}
 		
+		semanticChecking.setCurrentMethod(method);
 		next();
 		
 		statList = statementList();
@@ -751,7 +752,7 @@ public class Compiler {
 		Expr left = null;
 		left = term();
 		
-		if (lexer.token == Token.PLUS || 
+		while (lexer.token == Token.PLUS || 
 			lexer.token == Token.MINUS || 
 			lexer.token == Token.OR) {
 			Token operator = lexer.token;
@@ -880,6 +881,11 @@ public class Compiler {
 	private AssignExpr assignExpr () {
 		Expr left = null, right = null;
 		int lineNumber = lexer.getLineNumber();
+		if(lexer.token == Token.BOOLEAN
+			|| lexer.token == Token.LITERALINT
+			|| lexer.token == Token.LITERALSTRING) {
+			this.error("Cannot assign to a literal");
+		}
 		left = expr();
 		
 		if (left == null) return null;
@@ -895,6 +901,10 @@ public class Compiler {
 			}
 			
 			right = expr();
+			
+			if(!left.getType().getName().equals(right.getType().getName())) {
+				this.error("Type error: value of the right-hand side is not subtype of the variable of the left-hand side.");
+			}
 			
 			if (right == null) this.error("Expression expected");			
 		}
@@ -944,12 +954,19 @@ public class Compiler {
 					Type t1 = getTypeOfId(id);
 					
 					//TypeCianetoClass cClass = hashClasses.get(t1.getName());
+					MethodDec method = null;
 					TypeCianetoClass cClass = semanticChecking.getTypeCianetoClass(t1.getName());
 					if(cClass==null) {
-						this.error("The class of "+t1.getName()+" is not declared");
+						if(t1.getName().equals(semanticChecking.getCurrentClassName())) {
+							method = semanticChecking.getMethodDec(id2);
+						} else {
+							this.error("The class of "+t1.getName()+" is not declared");
+						}
+					} else {
+						method = cClass.getMethod(id2);
 					}
 					
-					MethodDec method = cClass.getMethod(id2);
+					
 					if(method==null) {
 						this.error("method "+id2+" is not declared in "+t1.getName());
 					}
@@ -1313,6 +1330,12 @@ public class Compiler {
 		if(cianetoClass!=null) {
 			Type type = Type.nullType;
 			type.setName(cianetoClass.getName());
+			return type;
+		}
+		
+		if(id.equals(semanticChecking.getCurrentClassName())) {
+			Type type = Type.nullType;
+			type.setName(id);
 			return type;
 		}
 		
