@@ -49,10 +49,20 @@ public class PrimarySelfExpr extends PrimaryExpr {
 				id1 = id1.substring(0, id1.length() - 1);
 		    }
 			
-			pw.printIdent("this." + id1 + "(");
+			if (id1.equals("self")) {
+				pw.printIdent("this(");
+			} else {
+				pw.printIdent("this." + id1 + "(");
+			}
+			
+			
 			putParenthesis = true;
 		} else {
-			pw.printIdent("this." + id1);
+			if (id1.equals("self")) {
+				pw.printIdent("this");
+			} else {
+				pw.printIdent("this" + id1);
+			}			
 		}		
 		
 		if (exprList != null) {

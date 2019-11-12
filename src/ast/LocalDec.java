@@ -22,6 +22,7 @@ public class LocalDec extends Statement {
 	}
 	
 	public void genJava(PW pw) {
+		System.out.println(type);
 		pw.printIdent(this.type.getName());
 		
 		if (idList != null) {

@@ -15,11 +15,11 @@ public class OK_SEM09 {
    private static class A {
       public void m (int n, A x) {
          A other;
-         other = this.self;
+         other = this;
          n = n - 1;
 
          if (n > 0) {
-            other.m(            n            this.self);
+            other.m(n, this);
          }
       }
    }
@@ -28,7 +28,7 @@ public class OK_SEM09 {
       public void run () {
          A a;
          a = new A();
-         a.m(5         a);
+         a.m(5, a);
       }
    }
 
