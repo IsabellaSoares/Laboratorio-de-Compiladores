@@ -19,9 +19,9 @@ O compilador obteve sucesso em testar alguns aspectos (constru��es) de Ciane
 Os nomes de arquivos listados s�o aqueles que testam 'aspecto' e nos quais o compilador obteve sucesso e gerou c�digo correto (se op��o -genjava ou -genc foi usada).
 Os testes s�o categorizados por import�ncia: 'Muito importante', 'Importante', 'pouco importante'
 
-Testes 'Muito importantes' em que o compilador acertou:
-    typeErrorAssignRightSideNotSubtypeLeftSide
-        ./testes/Sem/OK/OK_SEM05.ci
+Testes 'importantes' em que o compilador acertou:
+    scopeLocalVarField
+        ./testes/Sem/OK/OK_SEM06.ci
 
 
 _________________________________________________________________________
@@ -32,9 +32,9 @@ O compilador n�o sinalizou nenhum erro que n�o deveria ter sinalizado
 Para o caso de teste que voc� utilizou, o compilador est� correto
 
 List of Java files with compilation errors: 
-   ./testes/Sem/OK/OK_SEM05.java
 
 List of files with correct Java code: 
+   ./testes/Sem/OK/OK_SEM06.java
 
 List of files Java code that compiles but was generated incorrectly: 
 
