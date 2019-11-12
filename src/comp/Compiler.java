@@ -1146,7 +1146,7 @@ public class Compiler {
 		ArrayList<String> idList = new ArrayList<>();
 		Type type = Type.undefinedType;
 		type.setName(lexer.getStringValue());
-		type = type();		
+		type = type();
 		
 		if (type == null) 
 			error("Type expected");
@@ -1197,6 +1197,9 @@ public class Compiler {
 		}
 		else if ( lexer.token == Token.ID ) {
 			type = Type.nullType;
+			/*type = semanticChecking.getTypeCianetoClass(lexer.getStringValue());
+			System.out.println("cianeto");
+			System.out.println(type.getName());*/
 			type.setName(lexer.getStringValue());
 			next();
 		}

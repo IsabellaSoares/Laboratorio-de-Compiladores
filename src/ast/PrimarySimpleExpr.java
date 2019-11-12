@@ -50,6 +50,10 @@ public class PrimarySimpleExpr extends PrimaryExpr {
 			
 			if (exprList != null) {
 				for (int i = 0; i < exprList.size(); i++) {
+					if (i > 0) {
+						pw.print(", ");
+					}
+					
 					exprList.get(i).genJava(pw);
 				}
 			}

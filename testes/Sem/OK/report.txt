@@ -19,9 +19,9 @@ O compilador obteve sucesso em testar alguns aspectos (constru��es) de Ciane
 Os nomes de arquivos listados s�o aqueles que testam 'aspecto' e nos quais o compilador obteve sucesso e gerou c�digo correto (se op��o -genjava ou -genc foi usada).
 Os testes s�o categorizados por import�ncia: 'Muito importante', 'Importante', 'pouco importante'
 
-Testes 'importantes' em que o compilador acertou:
-    scopeLocalVarField
-        ./testes/Sem/OK/OK_SEM06.ci
+Testes 'pouco importantes' em que o compilador acertou
+    methodOverridingSameSignature
+        ./testes/Sem/OK/OK_SEM08.ci
 
 
 _________________________________________________________________________
@@ -34,7 +34,7 @@ Para o caso de teste que voc� utilizou, o compilador est� correto
 List of Java files with compilation errors: 
 
 List of files with correct Java code: 
-   ./testes/Sem/OK/OK_SEM06.java
+   ./testes/Sem/OK/OK_SEM08.java
 
 List of files Java code that compiles but was generated incorrectly: 
 
