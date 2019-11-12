@@ -1,0 +1,40 @@
+/* 
+    Caroline Aparecida
+    hicaarol@gmail.com
+*/
+
+@annot("check", "wrongSubclassMethodSignature")
+@cep(17, "Método 'put' da classe 'B' possui valor de retorno. Na superclasse 'A', não",
+       "Method 'put' of subclass 'B' has a signature different from method inherited from superclass 'A'",
+       "comp.Compiler.methodDec()")
+
+
+open
+class A 
+    
+    func put {    
+    
+    }
+
+end
+
+class B extends A 
+    
+    override
+    func put -> Int {
+        return 0;
+    }
+
+end
+
+class Program  
+    
+    func run {
+        var A a;
+        a = A.new;
+        a.put;
+    }
+
+end
+
+

@@ -1,0 +1,15 @@
+/*
+Iago Freitas Piedade
+iagopiedade@hotmail.com
+*/
+@cep(6, "'{' esperado após a assinatura do método", 
+   "'{' expected", "comp.Compiler.methodDec()")
+
+class Program
+
+    func run 
+        var Int i;
+    {
+    }
+    
+end

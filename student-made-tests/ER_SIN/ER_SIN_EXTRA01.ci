@@ -1,0 +1,41 @@
+/* 
+Vinicius Silva Salinas
+vinicius_salis@hotmail.com
+*/
+
+@cep(22, "Ausencia do caracter '{' apos 'run'", "")
+
+class A
+    var Int num1
+    var Int num2
+    var Int result
+     
+    func mult -> Int { return self.num1 * self.num2; }
+    func div: Int num3, Int num4 { self.result = num3 / num4; }
+end
+
+class B
+    var String name
+    
+    func setName: String name { self.name = name; }
+    func getName -> String { return self.name; }
+end
+
+class Program
+
+    func run
+    
+        var A a;
+        var B b;
+        var String c;
+
+        a = A.new;
+        b = B.new;
+
+        c = In.readString;
+        b.setName: c;
+
+        Out.println: b.getName;
+    }
+
+end

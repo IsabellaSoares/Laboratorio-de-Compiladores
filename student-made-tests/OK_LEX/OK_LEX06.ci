@@ -1,0 +1,17 @@
+/*
+Michael dos Santos
+michael-santos@outlook.com.br
+*/
+
+@nce
+
+/*
+    @filename    ok-lex06.kra
+
+    @comment    Testa se ^I ou \t, caracter de tabulacao, 'e considerado como
+    branco pelo analisador lexico
+    */
+
+        class Program
+             func run {   }
+        end

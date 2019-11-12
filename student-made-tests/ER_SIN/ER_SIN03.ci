@@ -1,0 +1,15 @@
+/* 
+Isabela Salmeron Boschi
+isabelasalmeron@msn.com
+*/
+@cep(6, "Falta a variável", "Identifier expected", "comp.Compiler.localDec()")
+
+class Program
+  
+    func run {
+        
+        var Int ;
+       
+    }
+
+end

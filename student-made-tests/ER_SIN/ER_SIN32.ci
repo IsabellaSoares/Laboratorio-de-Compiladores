@@ -1,0 +1,10 @@
+@cep(5, "Parâmetro ausente", 
+   "Type expected", "comp.Compiler.methodDec()")
+
+class Program 
+  
+    func m: Int x, , Int y  {   //#
+    }
+    
+    func run { }
+end

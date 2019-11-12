@@ -1,0 +1,18 @@
+/*
+Iago Freitas Piedade
+iagopiedade@hotmail.com
+*/
+@annot("check", "missingClassInNew")
+@cep(7, "Classe 'A' não existe", 
+  "Class 'A' was not found", 
+  "comp.Compiler.factor()")
+
+class Program
+
+    func run {  
+        if A.new == nil {
+            Out.print: 0;
+        }
+    }
+
+end

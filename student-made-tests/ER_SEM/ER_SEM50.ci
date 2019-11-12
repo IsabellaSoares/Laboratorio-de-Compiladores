@@ -1,0 +1,23 @@
+@annot("check", "breakOutsideWhileRepeatUntil")
+@cep(17, "O compilador deverá sinalizar 'break fora de while ou repeat-until'",
+   "Command 'break' outside a command 'while' or repeat-until",
+   "comp.Compiler.breakStatement()")
+
+
+class Program 
+   
+   func run {
+      while false {         
+        while false {            
+            while false {               
+                break;
+            }            
+            break;
+         }         
+         break;
+      }      
+      break;   //#
+   }   
+
+end
+

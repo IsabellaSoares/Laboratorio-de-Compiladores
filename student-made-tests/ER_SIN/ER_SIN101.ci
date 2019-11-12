@@ -1,0 +1,28 @@
+/*
+Vitor Mesquita Fogaça
+vitor.fogaca@outlook.com
+*/
+
+@cep(2, "missing type in variable declaration", "Type expected")
+class Teste
+    var n;
+
+    func get -> Int {
+        return self.n;
+    }
+
+    func set: Int n {
+        self.n = n;
+    }
+end
+
+class Program
+    func run {
+        var Teste t;
+        var Teste a;
+        t = Teste.new;
+        a = In.readInt;
+        t.set: a;
+        Out.println: t.get;
+    }
+end

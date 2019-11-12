@@ -1,0 +1,9 @@
+@cep(5, "Falta ';' após o primeiro 'Out.print(0)'", "';' missing")
+      
+class Program
+
+    func run {
+        Out.print: 0                //#
+        Out.print: 1;
+    }
+end

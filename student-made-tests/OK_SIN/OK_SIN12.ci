@@ -1,0 +1,22 @@
+/*
+Ricardo Mendes Leal Junior
+ricardomlealjr@gmail.com
+*/
+@nce
+
+/*
+  @filename   ok-sin12.kra
+
+  @comment    testa se aceita - antes de variavel
+*/
+
+class Program
+    func run {
+        var Int a;
+
+        a = 1;
+        Out.println: -a;
+    }
+end
+
+

@@ -1,0 +1,54 @@
+/*
+Evelin Soares
+evelincontatos@gmail.com
+*/
+
+@annot("check", "typeErrorAssignRightSideNotSubtypeLeftSide")
+@cep(44, "Erro de tipos. O tipo de 'a', 'A', não é subclasse de 'B', o tipo do parâmetro",
+      "Type error: the type of the real parameter is not subclass of the type of the formal parameter",
+      "comp.Compiler.factor()")
+
+
+open 
+class A
+
+    private var Int n;
+
+    func set: Int n {
+        self.n = n;
+    }
+
+    func get -> Int {
+        return self.n;
+    }
+
+
+end
+
+
+open 
+class B extends A
+
+    override
+    func set: Int pn {
+        Out.println: pn;
+        super.set: pn;
+    }
+
+end
+
+
+class Program
+
+    func m: B b {
+        b.set: 0;
+    }
+
+    func run {
+        var A a;
+
+        a = A.new;
+        self.m: a;
+    }
+
+end

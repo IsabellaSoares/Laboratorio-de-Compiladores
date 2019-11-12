@@ -1,0 +1,68 @@
+/*
+Renan Rossignatti de França
+renanrfranca@gmail.com
+*/
+
+
+@nce
+
+/*
+    @filename   OK-SIN02.ci
+        
+    @comment    Testa se o  analisador sintatico manipula corretamente as regras
+                da gramatica, a maioria (ou todas) das quais esta representada
+                abaixo
+*/
+
+class A
+
+    func m {
+        var Int i;
+        var Int j;
+        var Boolean b;
+        
+        b = false;
+        if b {
+        }
+        else {
+        }
+        while b {
+            ;
+        }
+        
+        while (b) {
+        }
+        i = ((1 * 4) + 3) - (5 / 2);
+        b = false;
+        if ((!b && (i < 0)) || (i > 10)) {
+            b = true;
+            i = -1;
+            i = In.readInt;
+            j = In.readInt;
+            while i > 0 {
+                Out.println: i;
+                i = i - 1;
+            }
+        }
+        else {
+            b = true;
+            Out.println: i;
+        }
+        if ((((((i == 1) || (i < 1)) || (i <= 5)) || (i > 1)) || (i >= 1)) || (i != 3)) {
+            i = 0;
+        }
+    }
+
+end
+
+
+class Program
+
+    func run {
+        var A a;
+
+        a = A.new;
+        a.m;
+    }
+    
+end

@@ -1,0 +1,11 @@
+@cep(7, "Falta um ';' após a primeira atribuição", "';' expected")
+
+class Program
+
+    func run {
+
+       var Int i;
+       i = 1       //#
+       i = 0;
+    }
+end

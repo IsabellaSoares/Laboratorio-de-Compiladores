@@ -1,0 +1,16 @@
+/* 
+Lucas Rigo Yoshimura
+lucasrigoyoshimura@gmail.com
+*/
+
+@cep(5, "Tipo de retorno ausente na declaracao de 'm'",
+   "Identifier expected", "comp.Compiler.methodDec()")
+
+class Program 
+  
+    func m: Int x, Int y -> {  
+    }
+   
+    func run {
+    }
+end

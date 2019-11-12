@@ -1,0 +1,16 @@
+/*
+Matteus Takeshi Dias
+matteus_cti@hotmail.com
+*/
+
+@cep(7, "Corpo do método ausente", "'{' expected", "comp.Compiler.methodDec()")
+
+class Carro
+    func acelerar {
+    // ...
+    }
+    func frear // ... falta corpo do método
+    func buzinar {
+    // ...
+    }
+end

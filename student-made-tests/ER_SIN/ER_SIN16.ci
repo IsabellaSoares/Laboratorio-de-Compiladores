@@ -1,0 +1,13 @@
+/*
+    João Paulo Francisco de Paula
+*/
+﻿@cep(5, "Tipo usado como variável", "Identifier expected", 
+"comp.Compiler.localDec()")
+
+class Program
+
+    func run {
+        var String Int;
+    }
+
+end

@@ -1,0 +1,32 @@
+/*
+    Nathan Eloy
+    nathaneloy@hotmail.com
+*/
+
+@nce
+
+    /*
+    @filename   ok-lex10.ci
+
+    @comment    Testa se o lexico aceita tab's na primeira posicao do arquivo.
+
+*/
+
+class A
+
+    func m {
+    }
+
+end
+
+
+class Program
+
+    func run {
+        var A a;
+
+        a = A.new;
+        a.m;
+    }
+
+end

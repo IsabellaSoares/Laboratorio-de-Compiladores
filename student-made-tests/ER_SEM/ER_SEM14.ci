@@ -1,0 +1,15 @@
+@annot("check", "typeError")
+@cep(9, "Expressoes booleanas nao podem ser escritas", "Attempt to print a boolean expression")
+  
+
+class Program 
+   
+   func run {
+      var Boolean b;
+
+      b = false;
+      Out.println: b;
+   }   
+
+end
+
