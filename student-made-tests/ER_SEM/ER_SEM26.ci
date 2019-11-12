@@ -1,0 +1,20 @@
+/* -----------------------
+ * Carlos Tadeu C. S
+ * tadeucarlos07@gmail.com
+ * ----------------------- */
+
+@annot("check", "breakOutsideWhileRepeatUntil")
+@cep(8, "O compilador devera sinalizar erro 'break fora de while or repeat-until'", 
+    "'break' statement found outside a 'while' or 'repeat-until' statement", 
+    "comp.Compiler.statement())")
+  
+
+class Program 
+   
+    func run {
+        break;
+    }   
+
+end
+
+

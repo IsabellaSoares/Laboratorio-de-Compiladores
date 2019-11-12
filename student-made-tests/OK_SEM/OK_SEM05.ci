@@ -1,0 +1,71 @@
+@annot("check", "typeErrorAssignRightSideNotSubtypeLeftSide")
+@nce
+
+/*
+  @filename   ok-sem05.ci
+
+  @comment    Testa se o compilador aceita atribuicoes do tipo
+      Classe = Subclasse
+  que acontecem tambem em passagem de parametros e em retorno de valores
+  de metodos (com return).
+  */
+
+open
+class A 
+   
+   private var Int n;
+   
+   func set: Int pn {
+      self.n = pn;
+   }   
+   
+   func get -> Int {
+      return self.n;
+   }   
+
+end
+
+
+class B extends A 
+   
+   override
+   func set: Int pn {
+      Out.print: pn;
+      super.set: pn;
+   }   
+
+end
+
+
+class Program 
+   
+   func m: A a -> B {
+      a.set: 0;
+      return B.new;
+   }   
+   
+   func p: Int i -> A {
+    
+      if i > 0 {
+         return A.new;
+      }
+      else {
+         return B.new;
+      }
+   }   
+   
+   func run {
+      var A a;
+      var B b;
+      
+      a = A.new;
+      b = B.new;
+      a = b;
+      a.set: 0;
+      a = self.m: a;
+      b = self.m: b;
+      a = self.p: 0;
+   }   
+
+end
+

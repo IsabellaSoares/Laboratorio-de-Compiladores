@@ -1,0 +1,21 @@
+/*
+Giovanna Blasco Martin
+giovanna.blasco@hotmail.com
+*/
+
+@annot("check", "identifierNotFound")
+@cep(10, "Uso de variável de instância sem 'self'", "Identifier 'a' was not found", "comp.Compiler.factor()" )
+
+class Program
+  
+    private var Int a;
+  
+    func run {
+
+        var Int b;
+        b = 1;
+        a = b;
+    }
+
+end
+

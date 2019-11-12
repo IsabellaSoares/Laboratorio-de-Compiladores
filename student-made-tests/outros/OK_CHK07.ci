@@ -1,0 +1,137 @@
+@nce
+
+/*
+  Mateus Silva Vasconcelos
+  mattvasc@outlook.com
+*/
+
+/*
+  @filename   ok-chk07.kra
+
+  @comment    Este programa e' usado para testar o 'refactoring'  'extract class'.
+   Note que o codigo resultante do refactoring pode NAO compilar.
+   E' o caso deste exemplo.
+
+*/
+
+class Person
+   
+   private var String course;
+   private var Int number;
+   private var Int age;
+   private var String  name;
+   
+   public func getCourse -> String {
+      return self.course;
+   }   
+   
+   public func setCourse: String  course {
+      self.course = course;
+   }   
+   
+   public func getNumber -> Int {
+      return self.number;
+   }   
+   
+   public func setNumber: Int number {
+      self.number = number;
+   }   
+   
+   public func init: String name, Int age {
+      self.name = name;
+      self.age = age;
+   }   
+   
+   public func getName -> String {
+      return self.name;
+   }   
+   
+   public func getAge -> Int {
+      return self.age;
+   }   
+   
+   public func print {
+      Out.println:  "Name = " ++ self.name;
+      Out.println:  "Age = " ++ self.age; 
+   }   
+end
+
+
+class Group
+   
+   private var Person first;
+   private var Person second;
+   
+   public func set: Person first, Person second {
+      self.first = first;
+      self.second = second;
+   }   
+   
+   public func getFirst -> Person {
+      return self.first;
+   }   
+   
+   public func getSecond -> Person {
+      return self.second;
+   }   
+   
+   public func print {
+      Out.println:  "First: " ++ self.first.getName;
+      Out.println:  "Second: " ++ self.second.getName;
+   }   
+
+end
+
+
+class University
+   
+   private var String  name;
+   private var Int numberOfStudents;
+   private var String  city;
+   
+   public func init: String  name, String  city, Int numberOfStudents {
+      self.name = name;
+      self.city = city;
+      self.numberOfStudents = numberOfStudents;
+   }   
+   
+   public func print {
+      Out.println:  self.name;
+      Out.println:  self.city;
+      Out.println:  self.numberOfStudents;
+   }   
+
+end
+
+
+class Program
+   
+   public func run {
+      var University s;
+      var Person joao;
+      var Person maria;
+      var Group g;
+      
+      s = University.new;
+      s.init: "UFSCar", "Sao Carlos", 7000;
+      s.print;
+      Out.println: "";
+      joao = Person.new;
+      joao.init: "Joao", 21;
+      joao.setCourse: "EnC";
+      joao.setNumber: 6729;
+      maria = Person.new;
+      maria.init: "Maria", 20;
+      maria.setCourse: "Fisioterapia";
+      maria.setNumber: 8607;
+      joao.print;
+      Out.println: "";
+      maria.print;
+      Out.println: "";
+      g = Group.new;
+      g.set: joao, maria;
+      g.print;
+      Out.println: "";
+   }   
+
+end

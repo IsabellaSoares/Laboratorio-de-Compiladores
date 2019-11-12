@@ -1,0 +1,18 @@
+/* 
+Lucas Rigo Yoshimura
+lucasrigoyoshimura@gmail.com
+*/
+
+@cep(11, "Falta fechar com '}' o 'while' ou, se preferir, a funcao",
+  "'}' expected", "comp.Compiler.classDec()")
+
+class Program 
+  
+    func run {
+        
+        while ( true ) {
+        
+    }
+
+end
+

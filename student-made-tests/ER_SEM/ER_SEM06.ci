@@ -1,0 +1,15 @@
+/*
+    Breno V. V. de Oliveira
+    breno.oliveira@dcomp.sor.ufscar.br
+*/
+@annot("check", "exprRightHandSideAssignment")
+@cep(6, "Instrucao esperada, atribuicao a valor", "'operator expected' or 'variable expected at the left-hand side of a assignment'")
+ 
+      
+class Program 
+  
+    func run {
+        0 = 0;       
+    }
+
+end

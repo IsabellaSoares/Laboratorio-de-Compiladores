@@ -1,0 +1,19 @@
+@annot("check", "missingOverride")
+@cep(10, "An overridden method should be preceded by 'override'",
+         "'override' expected before overridden method")
+
+open 
+class A
+    public func put: Int x, String s {
+    }
+end
+
+class B extends A
+    public func put: Int x, String s {
+    }
+end
+
+class Program
+    func run {
+    }
+end

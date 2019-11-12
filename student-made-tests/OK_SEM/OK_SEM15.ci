@@ -1,0 +1,47 @@
+/*
+Renan Rossignatti de França
+renanrfranca@gmail.com
+*/
+
+@annot("check", "supertypeAssignSelf")
+@nce
+
+/*
+    @filename   OK-SEM15.ci
+
+    @comment    Testa se o compilador aceita self onde se espera objeto de superclasse
+*/
+
+open
+class A
+
+    func print {
+        Out.println: 0;
+    }
+
+    func accept: A x {
+        x.print;
+    }
+
+end
+
+open
+class B extends A
+
+    func m {
+        super.accept: self;
+    }
+
+end
+
+
+class Program
+
+    func run {
+        var B b;
+
+        b = B.new;
+        b.m;
+    }
+
+end

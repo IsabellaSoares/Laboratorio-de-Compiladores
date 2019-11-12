@@ -1,0 +1,32 @@
+/* 
+Giovana Vieira de Morais 
+giovana.vmorais@gmail.com
+*/
+
+@annot("check", "wrongSubclassMethodSignature")
+@cep(14, "'put' redefinido em 'B' com parâmetros diferentes daqueles da superclasse A",
+    "Method 'put' is being redefined in subclass 'B' with a signature different from the method of superclass 'A'",
+    "comp.Compiler.methodDec()")
+
+open 
+class A
+    private var Int i;
+
+    public func put: Int x, Int y, Boolean ok {
+
+    }
+end
+
+class B extends A
+    func put: Int x, Int y, Int ok {
+    }
+end
+
+class Program 
+    func run {
+        var A a;
+        
+        a = A.new;
+        a.put: 0, 1, true;
+    }
+end

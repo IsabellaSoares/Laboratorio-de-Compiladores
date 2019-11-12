@@ -1,0 +1,41 @@
+/*
+Giovanna Blasco Martin
+giovanna.blasco@hotmail.com
+*/
+
+@annot("check", "typeErrorSearchMethod")
+@cep(30, "Chamada a método inexistente", "Method 's' was not found in class 'C' or its superclasses", "comp.Compiler.factor()" )
+  
+open
+class A
+
+    func m {
+    }
+
+end
+
+open
+class B extends A
+  
+    func p {
+    }
+
+end
+
+class C extends B
+  
+    func r {
+    }
+
+end
+
+class Program
+  
+    func run {
+        var C c;
+        c = C.new;
+        c.s;  
+    }
+
+end
+

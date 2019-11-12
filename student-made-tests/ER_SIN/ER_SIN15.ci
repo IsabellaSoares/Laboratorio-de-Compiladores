@@ -1,0 +1,13 @@
+/*
+    João Paulo Francisco de Paula
+*/
+﻿@cep(6, "Não pode existir comentário no meio de um número",
+     "';' expected", "comp.Compiler.writeStatement()")
+
+class Program
+
+    func run {
+        Out.print: 2/*A*/4;
+    }
+
+end

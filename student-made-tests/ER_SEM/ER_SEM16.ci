@@ -1,0 +1,15 @@
+@annot("check", "typeError")
+@cep(10, "Menos unário aplicado a booleano", 
+  "Operator '-' does not accepts 'boolean' expressions",
+  "comp.Compiler.signalFactor()")
+  
+
+class Program 
+   
+   func run {
+      var Boolean b;
+      b = false;
+      Out.println: -b;  //#
+   }   
+
+end

@@ -1,0 +1,15 @@
+@annot("check", "illegalTypeOrIdentifier")
+@cep(9, "Não se pode atribuir objetos a métodos ",
+        "Identifier 'run' was not declared")
+
+class A end
+
+
+class Program 
+   
+    public func run {
+        run = nil;
+    }   
+
+end
+

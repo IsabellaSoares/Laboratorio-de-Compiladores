@@ -1,0 +1,26 @@
+/* 
+
+Evelin Soares
+evelincontatos@gmail.com
+
+*/
+
+@annot("check", "typeErrorAssignRightSideNotSubtypeLeftSide")
+@cep(14, "Objeto não pode receber valores de tipos basicos",
+     "Type error: the type of the expression of the right-hand side is a basic type and the type of the variable of the left-hand side is a class",
+     "comp.Compiler.assignExprLocalDec()")
+
+
+
+class A
+end
+
+class Program
+
+    func run {
+        var A a;
+
+        a = 0;
+    }
+
+end

@@ -1,0 +1,23 @@
+/* 
+William A Alves
+willianadrianoalves@hotmail.com
+*/
+
+@cep(4, "identificador 'getUser' e ':' devem estar juntos", "")
+  
+class Milhar
+    var Int numero;
+    func getUser : Int n -> Int {
+        self.numero = n*1000;
+        return self.numero;
+    }
+end
+
+class Program 
+    func run { 
+        var Milhar numero; 
+        numero = Milhar.new;
+        numero.getUser: 1;
+        Out.println: numero;        
+    } 
+end

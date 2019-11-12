@@ -1,0 +1,16 @@
+@annot("check", "typeError")
+@cep(8, "! aplicado a inteiro", 
+  "Operator '!' does not accepts 'int' values", "comp.Compiler.factor()")
+ 
+class Program 
+   
+   func run {
+      var Int i;
+      i = 0;
+      if ! i  {  //#
+      }
+      
+   }   
+
+end
+

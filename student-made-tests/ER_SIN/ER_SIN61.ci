@@ -1,0 +1,20 @@
+/* 
+Luciane Lopes
+luciane.silva@msn.com
+*/
+
+@cep(11, "')' deve vir depois da expressão do 'until'}", 
+  "')' expected", 
+  "comp.Compiler.repeatStat()")
+
+class Program
+
+    func run {
+        var Int i;
+        i = 0;
+        repeat
+            i = i + 1;
+        until (i < 10;  
+    }
+
+end

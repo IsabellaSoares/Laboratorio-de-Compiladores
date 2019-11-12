@@ -1,0 +1,29 @@
+/*
+Michael dos Santos
+michael-santos@outlook.com.br
+*/
+
+@nce
+
+/*
+    @filename    ok-lex03.kra
+    
+    @comment    Testa varias alternativas de composicao de comentarios
+    */
+
+class A
+    /*    /*  //    */
+    func m /*//*/{
+        
+    }
+end
+
+class Program
+    func run {
+        var A a/**/;
+        
+        a = A.new;
+        a //
+        . /* // */ m;
+    }
+end

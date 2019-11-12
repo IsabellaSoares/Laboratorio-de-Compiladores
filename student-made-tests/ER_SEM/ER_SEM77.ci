@@ -1,0 +1,16 @@
+/* 
+Gustavo Eda
+edapd12@gmail.com
+*/
+
+@annot("check", "missingRunMethodInProgram")
+@cep(9, "Classe 'Program' sem método 'run'", 
+    "Method 'run' was not found in class 'Program'",
+    "comp.Compiler.classDec()")
+
+class Program
+    
+    func m {
+    }
+
+end
