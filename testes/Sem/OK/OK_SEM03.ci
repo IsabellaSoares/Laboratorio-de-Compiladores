@@ -1,0 +1,31 @@
+/*
+    Nathan Eloy
+    nathaneloy@hotmail.com
+*/
+
+@annot("check", "typeErrorEqualEqualNotEqual")
+@nce
+
+/*
+    @filename   ok-sem03.ci
+
+    @comment    testa se o compilador aceita comparacoes com == e != com
+                Strings e nil
+*/
+
+
+class Program
+
+    func run {
+        var String r, s;
+
+        r = "Ola";
+        s = "Tudo bem?";
+        if ( (r == s) && (r != s) && (r == nil) && (nil == r) &&
+            (r == "Ola") && ("Ola" == r) && (r != nil) && (r != "Ola") &&
+            ("Ola" != r) && ("nil" == nil) ) {
+            Out.println: "impossivel";
+        }
+    }
+
+end

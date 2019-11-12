@@ -295,6 +295,8 @@ public class Compiler {
 		ArrayList<Variable> paramList = new ArrayList<>();
 		ArrayList<Statement> statList = new ArrayList<>();
 		
+		paramList = null;
+		
 		semanticChecking.clearHashParameters();
 		semanticChecking.clearHashLocalVariables();
 		
@@ -1359,7 +1361,7 @@ public class Compiler {
 	}
 	
 	private Type verifySendMessage(String variableName, String methodName, ArrayList<Expr> exprList) {
-		System.out.println(variableName+"."+methodName);
+		//System.out.println(variableName+"."+methodName);
 		
 		MethodDec method = null;
 		if(!variableName.equals("self")) {

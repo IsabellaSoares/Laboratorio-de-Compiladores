@@ -1,0 +1,24 @@
+/* 
+    Caroline Aparecida
+    hicaarol@gmail.com
+*/
+
+@annot("check", "methodsEqualNames")
+@cep(10, "Dois métodos públicos com mesmo nome", 
+  "Method 'm' is being redeclared",
+  "comp.Compiler.methodDec()")
+  
+
+class Program 
+
+    func m {
+    }
+
+    func m {  
+    }
+  
+    func run {
+    
+    }
+
+end

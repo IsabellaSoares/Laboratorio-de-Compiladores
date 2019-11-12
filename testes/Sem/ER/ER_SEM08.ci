@@ -1,0 +1,18 @@
+/*
+    Breno V. V. de Oliveira
+    breno.oliveira@dcomp.sor.ufscar.br
+*/
+@annot("check", "typeError")
+@cep(7, "Uso de operador aritmético com valores booleanos", 
+   "type boolean does not support operation '+'", "comp.Compiler.simpleExpr()")
+  
+
+class Program 
+   
+   func run {
+      Out.println:  true + false ;   
+   }   
+
+end
+
+

@@ -5,12 +5,12 @@ vitor.fogaca@outlook.com
 
 class Teste
     var Int n;
-	
+    
     func get -> Int {
         return self.n;
     }
-	
-	@cep(2, "token 'this' not recognized");
+    
+    @cep(2, "token 'this' not recognized")
     func set: Int n {
         this.n = n;
     }

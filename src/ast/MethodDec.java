@@ -29,13 +29,34 @@ public class MethodDec extends Member {
 	}
 	
 	public void genJava( PW pw ) {
+		
+		String methodName = this.method.getName();
+		
+		if (methodName.substring(methodName.length() - 1).equals(":")) {
+			methodName = methodName.substring(0, methodName.length() - 1);
+	    }
+		
 		if (this.method.getType().getCname().equals("NULL")) {
-			pw.print("void " + this.method.getName());
-		} else {
-			pw.print(this.method.getType().getName() + " " + this.method.getName());
+			pw.print("void " + methodName);
+		} else {			
+			pw.print(this.method.getType().getName() + " " + methodName);
 		}
 		
-		pw.println(" () {");
+		if (paramList != null) {
+			pw.print(" (");
+			
+			for (int i = 0; i < paramList.size(); i++) {
+				if (i > 0) {
+					pw.print(", ");
+				}
+				
+				paramList.get(i).genJava(pw);
+			}
+			
+			pw.println(") {");
+		} else {
+			pw.println(" () {");
+		}		
 		
 		if (statList != null) {
 			pw.add();

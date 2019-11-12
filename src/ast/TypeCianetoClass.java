@@ -53,6 +53,9 @@ public class TypeCianetoClass extends Type {
    
    public void genJava (PW pw) {
 	   pw.printlnIdent("private static class " + this.getCname() + " {");
+	   
+	   System.out.println("SUPER CLASS NAME");
+	   System.out.println(superName);
 		
 		for(MemberList ml : memberList) {
 			if (ml != null) {

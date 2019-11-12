@@ -1,0 +1,28 @@
+@annot("check", "openAsIdentifier")
+@nce
+
+/*
+  @filename   ok-sem11.ci
+
+  @comment    Testa se o compilador aceita metodo com nome 'open',
+              que não é uma palavra-chave
+  */
+
+class A 
+   
+   public func open {
+   }   
+
+end
+
+
+class Program 
+   
+   func run {
+      var A a;
+      
+      a = A.new;
+      a.open;
+   }   
+
+end

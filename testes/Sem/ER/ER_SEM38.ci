@@ -1,0 +1,29 @@
+/*
+Evelin Soares
+evelincontatos@gmail.com
+*/
+
+@annot("check", "typeErrorAssignRightSideNotSubtypeLeftSide")
+@cep(14, "A instrução 'b = a' está errada. Variáveis de subclasses não podem receber objetos de superclasses",
+   "Type error: type of the right-hand side of the assignment is not a subclass of the left-hand side",
+   "comp.Compiler.assignExprLocalDec()")
+
+open
+class A
+end
+
+class B extends A
+    func run {
+        var A a;
+        var B b;
+
+        a = A.new;
+        b = a;
+    }
+
+end
+
+class Program 
+    func run { 
+    }
+end

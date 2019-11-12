@@ -15,7 +15,7 @@ class Teste
     }
 end
 
-@cep(4, "type 'Integer' not recognized");
+@cep(4, "type 'Integer' not recognized")
 class Program
     func run {
         var Teste t;

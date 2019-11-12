@@ -33,8 +33,13 @@ public class PrimarySimpleExpr extends PrimaryExpr {
 	 */
 	
 	public void genJava( PW pw, boolean putParenthesis ) {
-		if (id1 != null)
-			pw.printIdent(id1);
+		if (id1 != null) {
+			if (putParenthesis) {
+				pw.print(id1);
+			} else {
+				pw.printIdent(id1);
+			}
+		}			
 		
 		if (id2 != null) {
 			pw.print("." + id2 + "(");

@@ -1,0 +1,15 @@
+@annot("check", "repeatUntilBreak")
+@nce
+
+class Program 
+    func run { 
+        var Int n = 10;
+        repeat
+            if n < 5 {
+                break;
+            }
+            n = n - 1;
+        until n == 0;
+    } 
+end
+

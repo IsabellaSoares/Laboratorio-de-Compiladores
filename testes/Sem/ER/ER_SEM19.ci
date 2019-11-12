@@ -1,0 +1,23 @@
+@annot("check", "typeNotFound")
+@cep(7, "Tipo invalido", 
+   "Type 'Program' was not found", "comp.Compiler.localDec()")
+  
+      
+class A 
+  
+    func m {
+       var Program i;       //#
+    }
+
+end
+
+class Program 
+  
+    func run {
+
+       var A a;
+       a = A.new;
+       a.m;
+    }
+
+end

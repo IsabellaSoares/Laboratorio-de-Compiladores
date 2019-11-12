@@ -23,9 +23,9 @@ public class CompositeExpr extends Expr {
 		if (left != null) 
 			left.genJava(pw, putParenthesis);
 		
-		if (op != null) 
+		if (op != null)
 			pw.print(" " + op.toString() + " ");
-		
+				
 		if (right != null) 
 			right.genJava(pw, putParenthesis);
 		

@@ -38,6 +38,8 @@ public class PrimarySelfExpr extends PrimaryExpr {
 	 * public Type getType() { return null; };
 	 */
 	
-	public void genJava( PW pw, boolean putParenthesis ) {};
+	public void genJava( PW pw, boolean putParenthesis ) {
+		pw.printIdent("this." + id1);
+	};
 	
 }

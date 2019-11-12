@@ -29,5 +29,7 @@ public class Variable extends Member {
 		return this.type;
 	}
 	
-	public void genJava( PW pw ) {};
+	public void genJava( PW pw ) {
+		pw.print(type.getName() + " " + name);
+	};
 }
