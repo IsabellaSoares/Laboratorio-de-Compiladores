@@ -25,5 +25,26 @@ public class PrimarySuperExpr extends PrimaryExpr {
 	 * public Type getType() { return null; };
 	 */
 	
-	public void genJava( PW pw, boolean putParenthesis ) {};
+	public void genJava( PW pw, boolean putParenthesis ) {
+		if (id.substring(id.length() - 1).equals(":")) {
+			id = id.substring(0, id.length() - 1);
+	    }
+		
+		pw.printIdent("super." + id + "(");
+		
+		int indent = pw.get();
+		pw.set(0);
+		
+		for (int i = 0; i < exprList.size(); i++) {
+			if (i > 0) {
+				pw.print(", ");
+			}
+			
+			exprList.get(i).genJava(pw);
+		}
+		
+		pw.set(indent);
+		
+		pw.print(")");
+	};
 }

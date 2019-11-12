@@ -42,6 +42,10 @@ public class PrimarySimpleExpr extends PrimaryExpr {
 		}			
 		
 		if (id2 != null) {
+			if (id2.substring(id2.length() - 1).equals(":")) {
+				id2 = id2.substring(0, id2.length() - 1);
+		    }
+			
 			pw.print("." + id2 + "(");
 			
 			if (exprList != null) {

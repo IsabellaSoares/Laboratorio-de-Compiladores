@@ -22,16 +22,16 @@ public class OK_SEM05 {
       }
    }
 
-   private static class B {
-      override void set (int pn) {
+   private static class B extends A {
+      @Override void set (int pn) {
          System.out.print(pn);
-;
+         super.set(pn);
       }
    }
 
    private static class Program {
       public void m (B a) {
-         a.set:(0);
+         a.set(0);
          return new B();
       }
       public void p (int i) {
@@ -46,10 +46,10 @@ public class OK_SEM05 {
          a = new A();
          b = new B();
          a = b;
-         a.set:(0);
-         a = this.m:;
-         b = this.m:;
-         a = this.p:;
+         a.set(0);
+         a = this.m(a);
+         b = this.m(b);
+         a = this.p(0);
       }
    }
 

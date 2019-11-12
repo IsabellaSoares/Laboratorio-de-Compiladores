@@ -24,7 +24,14 @@ public class MemberList {
 	}
 	
 	public void genJava(PW pw) {
-		pw.printIdent(qualifier.getToken1() + " ");
+		String q = qualifier.getToken1().toString();
+		
+		if (q.equals("override")) {
+			pw.printIdent("@Override ");
+		} else {			
+			pw.printIdent(qualifier.getToken1() + " ");			
+		}
+		
 		member.genJava(pw);
 	}
 }

@@ -313,7 +313,6 @@ public class Compiler {
 		
 		if ( lexer.token == Token.MINUS_GT ) {
 			lexer.nextToken();
-			
 			Type methodType = type();
 			
 			if (methodType == null)
