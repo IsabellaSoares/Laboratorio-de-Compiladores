@@ -1,0 +1,21 @@
+@annot("check", "missingOverride")
+@cep(11, "An overridden method should be preceded by 'override'",
+         "'override' expected before overridden method")
+
+open 
+class A
+    public func zero -> Int { 
+        return 0;
+    }
+end
+
+class B extends A
+    public func zero -> Int {
+        return 1; 
+    }
+end
+
+class Program 
+    func run {
+    }
+end

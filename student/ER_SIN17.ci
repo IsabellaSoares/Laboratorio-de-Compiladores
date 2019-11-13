@@ -1,0 +1,14 @@
+/*
+    João Paulo Francisco de Paula
+*/
+@cep(6, "Falta ';' após declaração do 'i'", "Missing ';'", 
+"comp.Compiler.localDec()")
+
+class Program
+
+    func run {
+        var Int i
+        Out.print: 0;
+    }
+
+end

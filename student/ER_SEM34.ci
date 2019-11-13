@@ -1,0 +1,28 @@
+/* 
+    Caroline Aparecida
+    hicaarol@gmail.com
+*/
+
+@annot("check", "methodReturnValueNotUsed")
+@cep(17, "Envio de mensagem 'a.m()' retorna um valor mas está sendo utilizado como uma instrução",
+        "Message send 'a.m()' returns a value that is not used",
+        "comp.Compiler.statement()")
+
+class A 
+   
+    func m -> Int {
+        return 0;
+    }   
+
+end
+
+class Program 
+
+    func run {
+        var A a;
+        a = A.new;
+        a.m;           
+    }
+
+end
+

@@ -1,0 +1,47 @@
+/*
+Renan Rossignatti de França
+renanrfranca@gmail.com
+*/
+
+@annot("check", "nilAssign", "nilEqualEqualNotEqual")
+@nce
+
+/*
+    @filename   OK-SEM14.ci
+
+    @comment    Testa se o compilador aceita atribuicao a nil e comparacoes
+                == e !=
+  */
+
+open
+class A
+end
+
+open
+class B extends A
+end
+
+
+class Program
+   
+    func run {
+        var A a, a2;
+        var B b;
+        
+        a = nil;
+        b = nil;
+        a2 = nil;
+        if a == b {
+            Out.println: 0;
+        }
+        if b == a {
+            Out.println: 1;
+        }
+        if a == a2 {
+            Out.println: 2;
+        }
+    }   
+
+end
+
+

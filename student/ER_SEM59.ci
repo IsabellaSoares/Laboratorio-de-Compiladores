@@ -1,0 +1,28 @@
+/* 
+Giovana Vieira de Morais 
+giovana.vmorais@gmail.com
+*/
+
+@annot("check", "typeErrorSearchMethod")
+@cep(19,
+"Chamada a método privado",
+"Method 'p' was not found in the public interface of 'A' or ts superclasses",
+"comp.Compiler.factor()")
+
+class A
+    private func p {
+    }
+
+    public func m {
+        self.p;
+    }
+end
+
+class Program 
+    func run {
+        var A a;
+
+        a = A.new;
+        a.p;
+    }
+end

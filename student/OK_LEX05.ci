@@ -1,0 +1,19 @@
+/*
+Michael dos Santos
+michael-santos@outlook.com.br
+*/
+
+@nce
+
+/*
+    @filename    ok-lex05.kra
+
+    @comment    Testa se o lexico considera os numeros abaixo como validos
+    */
+
+class Program
+    func run {
+        Out.print: 0;
+        Out.print: 2147483647;
+    }
+end

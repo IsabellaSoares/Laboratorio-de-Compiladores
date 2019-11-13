@@ -1,0 +1,44 @@
+/*
+    Victor Hide Watanabe
+    victor.watanabe@dcomp.sor.ufscar.br
+*/
+
+@annot("check", "repeatUntil")
+@nce
+
+/*
+    @filename   ok-sin16.kra
+
+    @comment    test do-while
+
+*/
+
+
+class Program 
+
+    func run {
+        var Boolean b;
+        b = false;
+        repeat
+            
+        until false;
+        
+        repeat
+
+        until b;
+        
+        var Int i, j, n;
+        i = 0;
+        j = 0;
+        n = 10;
+
+        repeat
+            repeat
+                i = i + 1;
+                Out.println: i;
+            until i < n;
+            j = j + 1;
+        until j < n;
+    }
+end
+

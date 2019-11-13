@@ -1,0 +1,11 @@
+// Isabela Sayuri Matsumoto - 726539 isabelasassa@hotmail.com
+@cep(5, "' Out.print' sem argumentos", "Command ' Out.print' without arguments", "comp.Compiler.writeStatement()")
+
+class Program 
+  
+    func run {
+        Out.print: ;
+                
+    }
+
+end

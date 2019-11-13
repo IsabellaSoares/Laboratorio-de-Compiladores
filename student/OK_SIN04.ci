@@ -1,0 +1,33 @@
+/*
+Renan Rossignatti de França
+renanrfranca@gmail.com
+*/
+
+@nce
+
+/*
+    @filename   OK-SIN04.ci
+      
+    @comment    Confere se o sintatico consegue manipular comandos profundamente
+    aninhados
+    */
+
+
+class Program
+
+    func run {
+        if 1 < 2 {
+            if 2 < 3 {
+                if 3 < 4 {
+                    if 4 < 5 {
+                        if 5 < 6 {
+                            if 6 < 7 {
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+end

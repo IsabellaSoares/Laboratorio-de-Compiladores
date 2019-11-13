@@ -1,0 +1,18 @@
+/* 
+    Lucca Carvalho
+    luccalafonte97@gmail.com
+*/
+
+@cep(9, "Construtores não tomam parâmetros", 
+  "')' expected", 
+  "comp.Compiler.factor()")
+
+class Program 
+
+    func run {
+
+        var Program p;
+        p = Program.new: nil;
+    }
+
+end

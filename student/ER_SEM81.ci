@@ -1,0 +1,16 @@
+/* 
+Gustavo Eda
+edapd12@gmail.com
+*/
+
+@annot("check", "privateMethodRunOfClassProgram")
+@cep(6, "método run deve ser publico", 
+    "Method 'run' of class 'Program' cannot be private",
+    "comp.Compiler.methodDec()" )
+
+class Program 
+    
+    private func run {
+    }
+
+end

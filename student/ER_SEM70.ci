@@ -1,0 +1,30 @@
+/*
+Giovanna Blasco Martin
+giovanna.blasco@hotmail.com
+*/
+
+@annot("check", "methodRedefinition")
+@cep(7, "Dois métodos com mesmo nome, um público e outro privado", "Method 'm' is being redefined", "comp.Compiler.methodDec()" )
+
+class A
+  
+    func m {
+    }
+  
+    private func m {   
+    }
+
+end
+
+
+
+class Program
+  
+    func run {
+
+        var A a;
+        a = A.new;
+        a.m;
+    }
+
+end

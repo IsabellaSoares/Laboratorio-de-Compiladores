@@ -1,0 +1,22 @@
+/* 
+    Lucca Carvalho
+    luccalafonte97@gmail.com
+*/
+
+@cep(6, "Palavras chave não podem estar em maiúscula", 
+  "'public', 'private' or '}' expected", 
+  "comp.Compiler.classDec()")
+
+class Program
+
+    PUBLIC func m {
+    }
+
+    func run {
+
+        var A a;
+        a = A.new;
+        a.m;
+    }
+
+end

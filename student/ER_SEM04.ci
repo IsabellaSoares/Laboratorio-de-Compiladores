@@ -1,0 +1,17 @@
+@annot("check", "typeErrorAssignRightSideNotSubtypeLeftSide")
+@cep(10, "Erro de tipos: 'false' não pode ser atribuído a uma variável inteira", 
+   "Type error: value of the right-hand side is not subtype of the variable of the left-hand side.",
+   "comp.Compiler.assignExprLocalDec()")
+  
+
+class Program 
+   
+   func run {
+      var Int i;
+      
+      i = false;   //#
+      Out.println: i;
+   }   
+
+end
+

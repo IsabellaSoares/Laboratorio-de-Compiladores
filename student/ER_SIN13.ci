@@ -1,0 +1,18 @@
+/*
+    João Paulo Francisco de Paula
+*/
+@cep(5, "Corpo do método ausente", "'{' expected", 
+"comp.Compiler.methodDec()")
+
+class A
+
+    func m
+end
+
+
+class Program
+
+    func run {
+    }
+
+end

@@ -1,0 +1,13 @@
+@annot("check", "typeError")
+@cep(8, "Valor booleano em expressao inteira", 
+  "operator '+' of 'Int' expects an 'Int' value",
+  "comp.Compiler.simpleExpr()")
+  
+
+class Program 
+   
+   func run {
+      Out.println: 1 + 2 + true + 1 + 0;   //#
+   }   
+
+end

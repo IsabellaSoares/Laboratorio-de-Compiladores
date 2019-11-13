@@ -1,0 +1,34 @@
+@annot("check", "selfAsExpression")
+@nce
+
+/*
+  @filename   ok-sem09.ci
+
+  @comment    Testa se o compilador aceita self como expressao valida
+  */
+
+class A 
+   
+   func m: Int n, A x {
+      var A other;
+      
+      other = self;
+      n = n - 1;
+      if n > 0 {
+         other.m: n, self;
+      }
+   }   
+
+end
+
+
+class Program 
+   
+   func run {
+      var A a;
+      
+      a = A.new;
+      a.m: 5, a;
+   }   
+
+end

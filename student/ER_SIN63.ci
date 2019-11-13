@@ -1,0 +1,18 @@
+/* 
+Luciane Lopes
+luciane.silva@msn.com
+*/
+
+@cep(9, "';' expected", 
+  "';' expected", 
+  "")
+
+class Program
+
+    func run {
+        var Int i;
+        i = 0;
+        i = i 1;
+    }
+
+end

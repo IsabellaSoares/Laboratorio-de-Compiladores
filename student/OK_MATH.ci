@@ -1,0 +1,66 @@
+/*
+    Vinícius Furukawa Carvalho
+    email: vinicius_furuka@hotmail.com.br
+*/
+
+@annot("check", "arithmeticOperators")
+@nce
+
+/*
+  @filename   ok-math.ci
+
+  @comment    Executa funções matemáticas
+
+*/
+
+class A
+
+    func sum: Int n1, Int n2 -> Int {
+        return n1 + n2;
+    }
+    
+    func sub: Int n1, Int n2 -> Int {
+        return (n1 - n2);
+    }
+    
+    func mult: Int n1, Int n2 -> Int {
+        return (n1 * n2);
+    } 
+    
+    func div: Int n1, Int n2 -> Int {
+        if n2 == 0 {
+            return -1;
+        } else {
+            return (n1 / n2);
+        }
+    } 
+    
+    func pow2: Int n1 -> Int{
+        return (n1 + n1);
+    } 
+
+end
+
+class Program
+   
+   func run {
+      var A a;
+      var Int n1;
+      var Int n2;
+      
+      Out.println: "";
+      a = A.new;
+      Out.println: "Ok-math";
+      
+      n1 = In.readInt;
+      n2 = In.readInt;
+      
+      Out.println: a.sum: n1,n2;
+      Out.println: a.sub: n1,n2;
+      Out.println: a.mult: n1,n2;
+      Out.println: a.div: n1,n2;
+      Out.println: a.pow2: n1;
+      Out.println: a.pow2: n2;
+   }   
+
+end

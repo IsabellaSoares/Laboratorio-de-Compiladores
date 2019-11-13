@@ -1,0 +1,58 @@
+@annot("check", "methodSearchSuperclass")
+@nce
+
+/*
+  @filename   ok-sem10.ci
+
+  @comment    Testa se o compilador aceita envios de mensagens a metodos
+  definidos nas superclasses.
+  */
+
+open
+class A 
+   
+   func first: Int pn {
+   }   
+
+end
+
+open
+class B extends A 
+   
+   func second {
+   }   
+
+end
+
+
+class C extends B 
+   
+   func third {
+   }   
+
+end
+
+
+class Program 
+   
+   public func run {
+      var A a;
+      var B b;
+      var C c;
+      
+      a = A.new;
+      b = B.new;
+      c = C.new;
+      a.first: 0;
+      b.first: 0;
+      c.first: 0;
+      b.second;
+      c.second;
+      c.third;
+      a = b;
+      a = c;
+      b = c;
+   }   
+
+end
+

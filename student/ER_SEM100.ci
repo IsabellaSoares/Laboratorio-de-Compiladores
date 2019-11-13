@@ -1,0 +1,29 @@
+/*
+Vitor Mesquita Fogaça
+vitor.fogaca@outlook.com
+*/
+
+class Teste
+    var Int n;
+
+    func get -> Int {
+        return self.n;
+    }
+
+    func set: Int n {
+        self.n = n;
+    }
+end
+
+@annot("check", "identifierNotFound")
+@cep(7, "variable 'error' not found", "Identifer 'error' was not found")
+class Program
+    func run {
+        var Teste t;
+        var Int a;
+        t = Teste.new;
+        a = In.readInt;
+        t.set: error;
+        Out.println: t.get;
+    }
+end

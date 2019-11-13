@@ -1,0 +1,11 @@
+@cep(5, "';' excedente", 
+  "'public', 'private', or '}' expected", "comp.Compiler.classDec()")
+
+class Program 
+    
+    private var Int i;  ;    //#
+  
+    func run { } 
+
+end
+

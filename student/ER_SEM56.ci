@@ -1,0 +1,14 @@
+@annot("check", "typeErrorPlusPlus")
+@cep(10, "'++' can only be used with Int or String",
+         "Illegal types with ++, only Int and String are allowed")
+
+class A
+end
+
+class Program
+    func run {
+        var A a;
+        a = A.new;
+        Out.println: "a = " ++ a;
+    }
+end

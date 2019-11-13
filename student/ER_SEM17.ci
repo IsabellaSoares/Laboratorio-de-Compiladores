@@ -1,0 +1,13 @@
+@annot("check", "typeErrorSearchMethod")
+@cep(7, "readInt não toma parâmetros", 
+   "Method 'readInt:' was not found", "comp.Compiler.readStatement())")
+  
+      
+class Program 
+  
+    func run {
+        Out.println: (In.readInt: 0);
+    }
+
+end
+

@@ -1431,7 +1431,7 @@ public class Compiler {
 	}
 	
 	private Type verifySendMessage(String variableName, String methodName, ArrayList<Expr> exprList) {
-		System.out.println(variableName+"."+methodName);
+		//System.out.println(variableName+"."+methodName);
 		
 		MethodDec method = null;
 		if(!variableName.equals("self")) {

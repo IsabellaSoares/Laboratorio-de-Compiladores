@@ -1,0 +1,92 @@
+/*
+    Vinícius Furukawa Carvalho
+    email: vinicius_furuka@hotmail.com.br
+*/
+
+@nce
+
+/*
+  @filename   ok-calc.ci
+
+  @comment    Imprime a media da matéria de lab compiladores
+  
+    se NTrab >= 6 e NProv >= 6 então
+      NFinal = (NTrab + NProv)/2
+    senão se NProv < 6 então
+            NFinal = menor entre NProv e NTrab
+      senão
+            NFinal = (2*NTrab + NProv)/3
+
+*/
+
+open
+class A
+
+    func calculaNota: Int ntrab, Int nprov -> Int{
+        var Int ans;
+        ans = 11;
+        if ntrab >= 6 {
+            if nprov >= 6 {
+                ans = ntrab + nprov;
+                ans = ans/2;
+                return ans;
+            }
+        } 
+        return ans;
+    }
+    
+    func calculaNotaB: Int ntrab, Int nprov -> Int{
+        var Int ans;
+        ans = (2 * ntrab + nprov)/3;
+        return ans;
+    }
+end
+
+class B extends A    
+    override
+    func calculaNotaB: Int ntrab, Int nprov -> Int {
+        if ntrab < nprov {
+            return ntrab;
+        } 
+        else {
+            return nprov;
+        }
+    }
+end
+
+class Program
+   
+   func run {
+      var A a;
+      var Int ans;
+      var Int ntrab;
+      var Int nprov;
+      
+      Out.println: "";
+      Out.println: "Ok-fib";
+      Out.println: "The output should be :";
+      Out.println: "0 <= x <= 10";
+      a = A.new;
+      
+      //Realiza a leitura da nota da prova e nota do trabalho
+      nprov = In.readInt;
+      ntrab = In.readInt;
+      
+      //Calcula a nota
+      ans = a.calculaNota: ntrab, nprov;
+      
+      if ans != 11 {
+          Out.println: ans;
+      } 
+      else {
+          if (ans == 11) && (nprov < 6) {
+              a = B.new;
+              Out.println: (a.calculaNotaB: ntrab, nprov);
+          } 
+          else {
+              Out.println: (a.calculaNotaB: ntrab, nprov);
+          }
+      }
+   }   
+
+end

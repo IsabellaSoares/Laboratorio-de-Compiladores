@@ -1,0 +1,28 @@
+/*
+Evelin Soares
+evelincontatos@gmail.com
+
+*/
+
+@annot("check", "expressionExpected")
+@cep(18,"Instrução 'i = a.m()' admite que m retorna algum valor", 
+        "Expression expected in the right-hand side of assignment",
+        "comp.Compiler.assignExprLocalDec()")
+
+
+class A     
+    func m {
+
+    }
+end
+
+
+class Program
+    func run {
+        var A a;
+        var Int i;
+
+        a = A.new;    
+        i = a.m;
+    }
+end
