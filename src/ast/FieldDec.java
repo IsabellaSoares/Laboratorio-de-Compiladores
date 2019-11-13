@@ -25,7 +25,8 @@ public class FieldDec extends Member {
 	}
     
     public void genJava( PW pw ) {
-		pw.print(type.getName() + " ");
+    	System.out.println(type);
+		pw.printIdent(type.getName() + " ");
 		
 		if (idList != null) {
 			for (int i = 0; i < idList.size(); i++) {

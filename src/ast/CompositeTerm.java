@@ -26,14 +26,14 @@ public class CompositeTerm extends Term {
 			if (putParenthesis)
 				pw.print("(");
 			
-			left.genJava(pw, putParenthesis);
+			left.genJava(pw, false);
 		}
 		
 		if (operator != null) {
 			pw.print(" " + operator.toString() + " ");
 			
 			if (right != null)
-				right.genJava(pw, putParenthesis);
+				right.genJava(pw, false);
 		}
 		
 		if (putParenthesis)

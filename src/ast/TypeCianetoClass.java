@@ -51,11 +51,12 @@ public class TypeCianetoClass extends Type {
       return getName();
    }
    
-   public void genJava (PW pw) {
-	   pw.printlnIdent("private static class " + this.getCname() + " {");
-	   
-	   System.out.println("SUPER CLASS NAME");
-	   System.out.println(superName);
+   public void genJava (PW pw) {   
+	   if (superName.equals("")) {
+		   pw.printlnIdent("private static class " + this.getCname() + " {");
+	   } else {
+		   pw.printlnIdent("private static class " + this.getCname() + " extends " + superName + " {");
+	   }
 		
 		for(MemberList ml : memberList) {
 			if (ml != null) {

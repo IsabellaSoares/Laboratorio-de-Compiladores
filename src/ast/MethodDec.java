@@ -36,6 +36,8 @@ public class MethodDec extends Member {
 			methodName = methodName.substring(0, methodName.length() - 1);
 	    }
 		
+		//System.out.println(this.method.getType());
+		
 		if (this.method.getType().getCname().equals("NULL")) {
 			pw.print("void " + methodName);
 		} else {			

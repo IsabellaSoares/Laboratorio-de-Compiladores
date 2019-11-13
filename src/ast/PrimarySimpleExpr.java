@@ -42,13 +42,26 @@ public class PrimarySimpleExpr extends PrimaryExpr {
 		}			
 		
 		if (id2 != null) {
+			if (id2.substring(id2.length() - 1).equals(":")) {
+				id2 = id2.substring(0, id2.length() - 1);
+		    }
+			
 			pw.print("." + id2 + "(");
+			
+			int indent = pw.get();
+			pw.set(0);
 			
 			if (exprList != null) {
 				for (int i = 0; i < exprList.size(); i++) {
+					if (i > 0) {
+						pw.print(", ");
+					}
+					
 					exprList.get(i).genJava(pw);
 				}
 			}
+			
+			pw.set(indent);
 			
 			pw.print(")");
 		}

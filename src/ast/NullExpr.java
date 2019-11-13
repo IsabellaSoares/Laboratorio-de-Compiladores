@@ -11,7 +11,7 @@ public class NullExpr extends Factor {
 	}
 	
    public void genJava( PW pw, boolean putParenthesis ) {
-      pw.printIdent("NULL");
+      pw.print("null");
    }
    
 	/*

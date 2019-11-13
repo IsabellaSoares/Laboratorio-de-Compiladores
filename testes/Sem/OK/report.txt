@@ -20,8 +20,8 @@ Os nomes de arquivos listados s�o aqueles que testam 'aspecto' e nos quais o c
 Os testes s�o categorizados por import�ncia: 'Muito importante', 'Importante', 'pouco importante'
 
 Testes 'Muito importantes' em que o compilador acertou:
-    typeErrorAssignRightSideNotSubtypeLeftSide
-        ./testes/Sem/OK/OK_SEM05.ci
+    methodSearchSuperclass
+        ./testes/Sem/OK/OK_SEM10.ci
 
 
 _________________________________________________________________________
@@ -32,7 +32,7 @@ O compilador n�o sinalizou nenhum erro que n�o deveria ter sinalizado
 Para o caso de teste que voc� utilizou, o compilador est� correto
 
 List of Java files with compilation errors: 
-   ./testes/Sem/OK/OK_SEM05.java
+   ./testes/Sem/OK/OK_SEM10.java
 
 List of files with correct Java code: 
 

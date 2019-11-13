@@ -13,6 +13,7 @@ public class PrimarySelfExpr extends PrimaryExpr {
 	public PrimarySelfExpr (String id, Type type) {
 		super(type);
 		this.id1 = id;
+		this.exprList = null;
 	}
 	
 	public PrimarySelfExpr (String id, ArrayList<Expr> exprList, Type type) {
@@ -25,6 +26,7 @@ public class PrimarySelfExpr extends PrimaryExpr {
 		super(type);
 		this.id1 = id1;
 		this.id2 = id2;
+		this.exprList = null;
 	}
 	
 	public PrimarySelfExpr (String id1, String id2, ArrayList<Expr> exprList, Type type) {
@@ -38,8 +40,40 @@ public class PrimarySelfExpr extends PrimaryExpr {
 	 * public Type getType() { return null; };
 	 */
 	
-	public void genJava( PW pw, boolean putParenthesis ) {
-		pw.printIdent("this." + id1);
-	};
+	public void genJava( PW pw, boolean putParenthesis ) {		
+		
+		putParenthesis = false;
+		
+		if (exprList != null) {
+			if (id1.substring(id1.length() - 1).equals(":")) {
+				id1 = id1.substring(0, id1.length() - 1);
+		    }
+			
+			if (id1.equals("self")) {
+				pw.printIdent("this(");
+			} else {
+				pw.printIdent("this." + id1 + "(");
+			}
+			
+			
+			putParenthesis = true;
+		} else {
+			if (id1.equals("self")) {
+				pw.printIdent("this");
+			} else {
+				pw.printIdent("this" + id1);
+			}			
+		}		
+		
+		if (exprList != null) {
+			for (int i = 0; i < exprList.size(); i++) {
+				exprList.get(i).genJava(pw);
+			}
+		}
+		
+		if (putParenthesis) {
+			pw.print(")");
+		}
+	}
 	
 }
