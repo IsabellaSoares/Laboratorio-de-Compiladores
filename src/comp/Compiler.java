@@ -971,11 +971,16 @@ public class Compiler {
 			
 			right = expr();
 			
-			if(!left.getType().getName().equals(right.getType().getName())) {
+			if (right == null) this.error("Expression expected");
+			if(!left
+					.getType()
+					.getName()
+					.equals(
+							right
+							.getType()
+							.getName())) {
 				this.error("Type error: value of the right-hand side is not subtype of the variable of the left-hand side.");
 			}
-			
-			if (right == null) this.error("Expression expected");			
 		}
 		
 		//check(Token.SEMICOLON, "';' expected");
