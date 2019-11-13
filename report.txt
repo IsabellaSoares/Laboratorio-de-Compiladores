@@ -1,0 +1,84 @@
+Relatório do Compilador
+
+Resumo
+_________________________________________________________________________
+MI:  0             I: 0              PI: 0             Exc: 0
+ SSE: 0/16/0%      
+
+MI = muito importante, I = importante, PI = pouco importante, Exc = exceções
+Dev = deveria ter sinalizado, LE = sinalizou linha errada, SSE = sinalizado sem erro
+_________________________________________________________________________
+
+Número de testes 'Muito importantes' em que o compilador falhou: 0
+Número de testes 'Importantes' em que o compilador falhou: 0
+Número de testes 'Pouco importantes' em que o compilador falhou: 0
+
+O compilador obteve sucesso em testar alguns aspectos (construções) de Cianeto. A lista abaixo consiste de entradas da forma 
+    aspecto
+        listas de nomes de arquivos
+Os nomes de arquivos listados são aqueles que testam 'aspecto' e nos quais o compilador obteve sucesso e gerou código correto (se opção -genjava ou -genc foi usada).
+Os testes são categorizados por importância: 'Muito importante', 'Importante', 'pouco importante'
+
+Testes 'Muito importantes' em que o compilador acertou:
+    typeErrorAssignRightSideNotSubtypeLeftSide
+        OK_SEM05.ci
+
+    typeErrorEqualEqualNotEqual
+        OK_SEM03.ci
+        OK_SEM04.ci
+
+    supertypeAssignSelf
+        OK_SEM15.ci
+
+    methodSearchSuperclass
+        OK_SEM10.ci
+
+    nilEqualEqualNotEqual
+        OK_SEM14.ci
+
+    nilAssign
+        OK_SEM14.ci
+
+
+Testes 'importantes' em que o compilador acertou:
+    localVarSameClassName
+        OK_SEM12.ci
+
+    localVarSameMethodName
+        OK_SEM13.ci
+
+    scopeLocalVarField
+        OK_SEM06.ci
+
+
+Testes 'pouco importantes' em que o compilador acertou
+    repeatUntil
+        OK_SEM18.ci
+
+    methodOverridingSameSignature
+        OK_SEM08.ci
+
+    repeatUntilBreak
+        OK_SEM16.ci
+
+    whileBreak
+        OK_SEM07.ci
+
+    assert
+        OK_SEM17.ci
+
+    selfAsExpression
+        OK_SEM09.ci
+
+    openAsIdentifier
+        OK_SEM11.ci
+
+
+_________________________________________________________________________
+
+0 erros foram sinalizados em 16 arquivos sem erro (0%)
+_________________________________________________________________________
+O compilador não sinalizou nenhum erro que não deveria ter sinalizado
+Para os casos de teste que você utilizou, o compilador está correto
+
+Something wrong: null list of files that generate correct or wrong code

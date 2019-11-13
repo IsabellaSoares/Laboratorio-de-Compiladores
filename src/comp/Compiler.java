@@ -344,7 +344,7 @@ public class Compiler {
 							}
 						}
 						
-						if(!superMethod.getType().getName().equals(method.getName())) {
+						if(!superMethod.getType().getName().equals(method.getType().getName())) {
 							this.error("Wrong type of return");
 						}
 						
@@ -366,7 +366,7 @@ public class Compiler {
 		semanticChecking.setCurrentMethod(method);
 		next();
 		
-		statList = statementList();
+		statList = statementList("methodDec");
 		
 		if (returnRequired) {
 			error("missing 'return' statement");
@@ -425,13 +425,13 @@ public class Compiler {
 		return paramList;
 	}
 
-	private ArrayList<Statement> statementList() {
+	private ArrayList<Statement> statementList(String origin) {
 		
 		ArrayList<Statement> statList = new ArrayList<>();
 		
 		// only '}' is necessary in this test
 		while ( lexer.token != Token.RIGHTCURBRACKET && lexer.token != Token.END ) {
-			Statement e = statement("statementList");
+			Statement e = statement(origin);
 			statList.add(e);
 		}
 		
@@ -458,7 +458,7 @@ public class Compiler {
 			checkSemiColon = false;
 			break;
 		case BREAK:
-			if(!origin.equals("repeatStat") && !origin.equals("ifStat")) {
+			if(origin.equals("methodDec")) {
 				this.error("'break' statement found outside a 'while' or 'repeat-until' statement (comp.Compiler.statement()))");	
 			}
 			e = breakStat();
@@ -625,7 +625,7 @@ public class Compiler {
 		}
 		
 		ArrayList<Statement> statList = new ArrayList<>();		
-		statList = statementList();
+		statList = statementList("while");
 		
 		check(Token.RIGHTCURBRACKET, "missing '}' after 'while' body");
 		next();
@@ -697,9 +697,11 @@ public class Compiler {
 		
 		ArrayList<Expr> exprList = exprList();		
 		
-		for(Expr expr : exprList) {
-			if(!expr.getType().getName().equals("String")) {
-				this.error("Attempt to print a "+expr.getType().getName()+" expression");
+		if(exprList!=null) {
+			for(Expr expr : exprList) {
+				if(expr.getType().getName().equals("boolean")) {
+					this.error("Attempt to print a "+expr.getType().getName()+" expression");
+				}
 			}
 		}
 		
@@ -911,7 +913,7 @@ public class Compiler {
 		} else if (lexer.token == Token.NOT) {
 			next();
 			Factor factor = factor();
-			if(!factor.getType().equals("boolean")) {
+			if(!factor.getType().getName().equals("boolean")) {
 				this.error("Operator '!' does not accepts '"+factor.getType().getName()+"' values (comp.Compiler.factor())");
 			}
 			return new BooleanExpr(Token.NOT, factor, factor.getType());
