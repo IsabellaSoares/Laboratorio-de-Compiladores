@@ -205,6 +205,10 @@ public class Compiler {
 			
 			superclassName = lexer.getStringValue();
 		
+			if(superclassName.equals(className)) {
+				this.error("Class '"+className+"' is inheriting from itself (comp.Compiler.classDec())");
+			}
+			
 			semanticChecking.setSuperClass(semanticChecking.getTypeCianetoClass(superclassName));
 			lexer.nextToken();
 		}
@@ -250,7 +254,8 @@ public class Compiler {
 				if (qualifier == null)
 					qualifier = new Qualifier(Token.PUBLIC, null, null, null);
 				
-				MethodDec methodDec = methodDec();
+				MethodDec methodDec = methodDec(qualifier);
+				
 				semanticChecking.putInHashMethodsList(methodDec.getMethodName(), methodDec);
 				member = methodDec;
 			} else {
@@ -287,15 +292,13 @@ public class Compiler {
 		}
 	}
 
-	private MethodDec methodDec() {
+	private MethodDec methodDec(Qualifier qualifier) {
 		
 		lexer.nextToken();
 		
 		Variable method = new Variable(Type.nullType, null);
 		ArrayList<Variable> paramList = new ArrayList<>();
 		ArrayList<Statement> statList = new ArrayList<>();
-		
-		paramList = null;
 		
 		semanticChecking.clearHashParameters();
 		semanticChecking.clearHashLocalVariables();
@@ -322,6 +325,39 @@ public class Compiler {
 			method.setType(methodType);
 			
 			returnRequired = true;
+		}
+		
+		if(qualifier.getToken1()==Token.OVERRIDE) {
+			String methodName = method.getName();
+			TypeCianetoClass cianetoClass = semanticChecking.getTypeCianetoClass(semanticChecking.getSuperClass().getName());
+			if(cianetoClass!=null) {
+				MethodDec superMethod = cianetoClass.getMethod(methodName);
+				if(superMethod!=null) {
+					int sizeParam = paramList.size();
+					int sizeSuperParam = superMethod.getParamList().size();
+					ArrayList<Variable> superParamList = superMethod.getParamList();
+					if(sizeParam==sizeSuperParam) {
+						for(int i=0; i<sizeParam; i++) {
+							Variable v1 = paramList.get(i);
+							Variable v2 = superParamList.get(i);
+							if(!v1.getType().getName().equals(v2.getType().getName())) {
+								this.error("Method '"+methodName+"' of subclass '"+semanticChecking.getCurrentClassName()+"' has a signature different from method inherited from superclass '"+cianetoClass.getName()+"' (comp.Compiler.methodDec())");
+							}
+						}
+						
+						if(!superMethod.getType().getName().equals(method.getName())) {
+							this.error("Wrong type of return");
+						}
+						
+					} else {
+						this.error("Method '"+methodName+"' of subclass '"+semanticChecking.getCurrentClassName()+"' has a signature different from method inherited from superclass '"+cianetoClass.getName()+"' (comp.Compiler.methodDec())");
+					}
+				} else {
+					this.error("there is no method "+methodName+" to overwrite");
+				}
+			} else {
+				this.error("nonexistent superclass " + cianetoClass.getName());
+			}
 		}
 		
 		if ( lexer.token != Token.LEFTCURBRACKET ) {
@@ -396,14 +432,14 @@ public class Compiler {
 		
 		// only '}' is necessary in this test
 		while ( lexer.token != Token.RIGHTCURBRACKET && lexer.token != Token.END ) {
-			Statement e = statement();
+			Statement e = statement("statementList");
 			statList.add(e);
 		}
 		
 		return statList;
 	}
 
-	private Statement statement() {
+	private Statement statement(String origin) {
 				
 		boolean checkSemiColon = true;
 		
@@ -423,6 +459,9 @@ public class Compiler {
 			checkSemiColon = false;
 			break;
 		case BREAK:
+			if(!origin.equals("repeatStat") && !origin.equals("ifStat")) {
+				this.error("'break' statement found outside a 'while' or 'repeat-until' statement (comp.Compiler.statement()))");	
+			}
 			e = breakStat();
 			break;
 		case SEMICOLON:
@@ -485,6 +524,12 @@ public class Compiler {
 		
 		check(Token.ID, "Identifier expected");
 		
+		if(type instanceof TypeNull) {
+			if(semanticChecking.getTypeCianetoClass(type.getName())==null && !semanticChecking.getCurrentClassName().equals(type.getName())) {
+				this.error("ype '"+type.getName()+"' was not found (comp.Compiler.localDec())");
+			}
+		}
+		
 		ArrayList<Variable> idList = new ArrayList<>();
 		Expr expr = null;
 		
@@ -536,7 +581,7 @@ public class Compiler {
 		while ( lexer.token != Token.UNTIL &&
 				lexer.token != Token.RIGHTCURBRACKET &&
 				lexer.token != Token.END ) {
-			Statement stat = statement();			
+			Statement stat = statement("repeatStat");			
 			statList.add(stat);
 		}
 		
@@ -576,6 +621,10 @@ public class Compiler {
 		Expr e = expr();		
 		next();
 		
+		if(!e.getType().getName().equals("boolean")) {
+			this.error("non-boolean expression in 'while' command (comp.Compiler.whileStatement())");
+		}
+		
 		ArrayList<Statement> statList = new ArrayList<>();		
 		statList = statementList();
 		
@@ -604,7 +653,7 @@ public class Compiler {
 		
 		while ( lexer.token != Token.RIGHTCURBRACKET &&
 				lexer.token != Token.END && lexer.token != Token.ELSE ) {
-			Statement e = statement();
+			Statement e = statement("ifStat");
 			ifState.add(e);
 		}
 		
@@ -617,7 +666,7 @@ public class Compiler {
 			next();		
 			
 			while ( lexer.token != Token.RIGHTCURBRACKET ) {
-				Statement e = statement();
+				Statement e = statement("ifStat");
 				elseState.add(e);
 			}
 			
@@ -648,6 +697,12 @@ public class Compiler {
 		next();
 		
 		ArrayList<Expr> exprList = exprList();		
+		
+		for(Expr expr : exprList) {
+			if(!expr.getType().getName().equals("String")) {
+				this.error("Attempt to print a "+expr.getType().getName()+" expression");
+			}
+		}
 		
 		if (exprList == null) {
 			this.error("Command 'Out." + printName + "' without arguments");
@@ -771,6 +826,10 @@ public class Compiler {
 				this.error("Type not equals");
 			}
 			
+			if(operator == Token.PLUS && (left.getType().getName().equals("boolean") || right.getType().getName().equals("boolean")) ) {
+				this.error("type boolean does not support operation '+' (comp.Compiler.simpleExpr())");
+			}
+			
 			left = new CompositeSumSubExpr(left, operator, right, left.getType());
 		}
 		
@@ -795,6 +854,10 @@ public class Compiler {
 			
 			if(!left.getType().getName().equals(right.getType().getName())) {
 				this.error("Type not equals");
+			}
+			
+			if(operator == Token.AND && (left.getType().getName().equals("int") || right.getType().getName().equals("int"))) {
+				this.error("type 'int' does not support operator '&&' (comp.Compiler.term())");
 			}
 			
 			left = new CompositeTerm(left, operator, right, left.getType());
@@ -849,6 +912,9 @@ public class Compiler {
 		} else if (lexer.token == Token.NOT) {
 			next();
 			Factor factor = factor();
+			if(!factor.getType().equals("boolean")) {
+				this.error("Operator '!' does not accepts '"+factor.getType().getName()+"' values (comp.Compiler.factor())");
+			}
 			return new BooleanExpr(Token.NOT, factor, factor.getType());
 		} else if(lexer.token == Token.NULL) {
 			next();
@@ -1361,7 +1427,7 @@ public class Compiler {
 	}
 	
 	private Type verifySendMessage(String variableName, String methodName, ArrayList<Expr> exprList) {
-		//System.out.println(variableName+"."+methodName);
+		System.out.println(variableName+"."+methodName);
 		
 		MethodDec method = null;
 		if(!variableName.equals("self")) {
