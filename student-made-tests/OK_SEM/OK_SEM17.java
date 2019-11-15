@@ -14,10 +14,15 @@ public class OK_SEM17 {
 
    private static class Program {
       public void run () {
-         int n;
+         int n = input.nextInt();
 
          if (n < 15) {
             System.out.println("pequeno");
+            assert n < 15 : "n < 15";
+         }
+         else {
+            System.out.println("grande");
+            assert n >= 15 : "n >= 15";
          }
       }
    }

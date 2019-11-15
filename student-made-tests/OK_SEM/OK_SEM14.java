@@ -29,13 +29,19 @@ public class OK_SEM14 {
          if (a == b) {
             System.out.println(0);
          }
+         else {
+         }
 
          if (b == a) {
             System.out.println(1);
          }
+         else {
+         }
 
          if (a == a2) {
             System.out.println(2);
+         }
+         else {
          }
       }
    }

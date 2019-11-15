@@ -38,7 +38,18 @@ public class IfStat extends Statement {
 		}
 		
 		if (elseState != null) {
+			pw.printIdent("else {");
+			pw.println();
 			
+			pw.add();
+			
+			for (int i = 0; i < elseState.size(); i++) {
+				elseState.get(i).genJava(pw);
+			}
+			
+			pw.sub();
+			
+			pw.printlnIdent("}");
 		}
 	};
 }

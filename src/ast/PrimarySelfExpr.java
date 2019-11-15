@@ -61,7 +61,7 @@ public class PrimarySelfExpr extends PrimaryExpr {
 			if (id1.equals("self")) {
 				pw.printIdent("this");
 			} else {
-				pw.printIdent("this" + id1);
+				pw.printIdent("this." + id1);
 			}			
 		}		
 		

@@ -17,14 +17,16 @@ public class OK_SEM08 {
       public void put (int x, int y, boolean ok) {
 
          if ((x > y) &&          ok) {
-            thisi = 0;
+            this.i = 0;
+         }
+         else {
          }
       }
       public int get () {
-         return thisi;
+         return this.i;
       }
       public void set (int i) {
-         thisi = i;
+         this.i = i;
       }
    }
 
@@ -33,6 +35,8 @@ public class OK_SEM08 {
 
          if (((x + y) < 1) && !ok) {
             System.out.print(0);
+         }
+         else {
          }
       }
    }

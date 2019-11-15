@@ -21,6 +21,8 @@ public class OK_SEM09 {
          if (n > 0) {
             other.m(n, this);
          }
+         else {
+         }
       }
    }
 

@@ -34,9 +34,14 @@ public class LocalDec extends Statement {
 					pw.print(",");
 				
 				pw.print(" " + idList.get(i).getName());
-			}
-			
-			pw.println(";");
+			}			
 		}
+		
+		if (expr != null) {
+			pw.print(" = ");
+			expr.genJava(pw);
+		}
+		
+		pw.println(";");
 	};
 }

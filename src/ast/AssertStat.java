@@ -13,5 +13,15 @@ public class AssertStat extends Statement {
 		this.message = message;
 	}
 	
-	public void genJava( PW pw ) {};
+	public void genJava( PW pw ) {
+		pw.printIdent("assert ");
+		
+		int indent = pw.get();
+		pw.set(0);
+		
+		expr.genJava(pw);
+		
+		pw.set(indent);
+        pw.println(" : " + "\"" + message + "\";");
+	};
 }

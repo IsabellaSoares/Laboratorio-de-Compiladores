@@ -24,6 +24,8 @@ public class OK_SEM04 {
          if ((a == b) && (a == 1) && (1 == b) && (a != b) && (e == f) && (true == f) && (e != f) && (true != f)) {
             System.out.println("impossivel");
          }
+         else {
+         }
       }
    }
 

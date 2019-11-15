@@ -14,7 +14,7 @@ public class OK_SEM16 {
 
    private static class Program {
       public void run () {
-         int n;
+         int n = 10;
       }
    }
 
