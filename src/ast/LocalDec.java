@@ -17,6 +17,10 @@ public class LocalDec extends Statement {
 		this.expr = expr;
 	}
 	
+	public ArrayList<Variable> getIdList() {
+		return idList;
+	}
+	
 	public Type getType() {
 		return type;
 	}

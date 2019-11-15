@@ -302,16 +302,47 @@ public class Compiler {
 		
 		semanticChecking.clearHashParameters();
 		semanticChecking.clearHashLocalVariables();
-		
+		String name = null;
 		if ( lexer.token == Token.ID ) {
-			method.setName(lexer.getStringValue());
+			name = lexer.getStringValue();
+			if(semanticChecking.getFieldDec(name)!=null) {
+				this.error("Method '"+name+"' has name equal to an instance variable");
+			}
+			method.setName(name);
 			lexer.nextToken();
 		} else if ( lexer.token == Token.IDCOLON ) {
-			method.setName(lexer.getStringValue());
+			name = lexer.getStringValue();
+			if(semanticChecking.getFieldDec(name.replace(":", ""))!=null) {
+				this.error("Method '"+name+"' has name equal to an instance variable");
+			}
+			method.setName(name);
 			lexer.nextToken();			
 			paramList = paramList();
 		} else {
 			error("An identifier or identifer: was expected after 'func'");
+		}
+		
+		MethodDec md = semanticChecking.getMethodDec(name);
+		if(md!=null) {
+			int n1 = md.getParamList().size();
+			int n2 = paramList.size();
+			if(n1==0 && n2==0) {
+				this.error("Method '"+name+"' is being redeclared");
+			}
+			if(n1==n2) {
+				boolean same = true;
+				for(int i=0; i<n1 && same; i++) {
+					Variable v1 = md.getParamList().get(i);
+					Variable v2 = paramList.get(i);
+					if(!v1.getType().getName().equals(v2.getType().getName())) {
+						same = false;
+					}
+				}
+				if(!same) {
+					this.error("Method '"+name+"' is being redeclared");
+				}
+			}
+			
 		}
 		
 		if ( lexer.token == Token.MINUS_GT ) {
@@ -604,6 +635,10 @@ public class Compiler {
 	}
 
 	private ReturnStat returnStat() {
+		
+		if(!returnRequired) {
+			this.error("Illegal 'return' statement. Method returns 'void'");
+		}
 		next();
 		Expr expr = expr();
 		
@@ -972,14 +1007,20 @@ public class Compiler {
 			right = expr();
 			
 			if (right == null) this.error("Expression expected");
-			if(!left
-					.getType()
-					.getName()
-					.equals(
-							right
-							.getType()
-							.getName())) {
+			if(!left.getType().getName().equals(right.getType().getName())) {
 				this.error("Type error: value of the right-hand side is not subtype of the variable of the left-hand side.");
+			} else if(left.getType() instanceof TypeNull && right.getType() instanceof TypeNull) {
+				String name1 = left.getType().getName();
+				String name2 = right.getType().getName();
+				if(!name1.equals(name2)) {
+					TypeCianetoClass c = semanticChecking.getTypeCianetoClass(name1);
+					if(c==null) {
+						this.error("assignExpr: c null");
+					}
+					if(!c.isSubtype(name2)) {
+						this.error("Type error: value of the right-hand side is not subtype of the variable of the left-hand side.");
+					}
+				}
 			}
 		}
 		

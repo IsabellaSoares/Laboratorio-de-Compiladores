@@ -70,6 +70,16 @@ public class TypeCianetoClass extends Type {
 		pw.println();
    }
 
+   public boolean isSubtype(String name) {
+	   if(superclass!=null) {
+		   if(name.equals(superName)) {
+			   return true;
+		   } else {
+			   return superclass.isSubtype(name);
+		   }
+	   }
+	   return false;
+   }
    private boolean openClass = false;
    private String name;
    private String superName;
