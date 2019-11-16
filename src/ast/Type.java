@@ -10,11 +10,11 @@ abstract public class Type {
         this.name = name;
     }
 
-    public static Type booleanType = new TypeBoolean();
-    public static Type intType = new TypeInt();
-    public static Type stringType = new TypeString();
-    public static Type undefinedType = new TypeUndefined();
-    public static Type nullType = new TypeNull();
+    //public static Type booleanType = new TypeBoolean();
+    //public static Type intType = new TypeInt();
+    //public static Type stringType = new TypeString();
+    //public static Type undefinedType = new TypeUndefined();
+    //public static Type nullType = new TypeNull();
 
     public String getName() {
         return name;

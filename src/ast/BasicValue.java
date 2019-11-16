@@ -14,25 +14,25 @@ public class BasicValue extends Factor {
 	public BasicValue (Integer value, Type type) {
 		super(type);
 		this.intValue = value;
-		this.type = Type.intType;
+		this.type = new TypeInt();
 	}
 	
 	public BasicValue (String value, Type type) {
 		super(type);
 		this.stringValue = value;
-		this.type = Type.stringType;
+		this.type = new TypeString();
 	}
 	
 	public BasicValue (boolean value, Type type) {
 		super(type);
 		this.boolValue = value;
-		this.type = Type.booleanType;
+		this.type = new TypeBoolean();
 	}
 	
 	public void genJava(PW pw, boolean putParenthesis) {
-		if (type == Type.booleanType) {
+		if (type == new TypeBoolean()) {
 			pw.print(Boolean.toString(boolValue));
-		} else if (type == Type.intType) {
+		} else if (type == new TypeInt()) {
 			pw.print(Integer.toString(intValue));
 		} else {
 			pw.print("\"" + stringValue + "\"");

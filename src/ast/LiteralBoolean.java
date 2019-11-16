@@ -21,8 +21,8 @@ public class LiteralBoolean extends Expr {
 	 * @Override public Type getType() { return Type.booleanType; }
 	 */
 
-    public static LiteralBoolean True  = new LiteralBoolean(true, Type.booleanType);
-    public static LiteralBoolean False = new LiteralBoolean(false, Type.booleanType);
+    public static LiteralBoolean True  = new LiteralBoolean(true, new TypeBoolean());
+    public static LiteralBoolean False = new LiteralBoolean(false, new TypeBoolean());
 
     private boolean value;
 

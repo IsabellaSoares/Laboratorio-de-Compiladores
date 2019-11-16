@@ -16,7 +16,8 @@ import semanticchecking.SemanticChecking;
 
 public class Compiler {
 
-	public Compiler() { }
+	public Compiler() {
+	}
 
 	// compile must receive an input with an character less than
 	// p_input.lenght
@@ -39,84 +40,85 @@ public class Compiler {
 		ArrayList<TypeCianetoClass> CianetoClassList = new ArrayList<>();
 		Program program = new Program(CianetoClassList, metaobjectCallList, compilationErrorList);
 		boolean thereWasAnError = false;
-		
-		while ( lexer.token == Token.CLASS ||
-				(lexer.token == Token.ID && lexer.getStringValue().equals("open") ) ||
-				lexer.token == Token.ANNOT ) {
+
+		while (lexer.token == Token.CLASS || (lexer.token == Token.ID && lexer.getStringValue().equals("open"))
+				|| lexer.token == Token.ANNOT) {
 			try {
-				while ( lexer.token == Token.ANNOT ) {
+				while (lexer.token == Token.ANNOT) {
 					metaobjectAnnotation(metaobjectCallList);
 				}
 				CianetoClassList.add(classDec());
-			}
-			catch( CompilerError e) {
+			} catch (CompilerError e) {
 				// if there was an exception, there is a compilation error
 				thereWasAnError = true;
-				/*while ( lexer.token != Token.CLASS && lexer.token != Token.EOF ) {
-					try {
-						next();
-					}
-					catch ( RuntimeException ee ) {
-						e.printStackTrace();
-						return program;
-					}
-				}*/
+				/*
+				 * while ( lexer.token != Token.CLASS && lexer.token != Token.EOF ) { try {
+				 * next(); } catch ( RuntimeException ee ) { e.printStackTrace(); return
+				 * program; } }
+				 */
 			}
-			/*catch ( RuntimeException e ) {
+			/*
+			 * catch ( RuntimeException e ) { e.printStackTrace(); thereWasAnError = true; }
+			 */
+			catch (Throwable e) {
 				e.printStackTrace();
 				thereWasAnError = true;
-			}*/
-			catch ( Throwable e ) {
-	            e.printStackTrace();
-	            thereWasAnError = true;
-	            // adicione as linhas abaixo
-	            try {
-	                error("Exception '" + e.getClass().getName() + "' was thrown and not caught. "
-	                        + "Its message is '" + e.getMessage() + "'");
-	            }
-	            catch( CompilerError ee) {
-	            }
-	            return program; // add this line
-	        }
+				// adicione as linhas abaixo
+				try {
+					error("Exception '" + e.getClass().getName() + "' was thrown and not caught. " + "Its message is '"
+							+ e.getMessage() + "'");
+				} catch (CompilerError ee) {
+				}
+				return program; // add this line
+			}
 
 		}
-		
-		if ( !thereWasAnError && lexer.token != Token.EOF ) {
-			try {
-				//error("End of file expected");
-				error("'class' expected");
-			}
-			catch( CompilerError e) {
+
+		boolean flag = false;
+		for (TypeCianetoClass c : CianetoClassList) {
+			if (c.getName().equals("Program")) {
+				flag = true;
 			}
 		}
-		
+		if (!flag) {
+			this.error("Source code without a class 'Program'");
+		}
+
+		if (!thereWasAnError && lexer.token != Token.EOF) {
+			try {
+				// error("End of file expected");
+				error("'class' expected");
+			} catch (CompilerError e) {
+			}
+		}
+
 		return program;
 	}
 
-	/**  parses a metaobject annotation as <code>{@literal @}cep(...)</code> in <br>
-     * <code>
-     * {@literal @}cep(5, "'class' expected") <br>
-     * class Program <br>
-     *     func run { } <br>
-     * end <br>
-     * </code>
-     *
-
+	/**
+	 * parses a metaobject annotation as <code>{@literal @}cep(...)</code> in <br>
+	 * <code>
+	 * {@literal @}cep(5, "'class' expected") <br>
+	 * class Program <br>
+	 *     func run { } <br>
+	 * end <br>
+	 * </code>
+	 *
+	 * 
 	 */
 	@SuppressWarnings("incomplete-switch")
 	private void metaobjectAnnotation(ArrayList<MetaobjectAnnotation> metaobjectAnnotationList) {
-		
+
 		String name = lexer.getMetaobjectName();
 		int lineNumber = lexer.getLineNumber();
 		lexer.nextToken();
 		ArrayList<Object> metaobjectParamList = new ArrayList<>();
 		boolean getNextToken = false;
-		if ( lexer.token == Token.LEFTPAR ) {
+		if (lexer.token == Token.LEFTPAR) {
 			// metaobject call with parameters
 			lexer.nextToken();
-			while ( lexer.token == Token.LITERALINT || lexer.token == Token.LITERALSTRING ||
-					lexer.token == Token.ID ) {
-				switch ( lexer.token ) {
+			while (lexer.token == Token.LITERALINT || lexer.token == Token.LITERALSTRING || lexer.token == Token.ID) {
+				switch (lexer.token) {
 				case LITERALINT:
 					metaobjectParamList.add(lexer.getNumberValue());
 					break;
@@ -127,47 +129,46 @@ public class Compiler {
 					metaobjectParamList.add(lexer.getStringValue());
 				}
 				lexer.nextToken();
-				if ( lexer.token == Token.COMMA )
+				if (lexer.token == Token.COMMA)
 					lexer.nextToken();
 				else
 					break;
 			}
-			if ( lexer.token != Token.RIGHTPAR )
+			if (lexer.token != Token.RIGHTPAR)
 				error("')' expected after annotation with parameters");
 			else {
 				getNextToken = true;
 			}
 		}
-		switch ( name ) {
+		switch (name) {
 		case "nce":
-			if ( metaobjectParamList.size() != 0 )
+			if (metaobjectParamList.size() != 0)
 				error("Annotation 'nce' does not take parameters");
 			break;
 		case "cep":
-			if ( metaobjectParamList.size() != 3 && metaobjectParamList.size() != 4 )
+			if (metaobjectParamList.size() != 3 && metaobjectParamList.size() != 4)
 				error("Annotation 'cep' takes three or four parameters");
-			if ( !( metaobjectParamList.get(0) instanceof Integer)  ) {
+			if (!(metaobjectParamList.get(0) instanceof Integer)) {
 				error("The first parameter of annotation 'cep' should be an integer number");
-			}
-			else {
-				int ln = (Integer ) metaobjectParamList.get(0);
+			} else {
+				int ln = (Integer) metaobjectParamList.get(0);
 				metaobjectParamList.set(0, ln + lineNumber);
 			}
-			if ( !( metaobjectParamList.get(1) instanceof String) ||  !( metaobjectParamList.get(2) instanceof String) )
+			if (!(metaobjectParamList.get(1) instanceof String) || !(metaobjectParamList.get(2) instanceof String))
 				error("The second and third parameters of annotation 'cep' should be literal strings");
-			if ( metaobjectParamList.size() >= 4 && !( metaobjectParamList.get(3) instanceof String) )
+			if (metaobjectParamList.size() >= 4 && !(metaobjectParamList.get(3) instanceof String))
 				error("The fourth parameter of annotation 'cep' should be a literal string");
 			break;
 		case "annot":
-			if ( metaobjectParamList.size() < 2  ) {
+			if (metaobjectParamList.size() < 2) {
 				error("Annotation 'annot' takes at least two parameters");
 			}
-			for ( Object p : metaobjectParamList ) {
-				if ( !(p instanceof String) ) {
+			for (Object p : metaobjectParamList) {
+				if (!(p instanceof String)) {
 					error("Annotation 'annot' takes only String parameters");
 				}
 			}
-			if ( ! ((String ) metaobjectParamList.get(0)).equalsIgnoreCase("check") )  {
+			if (!((String) metaobjectParamList.get(0)).equalsIgnoreCase("check")) {
 				error("Annotation 'annot' should have \"check\" as its first parameter");
 			}
 			break;
@@ -175,40 +176,44 @@ public class Compiler {
 			error("Annotation '" + name + "' is illegal");
 		}
 		metaobjectAnnotationList.add(new MetaobjectAnnotation(name, metaobjectParamList));
-		if ( getNextToken ) lexer.nextToken();
+		if (getNextToken)
+			lexer.nextToken();
 	}
 
 	private TypeCianetoClass classDec() {
 		boolean openClass = false;
-		
-		if ( lexer.token == Token.ID && lexer.getStringValue().equals("open") ) {
+
+		if (lexer.token == Token.ID && lexer.getStringValue().equals("open")) {
 			openClass = true;
 			next();
 		}
-		
-		if ( lexer.token != Token.CLASS ) error("'class' expected");
-		
+
+		if (lexer.token != Token.CLASS)
+			error("'class' expected");
+
 		lexer.nextToken();
-		
-		if ( lexer.token != Token.ID ) error("Identifier expected");
-		
+
+		if (lexer.token != Token.ID)
+			error("Identifier expected");
+
 		String className = lexer.getStringValue();
 		semanticChecking.setCurrentClassName(className);
 		lexer.nextToken();
-		
+
 		String superclassName = "";
-		
-		if ( lexer.token == Token.EXTENDS ) {
+
+		if (lexer.token == Token.EXTENDS) {
 			lexer.nextToken();
-			
-			if ( lexer.token != Token.ID ) error("Identifier expected");
-			
+
+			if (lexer.token != Token.ID)
+				error("Identifier expected");
+
 			superclassName = lexer.getStringValue();
-		
-			if(superclassName.equals(className)) {
-				this.error("Class '"+className+"' is inheriting from itself (comp.Compiler.classDec())");
+
+			if (superclassName.equals(className)) {
+				this.error("Class '" + className + "' is inheriting from itself (comp.Compiler.classDec())");
 			}
-			
+
 			semanticChecking.setSuperClass(semanticChecking.getTypeCianetoClass(superclassName));
 			lexer.nextToken();
 		}
@@ -217,63 +222,71 @@ public class Compiler {
 		if (lexer.token != Token.END) {
 			semanticChecking.clearHashMethodList();
 			list = memberList();
-			
-			if (list == null || list.isEmpty()) this.error("Class member OR 'end' expected");
-			
-			if (lexer.token != Token.END) error("'end' expected");
+
+			if (list == null || list.isEmpty())
+				this.error("Class member OR 'end' expected");
+
+			if (lexer.token != Token.END)
+				error("'end' expected");
 		}
-		
+
 		lexer.nextToken();
-		
-		TypeCianetoClass c = new TypeCianetoClass(openClass, className, superclassName, semanticChecking.getSuperClass(), list);
+
+		if (className.equals("Program")) {
+			MethodDec m = semanticChecking.getMethodDec("run");
+			if (m == null) {
+				this.error("Method 'run' was not found in class 'Program'");
+			}
+		}
+
+		TypeCianetoClass c = new TypeCianetoClass(openClass, className, superclassName,
+				semanticChecking.getSuperClass(), list);
 		c.setMethodList(semanticChecking.getHashMethodsList());
 		semanticChecking.putInHashClasses(className, c);
 		return c;
 	}
 
 	private List<MemberList> memberList() {
-		
+
 		List<MemberList> list = new ArrayList<MemberList>();
 		semanticChecking.clearHashGlobalVariables();
-		
-		while ( true ) { 
+
+		while (true) {
 			Qualifier qualifier = null;
 			Member member = null;
-			if (lexer.token != Token.END &&
-				lexer.token != Token.VAR &&
-				lexer.token != Token.FUNC) {
+			if (lexer.token != Token.END && lexer.token != Token.VAR && lexer.token != Token.FUNC) {
 				qualifier = qualifier();
 			}
-			
-			if ( lexer.token == Token.VAR ) {
+
+			if (lexer.token == Token.VAR) {
 				if ((qualifier != null) && (qualifier.getToken1() == Token.PUBLIC))
 					this.error("Attempt to declare public instance variable in line " + lexer.getLineNumber());
-								
+
 				member = fieldDec();
-			} else if ( lexer.token == Token.FUNC ) {
+			} else if (lexer.token == Token.FUNC) {
 				if (qualifier == null)
 					qualifier = new Qualifier(Token.PUBLIC, null, null, null);
-				
+
 				MethodDec methodDec = methodDec(qualifier);
-				
+
 				semanticChecking.putInHashMethodsList(methodDec.getMethodName(), methodDec);
 				member = methodDec;
 			} else {
 				break;
 			}
-			
+
 			if (qualifier == null && member == null)
 				this.error("'public', 'private' or '}' expected");
-			
-			//if (member == null) return null;
-			
+
+			// if (member == null) return null;
+
 			MemberList memberList = new MemberList(qualifier, member);
 			list.add(memberList);
 		}
-		
+
 		if (lexer.token != Token.END && lexer.token != Token.LEFTCURBRACKET)
 			this.error("'public', 'private', '}' or 'end' expected (line " + lexer.getLineNumber() + ")");
-				
+
 		return list;
 	}
 
@@ -281,201 +294,214 @@ public class Compiler {
 		this.signalError.showError(msg);
 	}
 
-
 	private void next() {
 		lexer.nextToken();
 	}
 
 	private void check(Token shouldBe, String msg) {
-		if ( lexer.token != shouldBe ) {
+		if (lexer.token != shouldBe) {
 			error(msg);
 		}
 	}
 
 	private MethodDec methodDec(Qualifier qualifier) {
-		
+
 		lexer.nextToken();
-		
-		Variable method = new Variable(Type.nullType, null);
+
+		Variable method = new Variable(new TypeNull(), null);
 		ArrayList<Variable> paramList = new ArrayList<>();
 		ArrayList<Statement> statList = new ArrayList<>();
-		
+
 		semanticChecking.clearHashParameters();
 		semanticChecking.clearHashLocalVariables();
 		String name = null;
-		if ( lexer.token == Token.ID ) {
+		if (lexer.token == Token.ID) {
 			name = lexer.getStringValue();
-			if(semanticChecking.getFieldDec(name)!=null) {
-				this.error("Method '"+name+"' has name equal to an instance variable");
+			if (semanticChecking.getFieldDec(name) != null) {
+				this.error("Method '" + name + "' has name equal to an instance variable");
 			}
 			method.setName(name);
 			lexer.nextToken();
-		} else if ( lexer.token == Token.IDCOLON ) {
+		} else if (lexer.token == Token.IDCOLON) {
 			name = lexer.getStringValue();
-			if(semanticChecking.getFieldDec(name.replace(":", ""))!=null) {
-				this.error("Method '"+name+"' has name equal to an instance variable");
+			if (semanticChecking.getFieldDec(name.replace(":", "")) != null) {
+				this.error("Method '" + name + "' has name equal to an instance variable");
 			}
 			method.setName(name);
-			lexer.nextToken();			
+			lexer.nextToken();
 			paramList = paramList();
 		} else {
 			error("An identifier or identifer: was expected after 'func'");
 		}
-		
+
+		if (name.equals("run")) {
+			if (qualifier.getToken1() == Token.PRIVATE) {
+				this.error("Method 'run' of class 'Program' cannot be private");
+			}
+		}
+
 		MethodDec md = semanticChecking.getMethodDec(name);
-		if(md!=null) {
+		if (md != null) {
 			int n1 = md.getParamList().size();
 			int n2 = paramList.size();
-			if(n1==0 && n2==0) {
-				this.error("Method '"+name+"' is being redeclared");
+			if (n1 == 0 && n2 == 0) {
+				this.error("Method '" + name + "' is being redeclared");
 			}
-			if(n1==n2) {
+			if (n1 == n2) {
 				boolean same = true;
-				for(int i=0; i<n1 && same; i++) {
+				for (int i = 0; i < n1 && same; i++) {
 					Variable v1 = md.getParamList().get(i);
 					Variable v2 = paramList.get(i);
-					if(!v1.getType().getName().equals(v2.getType().getName())) {
+					if (!v1.getType().getName().equals(v2.getType().getName())) {
 						same = false;
 					}
 				}
-				if(!same) {
-					this.error("Method '"+name+"' is being redeclared");
+				if (!same) {
+					this.error("Method '" + name + "' is being redeclared");
 				}
 			}
-			
+
 		}
-		
-		if ( lexer.token == Token.MINUS_GT ) {
+
+		if (lexer.token == Token.MINUS_GT) {
 			lexer.nextToken();
 			Type methodType = type();
-			
+
 			if (methodType == null)
 				this.error("Type expected to method in line " + lexer.getLineNumber());
-						
+
 			method.setType(methodType);
-			
+
 			returnRequired = true;
 		}
-		
-		if(qualifier.getToken1()==Token.OVERRIDE) {
+
+		if (qualifier.getToken1() == Token.OVERRIDE) {
 			String methodName = method.getName();
-			TypeCianetoClass cianetoClass = semanticChecking.getTypeCianetoClass(semanticChecking.getSuperClass().getName());
-			if(cianetoClass!=null) {
+			TypeCianetoClass cianetoClass = semanticChecking
+					.getTypeCianetoClass(semanticChecking.getSuperClass().getName());
+			if (cianetoClass != null) {
 				MethodDec superMethod = cianetoClass.getMethod(methodName);
-				if(superMethod!=null) {
+				if (superMethod != null) {
 					int sizeParam = paramList.size();
 					int sizeSuperParam = superMethod.getParamList().size();
 					ArrayList<Variable> superParamList = superMethod.getParamList();
-					if(sizeParam==sizeSuperParam) {
-						for(int i=0; i<sizeParam; i++) {
+					if (sizeParam == sizeSuperParam) {
+						for (int i = 0; i < sizeParam; i++) {
 							Variable v1 = paramList.get(i);
 							Variable v2 = superParamList.get(i);
-							if(!v1.getType().getName().equals(v2.getType().getName())) {
-								this.error("Method '"+methodName+"' of subclass '"+semanticChecking.getCurrentClassName()+"' has a signature different from method inherited from superclass '"+cianetoClass.getName()+"' (comp.Compiler.methodDec())");
+							if (!v1.getType().getName().equals(v2.getType().getName())) {
+								this.error("Method '" + methodName + "' of subclass '"
+										+ semanticChecking.getCurrentClassName()
+										+ "' has a signature different from method inherited from superclass '"
+										+ cianetoClass.getName() + "' (comp.Compiler.methodDec())");
 							}
 						}
-						
-						if(!superMethod.getType().getName().equals(method.getType().getName())) {
+
+						if (!superMethod.getType().getName().equals(method.getType().getName())) {
 							this.error("Wrong type of return");
 						}
-						
+
 					} else {
-						this.error("Method '"+methodName+"' of subclass '"+semanticChecking.getCurrentClassName()+"' has a signature different from method inherited from superclass '"+cianetoClass.getName()+"' (comp.Compiler.methodDec())");
+						this.error("Method '" + methodName + "' of subclass '" + semanticChecking.getCurrentClassName()
+								+ "' has a signature different from method inherited from superclass '"
+								+ cianetoClass.getName() + "' (comp.Compiler.methodDec())");
 					}
 				} else {
-					this.error("there is no method "+methodName+" to overwrite");
+					this.error("there is no method " + methodName + " to overwrite");
 				}
 			} else {
 				this.error("nonexistent superclass " + cianetoClass.getName());
 			}
+		} else if (thereIsTheSameMethodInSuperClass(method, paramList)) {
+			this.error("'override' expected before overridden method");
 		}
-		
-		if ( lexer.token != Token.LEFTCURBRACKET ) {
+
+		if (lexer.token != Token.LEFTCURBRACKET) {
 			error("'{' expected (func " + method.getName() + ")");
 		}
-		
+
 		semanticChecking.setCurrentMethod(method);
 		next();
-		
+
 		statList = statementList("methodDec");
-		
+
 		if (returnRequired) {
 			error("missing 'return' statement");
 		}
-		
-		if ( lexer.token != Token.RIGHTCURBRACKET) {			
+
+		if (lexer.token != Token.RIGHTCURBRACKET) {
 			error("'}' expected");
 		}
-		
+
 		if (lexer.token != Token.END) {
 			next();
-		}		
-		
+		}
+
 		return new MethodDec(method, statList, paramList);
 	}
-	
+
 	private ArrayList<Variable> paramList() {
-		
+
 		ArrayList<Variable> paramList = new ArrayList<>();
-		
+
 		while (true) {
-			Variable var = new Variable(Type.undefinedType, null);
-			
+			Variable var = new Variable(new TypeUndefined(), null);
+
 			Type varType = type();
-			
+
 			if (varType == null)
 				this.error("Type expected to parameter in line " + lexer.getLineNumber());
-						
+
 			var.setType(varType);
-			
+
 			if (lexer.token != Token.ID) {
 				this.error("Identifier expected");
 			}
-			
+
 			String name = lexer.getStringValue();
-			
-			if (semanticChecking.getLocalDec(name)!=null) {
-				this.error(name+" is already declared as local variable");
-			} else if (semanticChecking.getParamVariable(name)!=null) {
-				this.error(name+" is already declared as a parameter");
+
+			if (semanticChecking.getLocalDec(name) != null) {
+				this.error(name + " is already declared as local variable");
+			} else if (semanticChecking.getParamVariable(name) != null) {
+				this.error(name + " is already declared as a parameter");
 			}
-			
+
 			var.setName(name);
 			next();
-			
+
 			semanticChecking.putInHashParameter(name, var);
 			paramList.add(var);
-			
+
 			if (lexer.token == Token.COMMA) {
 				next();
 			} else {
 				break;
 			}
 		}
-		
+
 		return paramList;
 	}
 
 	private ArrayList<Statement> statementList(String origin) {
-		
+
 		ArrayList<Statement> statList = new ArrayList<>();
-		
+
 		// only '}' is necessary in this test
-		while ( lexer.token != Token.RIGHTCURBRACKET && lexer.token != Token.END ) {
+		while (lexer.token != Token.RIGHTCURBRACKET && lexer.token != Token.END) {
 			Statement e = statement(origin);
 			statList.add(e);
 		}
-		
+
 		return statList;
 	}
 
 	private Statement statement(String origin) {
-				
+
 		boolean checkSemiColon = true;
-		
+
 		Statement e = null;
-		
-		switch ( lexer.token ) {
+
+		switch (lexer.token) {
 		case IF:
 			e = ifStat();
 			checkSemiColon = false;
@@ -489,8 +515,9 @@ public class Compiler {
 			checkSemiColon = false;
 			break;
 		case BREAK:
-			if(origin.equals("methodDec")) {
-				this.error("'break' statement found outside a 'while' or 'repeat-until' statement (comp.Compiler.statement()))");	
+			if (origin.equals("methodDec")) {
+				this.error(
+						"'break' statement found outside a 'while' or 'repeat-until' statement (comp.Compiler.statement()))");
 			}
 			e = breakStat();
 			break;
@@ -503,101 +530,104 @@ public class Compiler {
 			e = repeatStat();
 			break;
 		case VAR:
-			e = localDec();	
-			
+			e = localDec();
+
 			if (lexer.token == Token.SEMICOLON) {
 				checkSemiColon = false;
 			}
-			
+
 			next();
-			
+
 			break;
 		case ASSERT:
 			e = assertStat();
 			checkSemiColon = false;
 			break;
 		default:
-			if ( lexer.token == Token.ID && lexer.getStringValue().equals("Out") ) {
+			if (lexer.token == Token.ID && lexer.getStringValue().equals("Out")) {
 				e = writeStat();
-				
+
 				if (lexer.token == Token.SEMICOLON) {
 					checkSemiColon = false;
 				}
-				
-				next();				
-			} else if (lexer.getStringValue().equals("print:") || 
-						lexer.getStringValue().equals("println:")) {
+
+				next();
+			} else if (lexer.getStringValue().equals("print:") || lexer.getStringValue().equals("println:")) {
 				this.error("Missing 'Out.'");
 			} else {
 				e = assignExpr();
-				
-				if (e == null) this.error("Statement expected");
-								
-				if (lexer.token == Token.SEMICOLON) checkSemiColon = false;
-								
+
+				if (e == null)
+					this.error("Statement expected");
+
+				if (lexer.token == Token.SEMICOLON)
+					checkSemiColon = false;
+
 				next();
 			}
 		}
-		
-		if (e == null) this.error("Statement expected");
-				
-		if ( checkSemiColon ) check(Token.SEMICOLON, "';' expected");
-				
+
+		if (e == null)
+			this.error("Statement expected");
+
+		if (checkSemiColon)
+			check(Token.SEMICOLON, "';' expected");
+
 		return e;
 	}
 
 	private LocalDec localDec() {
 		next();
-		
-		Type type = Type.undefinedType;		
+
+		Type type = new TypeUndefined();
 		type = type();
-		
+
 		check(Token.ID, "Identifier expected");
-		
-		if(type instanceof TypeNull) {
-			if(semanticChecking.getTypeCianetoClass(type.getName())==null && !semanticChecking.getCurrentClassName().equals(type.getName())) {
-				this.error("ype '"+type.getName()+"' was not found (comp.Compiler.localDec())");
+
+		if (type instanceof TypeNull) {
+			if (semanticChecking.getTypeCianetoClass(type.getName()) == null
+					&& !semanticChecking.getCurrentClassName().equals(type.getName())) {
+				this.error("ype '" + type.getName() + "' was not found (comp.Compiler.localDec())");
 			}
 		}
-		
+
 		ArrayList<Variable> idList = new ArrayList<>();
 		Expr expr = null;
-		
-		while ( lexer.token == Token.ID ) {
+
+		while (lexer.token == Token.ID) {
 			String name = lexer.getStringValue();
-			
-			if (semanticChecking.getLocalDec(name)!=null) {
-				this.error(name+" is already declared as local variable");
-			} else if (semanticChecking.getParamVariable(name)!=null) {
-				this.error(name+" is already declared as a parameter");
+
+			if (semanticChecking.getLocalDec(name) != null) {
+				this.error(name + " is already declared as local variable");
+			} else if (semanticChecking.getParamVariable(name) != null) {
+				this.error(name + " is already declared as a parameter");
 			}
-			
-			
+
 			Variable var = new Variable(type, name);
 			idList.add(var);
-			
+
 			next();
-			
-			if ( lexer.token == Token.COMMA ) {
-				next();				
+
+			if (lexer.token == Token.COMMA) {
+				next();
 				check(Token.ID, "Missing identifier");
 			} else {
 				break;
 			}
 		}
-		
+
 		if (lexer.token == Token.DOT) {
 			this.error("Invalid Character: '" + lexer.token.toString() + "'");
 		}
-		
-		if ( lexer.token == Token.ASSIGN ) {
+
+		if (lexer.token == Token.ASSIGN) {
 			next();
 			// check if there is just one variable
 			expr = expr();
 		}
-		
+
 		LocalDec localDec = new LocalDec(type, idList, expr);
-		for(Variable var : idList) {
+		for (Variable var : idList) {
 			semanticChecking.putInLocalVariables(var.getName(), localDec);
 		}
 		return localDec;
@@ -605,27 +635,30 @@ public class Compiler {
 
 	private RepeatStat repeatStat() {
 		next();
-		
-		ArrayList<Statement> statList = new ArrayList<>();		
-				
-		while ( lexer.token != Token.UNTIL &&
-				lexer.token != Token.RIGHTCURBRACKET &&
-				lexer.token != Token.END ) {
-			Statement stat = statement("repeatStat");			
+
+		ArrayList<Statement> statList = new ArrayList<>();
+
+		while (lexer.token != Token.UNTIL && lexer.token != Token.RIGHTCURBRACKET && lexer.token != Token.END) {
+			Statement stat = statement("repeatStat");
 			statList.add(stat);
 		}
-		
-		//if (!lexer.token.toString().matches("^[a-zA-Z0-9]*$"))
-			//this.error("'" + lexer.token.toString() + "' not expected before 'until'");
-				
+
+		// if (!lexer.token.toString().matches("^[a-zA-Z0-9]*$"))
+		// this.error("'" + lexer.token.toString() + "' not expected before 'until'");
+
 		check(Token.UNTIL, "missing keyword 'until'");
 		next();
-		
+
 		Expr expr = expr();
-		
+
+		/*
+		 * if(!expr.getType().getName().equals("boolean")) {
+		 * this.error("boolean expression expected in a repeat-until statement"); }
+		 */
+
 		if (lexer.token == Token.RIGHTPAR)
 			this.error("')' unexpected");
-		
+
 		return new RepeatStat(statList, expr);
 	}
 
@@ -635,766 +668,798 @@ public class Compiler {
 	}
 
 	private ReturnStat returnStat() {
-		
-		if(!returnRequired) {
+
+		if (!returnRequired) {
 			this.error("Illegal 'return' statement. Method returns 'void'");
 		}
 		next();
 		Expr expr = expr();
-		
-		check(Token.SEMICOLON, "';' expected");		
-		next();	
-		
+
+		check(Token.SEMICOLON, "';' expected");
+		next();
+
 		returnRequired = false;
+
+		Type methodType = semanticChecking.getCurrentMethodVariable().getType();
+		Type exprType = expr.getType();
+
+		if (!methodType.getName().equals(exprType.getName())) {
+			if ((methodType instanceof TypeNull) && (exprType instanceof TypeNull)) {
+				String nameMethodType = methodType.getName();
+				String nameExprType = exprType.getName();
+				if (!nameMethodType.equals(nameExprType)) {
+					TypeCianetoClass c = semanticChecking.getTypeCianetoClass(nameExprType);
+					if (!c.isSubtype(nameMethodType)) {
+						this.error(
+								"Type error: type of the expression returned is not subclass of the method return type");
+					}
+				}
+			} else {
+				this.error("Wrong type of return");
+			}
+		}
+
 		return new ReturnStat(expr);
 	}
 
 	private WhileStat whileStat() {
 		next();
-		
-		Expr e = expr();		
+
+		Expr e = expr();
 		next();
-		
-		if(!e.getType().getName().equals("boolean")) {
+
+		if (!e.getType().getName().equals("boolean")) {
 			this.error("non-boolean expression in 'while' command (comp.Compiler.whileStatement())");
 		}
-		
-		ArrayList<Statement> statList = new ArrayList<>();		
+
+		ArrayList<Statement> statList = new ArrayList<>();
 		statList = statementList("while");
-		
+
 		check(Token.RIGHTCURBRACKET, "missing '}' after 'while' body");
 		next();
-		
+
 		return new WhileStat(e, statList);
 	}
 
 	private IfStat ifStat() {
 		next();
-		
+
 		Expr expr = expr();
-		
-		if (lexer.token == Token.PLUS || lexer.token == Token.MINUS || 
-			lexer.token == Token.DIV || lexer.token == Token.MULT || 
-			lexer.token == Token.ASSIGN) {
+
+		if (lexer.token == Token.PLUS || lexer.token == Token.MINUS || lexer.token == Token.DIV
+				|| lexer.token == Token.MULT || lexer.token == Token.ASSIGN) {
 			this.error("Expression expected OR invalid sequence of symbols");
 		}
-		
+
 		check(Token.LEFTCURBRACKET, "'{' expected (line " + lexer.getLineNumber() + ")");
 		next();
-		
+
 		ArrayList<Statement> ifState = new ArrayList<>();
 		ArrayList<Statement> elseState = new ArrayList<>();
-		
-		while ( lexer.token != Token.RIGHTCURBRACKET &&
-				lexer.token != Token.END && lexer.token != Token.ELSE ) {
+
+		while (lexer.token != Token.RIGHTCURBRACKET && lexer.token != Token.END && lexer.token != Token.ELSE) {
 			Statement e = statement("ifStat");
 			ifState.add(e);
 		}
-		
+
 		check(Token.RIGHTCURBRACKET, "'}' was expected");
 		next();
-		
-		if ( lexer.token == Token.ELSE ) {
+
+		if (lexer.token == Token.ELSE) {
 			next();
 			check(Token.LEFTCURBRACKET, "'{' expected (line " + lexer.getLineNumber() + ")");
-			next();		
-			
-			while ( lexer.token != Token.RIGHTCURBRACKET ) {
+			next();
+
+			while (lexer.token != Token.RIGHTCURBRACKET) {
 				Statement e = statement("ifStat");
 				elseState.add(e);
 			}
-			
+
 			check(Token.RIGHTCURBRACKET, "'}' was expected");
 			next();
 		}
-		
-		//next();
-		
+
+		// next();
+
 		return new IfStat(expr, ifState, elseState);
 	}
 
 	/**
-
+	
 	 */
 	private WriteStat writeStat() {
 		next();
-		check(Token.DOT, "a '.' was expected after 'Out'");		
+		check(Token.DOT, "a '.' was expected after 'Out'");
 		next();
-		
-		if (!lexer.getStringValue().equals("print:") && 
-			!lexer.getStringValue().equals("println:")) {
+
+		if (!lexer.getStringValue().equals("print:") && !lexer.getStringValue().equals("println:")) {
 			this.error("Command 'Out.' without arguments");
 		}
-		
+
 		String printName = lexer.getStringValue();
 		int lineNumber = lexer.getLineNumber();
 		next();
-		
-		ArrayList<Expr> exprList = exprList();		
-		
-		if(exprList!=null) {
-			for(Expr expr : exprList) {
-				if(expr.getType().getName().equals("boolean")) {
-					this.error("Attempt to print a "+expr.getType().getName()+" expression");
+
+		ArrayList<Expr> exprList = exprList();
+
+		if (exprList != null) {
+			for (Expr expr : exprList) {
+				if (expr.getType().getName().equals("boolean") || expr.getType() instanceof TypeNull) {
+					this.error("Attempt to print a " + expr.getType().getName() + " expression");
 				}
 			}
 		}
-		
+
 		if (exprList == null) {
 			this.error("Command 'Out." + printName + "' without arguments");
 		}
-		
+
 		if (lexer.token != Token.SEMICOLON) {
-			//System.out.println("linha: " + lineNumber);
+			// System.out.println("linha: " + lineNumber);
 			int line = lexer.getLineNumber();
 			lexer.setLineNumber(lineNumber);
 			this.error("';' expected");
 			lexer.setLineNumber(line);
 		}
-		
+
 		return new WriteStat(exprList, printName);
 	}
-	
+
 	private ArrayList<Expr> exprList() {
 		ArrayList<Expr> exprList = new ArrayList<>();
-		
+
 		Expr e = null;
 		e = expr();
-		
-		if (e == null) return null;
-				
+
+		if (e == null)
+			return null;
+
 		exprList.add(e);
-		
+
 		while (lexer.token == Token.COMMA) {
 			next();
-			
+
 			e = expr();
-			
+
 			if (e == null) {
 				this.error("Expression expected");
 			}
-			
+
 			exprList.add(e);
 		}
-		
-		
+
 		return exprList;
 	}
 
 	private Expr expr() {
 		Expr left = null;
 		left = simpleExpr();
-		
-		if (relation(lexer.token)) {	
+
+		if (relation(lexer.token)) {
 			Token op = lexer.token;
 			next();
-			
+
 			Expr right = null;
 			right = simpleExpr();
-			
+
 			if (right == null)
 				this.error("Expression expected OR Unknown sequence of symbols");
-			
-			if(left!=null && right!=null) {
-				//System.out.println("left type: " + left.getType());
-				//System.out.println("right type: " + right.getType());
+
+			if (left != null && right != null) {
+				// System.out.println("left type: " + left.getType());
+				// System.out.println("right type: " + right.getType());
 			}
-			
-			if(!left.getType().getName().equals(right.getType().getName())) {
-				if( !(left.getType().getName().equals("NullType")) && !(right.getType().getName().equals("NullType"))  ) {
+
+			if (!left.getType().getName().equals(right.getType().getName())) {
+				if (!(left.getType().getName().equals("NullType")) && !(right.getType().getName().equals("NullType"))) {
 					this.error("Type not equals");
 				}
 			}
-			
-			left = new CompositeExpr(left, op, right, Type.booleanType);
+
+			left = new CompositeExpr(left, op, right, new TypeBoolean());
 		}
-		
+
 		if (left == null) {
 			return null;
 		}
-		
+
 		return left;
 	}
-	
+
 	private Expr simpleExpr() {
 		Expr left = null;
 		left = sumSubExpr();
-		
+
 		while (lexer.token == Token.CONCAT) {
 			Token operator = lexer.token;
 			next();
-			
+
 			Expr right = null;
 			right = sumSubExpr();
-			
-			if(!left.getType().getName().equals(right.getType().getName())) {
+
+			if (!left.getType().getName().equals(right.getType().getName())) {
 				this.error("Type not equals");
 			}
-			
+
 			left = new CompositeSimpleExpr(left, operator, right, left.getType());
 		}
-		
+
 		if (left == null) {
 			return null;
 		}
-		
+
 		return left;
 	}
-	
+
 	private Expr sumSubExpr() {
 		Expr left = null;
 		left = term();
-		
-		while (lexer.token == Token.PLUS || 
-			lexer.token == Token.MINUS || 
-			lexer.token == Token.OR) {
+
+		while (lexer.token == Token.PLUS || lexer.token == Token.MINUS || lexer.token == Token.OR) {
 			Token operator = lexer.token;
 			next();
-			
+
 			if (lexer.token == Token.PLUS) {
 				return left;
 			}
-			
+
 			Expr right = null;
 			right = term();
-			
-			if(!left.getType().getName().equals(right.getType().getName())) {
+
+			if (!left.getType().getName().equals(right.getType().getName())) {
 				this.error("Type not equals");
 			}
-			
-			if(operator == Token.PLUS && (left.getType().getName().equals("boolean") || right.getType().getName().equals("boolean")) ) {
+
+			if (operator == Token.PLUS
+					&& (left.getType().getName().equals("boolean") || right.getType().getName().equals("boolean"))) {
 				this.error("type boolean does not support operation '+' (comp.Compiler.simpleExpr())");
 			}
-			
+
 			left = new CompositeSumSubExpr(left, operator, right, left.getType());
 		}
-		
+
 		if (left == null) {
 			return null;
 		}
-		
+
 		return left;
 	}
-	
+
 	private Expr term() {
 		Expr left = null;
 		left = signalFactor();
-		
-		while (lexer.token == Token.MULT || 
-			lexer.token == Token.DIV || 
-			lexer.token == Token.AND) {
+
+		while (lexer.token == Token.MULT || lexer.token == Token.DIV || lexer.token == Token.AND) {
 			Token operator = lexer.token;
 			next();
 			Expr right = null;
 			right = signalFactor();
-			
-			if(!left.getType().getName().equals(right.getType().getName())) {
+
+			if (!left.getType().getName().equals(right.getType().getName())) {
 				this.error("Type not equals");
 			}
-			
-			if(operator == Token.AND && (left.getType().getName().equals("int") || right.getType().getName().equals("int"))) {
+
+			if (operator == Token.AND
+					&& (left.getType().getName().equals("int") || right.getType().getName().equals("int"))) {
 				this.error("type 'int' does not support operator '&&' (comp.Compiler.term())");
 			}
-			
+
 			left = new CompositeTerm(left, operator, right, left.getType());
 		}
-		
+
 		if (left == null) {
 			return null;
 		}
-		
+
 		return left;
 	}
-	
+
 	private SignalFactor signalFactor() {
 		Token operator = null;
-		
-		if (lexer.token == Token.PLUS || 
-			lexer.token == Token.MINUS || 
-			lexer.token == Token.OR) {
+
+		if (lexer.token == Token.PLUS || lexer.token == Token.MINUS || lexer.token == Token.OR) {
 			operator = lexer.token;
 			next();
 		}
-		
+
 		Factor factor = factor();
-		
+
 		if (factor == null) {
 			return null;
 		}
-		
+
 		return new CompositeSignalFactor(operator, factor, factor.getType());
 	}
-	
+
 	private Factor factor() {
 		if (lexer.token == Token.LEFTPAR) {
 			next();
-			
+
 			Expr e = null;
 			e = expr();
-			
-			if (e == null) this.error("Expression expected");
-						
-			if (lexer.token != Token.RIGHTPAR) this.error("')' expected");
-						
-			if (e == null) return null;
-						
+
+			if (e == null)
+				this.error("Expression expected");
+
+			if (lexer.token != Token.RIGHTPAR)
+				this.error("')' expected");
+
+			if (e == null)
+				return null;
+
 			next();
 			return new ExprFactor(e, e.getType());
-		} else if (lexer.token == Token.ID || 
-					lexer.token == Token.SUPER || 
-					lexer.token == Token.SELF || 
-					lexer.token == Token.READ) {
+		} else if (lexer.token == Token.ID || lexer.token == Token.SUPER || lexer.token == Token.SELF
+				|| lexer.token == Token.READ) {
 			return primaryExpr();
 		} else if (lexer.token == Token.NOT) {
 			next();
 			Factor factor = factor();
-			if(!factor.getType().getName().equals("boolean")) {
-				this.error("Operator '!' does not accepts '"+factor.getType().getName()+"' values (comp.Compiler.factor())");
+			if (!factor.getType().getName().equals("boolean")) {
+				this.error("Operator '!' does not accepts '" + factor.getType().getName()
+						+ "' values (comp.Compiler.factor())");
 			}
 			return new BooleanExpr(Token.NOT, factor, factor.getType());
-		} else if(lexer.token == Token.NULL) {
+		} else if (lexer.token == Token.NULL) {
 			next();
-			return new NullExpr(Type.nullType);
+			return new NullExpr(new TypeNull());
 		} else {
 			return basicValue();
 		}
 	}
-	
+
 	private BasicValue basicValue() {
 		if (lexer.token == Token.LITERALINT) {
 			Integer value = lexer.getNumberValue();
 			next();
-			return new BasicValue(value, Type.intType);
+			return new BasicValue(value, new TypeInt());
 		} else if (lexer.token == Token.LITERALSTRING) {
 			String value = lexer.getLiteralStringValue();
 			next();
-			return new BasicValue(value, Type.stringType);
+			return new BasicValue(value, new TypeString());
 		} else if (lexer.token == Token.TRUE) {
 			boolean value = true;
 			next();
-			return new BasicValue(value, Type.booleanType);
+			return new BasicValue(value, new TypeBoolean());
 		} else if (lexer.token == Token.FALSE) {
 			boolean value = false;
 			next();
-			return new BasicValue(value, Type.booleanType);
+			return new BasicValue(value, new TypeBoolean());
 		} else {
 			return null;
-		}	
+		}
 	}
-	
-	private AssignExpr assignExpr () {
+
+	private AssignExpr assignExpr() {
 		Expr left = null, right = null;
 		int lineNumber = lexer.getLineNumber();
-		if(lexer.token == Token.BOOLEAN
-			|| lexer.token == Token.LITERALINT
-			|| lexer.token == Token.LITERALSTRING) {
+		if (lexer.token == Token.BOOLEAN || lexer.token == Token.LITERALINT || lexer.token == Token.LITERALSTRING) {
 			this.error("Cannot assign to a literal");
 		}
 		left = expr();
-		
-		if (left == null) return null;
-		
+
+		if (left == null)
+			return null;
+
 		if (lexer.token == Token.ASSIGN) {
 			lineNumber = lexer.getLineNumber();
 			next();
-			
-			//Se é um identificador, precisa verificar se já foi declarado
-			//Mensagem de erro temporária até implementação da análise semântica			
+
+			// Se é um identificador, precisa verificar se já foi declarado
+			// Mensagem de erro temporária até implementação da análise semântica
 			if (lexer.getStringValue().equals("readInt")) {
 				this.error("'readInt' was not declared");
 			}
-			
+
 			right = expr();
-			
-			if (right == null) this.error("Expression expected");
-			if(!left.getType().getName().equals(right.getType().getName())) {
-				this.error("Type error: value of the right-hand side is not subtype of the variable of the left-hand side.");
-			} else if(left.getType() instanceof TypeNull && right.getType() instanceof TypeNull) {
+
+			if (right == null)
+				this.error("Expression expected");
+			if (!left.getType().getName().equals(right.getType().getName())) {
+
+				if (left.getType() instanceof TypeNull && right.getType() instanceof TypeNull) {
+					String leftName = left.getType().getName();
+					String rightName = right.getType().getName();
+					if (!leftName.equals(rightName)) {
+						TypeCianetoClass c = semanticChecking.getTypeCianetoClass(rightName);
+						if (c == null) {
+							this.error("assignExpr: c null");
+						}
+						if (!c.isSubtype(leftName)) {
+							this.error(
+									"Type error: value of the right-hand side is not subtype of the variable of the left-hand side.");
+						}
+					}
+				} else {
+					this.error(
+							"Type error: value of the right-hand side is not subtype of the variable of the left-hand side.");
+				}
+
+			} else if (left.getType() instanceof TypeNull && right.getType() instanceof TypeNull) {
 				String name1 = left.getType().getName();
 				String name2 = right.getType().getName();
-				if(!name1.equals(name2)) {
+				if (!name1.equals(name2)) {
 					TypeCianetoClass c = semanticChecking.getTypeCianetoClass(name1);
-					if(c==null) {
+					if (c == null) {
 						this.error("assignExpr: c null");
 					}
-					if(!c.isSubtype(name2)) {
-						this.error("Type error: value of the right-hand side is not subtype of the variable of the left-hand side.");
+					if (!c.isSubtype(name2)) {
+						this.error(
+								"Type error: value of the right-hand side is not subtype of the variable of the left-hand side.");
 					}
 				}
 			}
+		} else {
+			this.error("nao tem ==");
 		}
-		
-		//check(Token.SEMICOLON, "';' expected");
-		if ( lexer.token != Token.SEMICOLON ) {
-			//System.out.println("linha: " + lineNumber);
+
+		// check(Token.SEMICOLON, "';' expected");
+		if (lexer.token != Token.SEMICOLON) {
+			// System.out.println("linha: " + lineNumber);
 			int line = lexer.getLineNumber();
 			lexer.setLineNumber(lineNumber);
 			error("';' expected");
 			lexer.setLineNumber(line);
 		}
-		
+
 		return new AssignExpr(left, right);
 	}
-	
-	private Factor primaryExpr() {		
-		
+
+	private Factor primaryExpr() {
+
 		if (lexer.token == Token.ID) {
-			
+
 			if (lexer.getStringValue().equals("In")) {
 				return readExpr();
 			}
-			
+
 			String id = lexer.getStringValue();
-			
-			if(semanticChecking.getTypeCianetoClass(id)==null 
-					&& semanticChecking.getFieldDec(id)==null 
-					&& semanticChecking.getLocalDec(id)==null 
-					&& semanticChecking.getParamVariable(id)==null) {
-				
-				if(!id.equals(semanticChecking.getCurrentClassName())) {
-					this.error(id+" was not declared");
+
+			if (semanticChecking.getTypeCianetoClass(id) == null
+					// && semanticChecking.getFieldDec(id)==null
+					&& semanticChecking.getLocalDec(id) == null && semanticChecking.getParamVariable(id) == null) {
+
+				if (!id.equals(semanticChecking.getCurrentClassName())) {
+					this.error(id + " was not declared");
 				}
 			}
-			
+
 			next();
-			
-			if (lexer.token == Token.DOT ) {
+
+			if (lexer.token == Token.DOT) {
 				next();
-				
+
 				if (lexer.token == Token.ID) {
-					
+
 					String id2 = lexer.getStringValue();
 					next();
-					
+
 					Type t1 = getTypeOfId(id);
-					
-					//TypeCianetoClass cClass = hashClasses.get(t1.getName());
+
+					// TypeCianetoClass cClass = hashClasses.get(t1.getName());
 					MethodDec method = null;
 					TypeCianetoClass cClass = semanticChecking.getTypeCianetoClass(t1.getName());
-					if(cClass==null) {
-						if(t1.getName().equals(semanticChecking.getCurrentClassName())) {
+					if (cClass == null) {
+						if (t1.getName().equals(semanticChecking.getCurrentClassName())) {
 							method = semanticChecking.getMethodDec(id2);
 						} else {
-							this.error("The class of "+t1.getName()+" is not declared");
+							this.error("The class of " + t1.getName() + " is not declared");
 						}
 					} else {
 						method = cClass.getMethod(id2);
 					}
-					
-					
-					if(method==null) {
-						this.error("method "+id2+" is not declared in "+t1.getName());
+
+					if (method == null) {
+						this.error("method " + id2 + " is not declared in " + t1.getName());
 					}
-					
+
 					return new PrimarySimpleExpr(id, id2, method.getType());
-					
+
 				} else if (lexer.token == Token.IDCOLON) {
 					String id2 = lexer.getStringValue();
 					next();
-					
+
 					ArrayList<Expr> exprList = exprList();
-					
+
 					Type t = verifySendMessage(id, id2, exprList);
-					
+
 					return new PrimarySimpleExpr(id, id2, exprList, t);
-					
+
 				} else if (lexer.token == Token.NEW) {
 					next();
 					return new ObjectCreation(id, getTypeOfId(id));
-					
+
 				} else {
 					this.error("Id or IdColon expected");
 				}
 			} else {
 				return new PrimarySimpleExpr(id, getTypeOfId(id));
 			}
-			
+
 		} else if (lexer.token == Token.SUPER) {
 			next();
-			
-			if (lexer.token == Token.DOT ) {
+
+			if (lexer.token == Token.DOT) {
 				next();
-				
+
 				if (lexer.token == Token.ID) {
-					
+
 					String id = lexer.getStringValue();
-					
-					if(semanticChecking.getSuperClass()==null) {
-						this.error("cannot call super, the class "+semanticChecking.getCurrentClassName()+" has not super class");
+
+					if (semanticChecking.getSuperClass() == null) {
+						this.error("cannot call super, the class " + semanticChecking.getCurrentClassName()
+								+ " has not super class");
 					}
-					
+
 					MethodDec methodDec = semanticChecking.getSuperClass().getMethod(id);
-					if(methodDec==null) {
-						this.error(id+" is not declared");
+					if (methodDec == null) {
+						this.error(id + " is not declared");
 					}
-					
+
 					next();
 					return new PrimarySuperExpr(id, methodDec.getType());
-					
+
 				} else if (lexer.token == Token.IDCOLON) {
 					String id = lexer.getStringValue();
 					next();
-					
+
 					ArrayList<Expr> exprList = exprList();
-					
-					if(semanticChecking.getSuperClass()==null) {
-						this.error("cannot call super, the class "+semanticChecking.getCurrentClassName()+" has not super class");
+
+					if (semanticChecking.getSuperClass() == null) {
+						this.error("cannot call super, the class " + semanticChecking.getCurrentClassName()
+								+ " has not super class");
 					}
-					
+
 					MethodDec methodDec = semanticChecking.getSuperClass().getMethod(id);
-					if(methodDec==null) {
-						this.error(id+" is not declared");
+					if (methodDec == null) {
+						this.error(id + " is not declared");
 					}
 					Type t = verifyArgumentsOfSendMessage(id, methodDec, exprList);
-					
+
 					return new PrimarySuperExpr(id, exprList, t);
-					
+
 				} else {
 					this.error("Id or IdColon expected");
 				}
 			}
-		} else if (lexer.token == Token.SELF) {			
+		} else if (lexer.token == Token.SELF) {
 			next();
-			
-			if (lexer.token == Token.DOT ) {
+
+			if (lexer.token == Token.DOT) {
 				next();
-				
+
 				if (lexer.token == Token.ID) {
-					
+
 					String id = lexer.getStringValue();
 					next();
-					
+
 					if (lexer.token == Token.DOT) {
 						next();
-						
+
 						if (lexer.token == Token.ID) {
-							
+
 							String id2 = lexer.getStringValue();
 							next();
-							
+
 							Type t1 = getTypeOfId(id);
 							Type t2 = getTypeOfId(id2);
-							if(!t1.getName().equals(t2.getName())) {
+							if (!t1.getName().equals(t2.getName())) {
 								this.error("Type not equals");
 							}
 							return new PrimarySelfExpr(id, id2, t1);
-							
+
 						} else if (lexer.token == Token.IDCOLON) {
 							String id2 = lexer.getStringValue();
 							next();
-							
+
 							ArrayList<Expr> exprList = exprList();
-							
+
 							Type t = verifySendMessage(id, id2, exprList);
-							
+
 							return new PrimarySelfExpr(id, id2, exprList, t);
-							
+
 						} else {
 							this.error("Id or IdColon expected");
 						}
 					}
-					
-					//FieldDec fieldDec = hashGlobalVariables.get(id);
-					//MethodDec methodDec = hashMethodsList.get(id);
+
+					// FieldDec fieldDec = hashGlobalVariables.get(id);
+					// MethodDec methodDec = hashMethodsList.get(id);
 					FieldDec fieldDec = semanticChecking.getFieldDec(id);
 					MethodDec methodDec = semanticChecking.getMethodDec(id);
-					if(methodDec==null && semanticChecking.getSuperClass()!=null) {
+					if (methodDec == null && semanticChecking.getSuperClass() != null) {
 						methodDec = semanticChecking.getSuperClass().getMethod(id);
 					}
-					Type type = Type.undefinedType;
-					if(fieldDec==null && methodDec==null) {
-						this.error(id+" is not declared");
+					Type type = new TypeUndefined();
+					if (fieldDec == null && methodDec == null) {
+						this.error(id + " is not declared");
 					}
-					
-					if(fieldDec!=null) {
+
+					if (fieldDec != null) {
 						type = fieldDec.getType();
-					} else if (methodDec!=null) {
+					} else if (methodDec != null) {
 						type = methodDec.getType();
 					}
 					return new PrimarySelfExpr(id, type);
-					
+
 				} else if (lexer.token == Token.IDCOLON) {
 					String id = lexer.getStringValue();
 					next();
-					
+
 					ArrayList<Expr> exprList = exprList();
-					
+
 					Type t = verifySendMessage("self", id, exprList);
-					
+
 					return new PrimarySelfExpr(id, exprList, t);
-					
+
 				} else {
 					this.error("Id or IdColon expected");
 				}
 			} else {
-				Type type = Type.nullType;
+				Type type = new TypeNull();
 				type.setName(semanticChecking.getCurrentClassName());
 				return new PrimarySelfExpr("self", type);
-			}		
+			}
 		}
-		
+
 		return null;
 	}
-	
+
 	private ReadExpr readExpr() {
-		next();		
-		check(Token.DOT, "a '.' was expected after 'Out'");		
 		next();
-		
+		check(Token.DOT, "a '.' was expected after 'Out'");
+		next();
+
 		if (lexer.getStringValue().equals("readInt")) {
 			next();
-			return new ReadExpr(Type.intType);
+			return new ReadExpr(new TypeInt());
 		} else if (lexer.getStringValue().equals("readString")) {
 			next();
-			return new ReadExpr(Type.stringType);
+			return new ReadExpr(new TypeString());
 		} else {
 			this.error("Command 'In.' without arguments");
 		}
-		
+
 		return null;
 	}
 
 	private FieldDec fieldDec() {
 		next();
-		
+
 		ArrayList<String> idList = new ArrayList<>();
-		Type type = Type.undefinedType;
+		Type type = new TypeUndefined();
 		type.setName(lexer.getStringValue());
 		type = type();
-		
-		if (type == null) 
+
+		if (type == null)
 			error("Type expected");
-		
-		if ( lexer.token != Token.ID ) {
+
+		if (lexer.token != Token.ID) {
 			this.error("A field name was expected");
 		} else {
-			while ( lexer.token == Token.ID  ) {
+			while (lexer.token == Token.ID) {
 				String name = lexer.getStringValue();
 				checkVariable(name);
 				idList.add(name);
 				next();
-				
-				if ( lexer.token == Token.COMMA ) {
+
+				if (lexer.token == Token.COMMA) {
 					lexer.nextToken();
 				} else {
 					break;
 				}
 			}
 		}
-		
-		if (lexer.token == Token.SEMICOLON) next();
-		
+
+		if (lexer.token == Token.SEMICOLON)
+			next();
+
 		if (lexer.token == Token.DOT)
 			this.error("Invalid Character: '" + lexer.token.toString() + "'");
 
 		FieldDec field = new FieldDec(type, idList);
-		for(String id : idList) {
+		for (String id : idList) {
 			semanticChecking.putInHashGlobalVariables(id, field);
 		}
 		return field;
 	}
 
 	private Type type() {
-		Type type = Type.undefinedType;
-		
-		if ( lexer.token == Token.INT ) {
-			type = Type.intType;
+		Type type = new TypeUndefined();
+
+		if (lexer.token == Token.INT) {
+			type = new TypeInt();
 			next();
-		}
-		else if ( lexer.token == Token.BOOLEAN ) {
-			type = Type.booleanType;
+		} else if (lexer.token == Token.BOOLEAN) {
+			type = new TypeBoolean();
 			next();
-		}
-		else if ( lexer.token == Token.STRING ) {
-			type = Type.stringType;
+		} else if (lexer.token == Token.STRING) {
+			type = new TypeString();
 			next();
-		}
-		else if ( lexer.token == Token.ID ) {
-			type = Type.nullType;
-			/*type = semanticChecking.getTypeCianetoClass(lexer.getStringValue());
-			System.out.println("cianeto");
-			System.out.println(type.getName());*/
+		} else if (lexer.token == Token.ID) {
+			type = new TypeNull();
+			/*
+			 * type = semanticChecking.getTypeCianetoClass(lexer.getStringValue());
+			 * System.out.println("cianeto"); System.out.println(type.getName());
+			 */
 			type.setName(lexer.getStringValue());
 			next();
-		}
-		else {
-			//this.error("A type was expected in line " + lexer.getLineNumber());
+		} else {
+			// this.error("A type was expected in line " + lexer.getLineNumber());
 			return null;
 		}
-		
+
 		return type;
 	}
 
-
 	private Qualifier qualifier() {
-		
-		Token q1 = null, q2 = null, q3 = null, q4 = null;	
-		
-		if (lexer.token != Token.PUBLIC && lexer.token != Token.PRIVATE && 
-				lexer.token != Token.OVERRIDE && lexer.token != Token.FINAL && 
-				lexer.token != Token.FUNC) {
+
+		Token q1 = null, q2 = null, q3 = null, q4 = null;
+
+		if (lexer.token != Token.PUBLIC && lexer.token != Token.PRIVATE && lexer.token != Token.OVERRIDE
+				&& lexer.token != Token.FINAL && lexer.token != Token.FUNC) {
 			return null;
 		}
-		
-		if (lexer.token == Token.FUNC) {			
+
+		if (lexer.token == Token.FUNC) {
 			q1 = Token.PUBLIC;
 			return new Qualifier(q1, q2, q3, q4);
 		} else {
 			q1 = lexer.token;
 		}
-		
+
 		next();
-		
-		if ( lexer.token == Token.PRIVATE ) {
+
+		if (lexer.token == Token.PRIVATE) {
 			q2 = lexer.token;
 			next();
-		} else if ( lexer.token == Token.PUBLIC ) {
+		} else if (lexer.token == Token.PUBLIC) {
 			q2 = lexer.token;
 			next();
-		} else if ( lexer.token == Token.OVERRIDE ) {
+		} else if (lexer.token == Token.OVERRIDE) {
 			q2 = lexer.token;
 			next();
-			
-			if ( lexer.token == Token.PUBLIC ) {
+
+			if (lexer.token == Token.PUBLIC) {
 				q3 = lexer.token;
 				next();
 			}
-		} else if ( lexer.token == Token.FINAL ) {
+		} else if (lexer.token == Token.FINAL) {
 			q2 = lexer.token;
 			next();
-			
-			if ( lexer.token == Token.PUBLIC ) {
+
+			if (lexer.token == Token.PUBLIC) {
 				q3 = lexer.token;
 				next();
-			} else if ( lexer.token == Token.OVERRIDE ) {
+			} else if (lexer.token == Token.OVERRIDE) {
 				q3 = lexer.token;
 				next();
-				
-				if ( lexer.token == Token.PUBLIC ) {
+
+				if (lexer.token == Token.PUBLIC) {
 					q4 = lexer.token;
 					next();
 				}
 			}
 		}
-		
+
 		return new Qualifier(q1, q2, q3, q4);
 	}
-	
+
 	private AssertStat assertStat() {
-		next();	
-		
+		next();
+
 		Expr expr = expr();
-		
+
 		check(Token.COMMA, "',' expected after the expression of the 'assert' statement");
 		next();
-		
+
 		check(Token.LITERALSTRING, "A literal string expected after the ',' of the 'assert' statement");
-		
+
 		String message = lexer.getLiteralStringValue();
-		next();	
-		
+		next();
+
 		check(Token.SEMICOLON, "';' expected");
-		next();		
+		next();
 
 		return new AssertStat(expr, message);
 	}
@@ -1408,86 +1473,86 @@ public class Compiler {
 		// Method intValue returns that value as an value of type int.
 		int value = lexer.getNumberValue();
 		lexer.nextToken();
-		return new LiteralInt(value, Type.intType);
+		return new LiteralInt(value, new TypeInt());
 	}
 
-	private static boolean relation (Token token) {
-		return token == Token.EQ || token == Token.LT || token == Token.GT
-				|| token == Token.LE || token == Token.GE || token == Token.NEQ || token == Token.AND;
+	private static boolean relation(Token token) {
+		return token == Token.EQ || token == Token.LT || token == Token.GT || token == Token.LE || token == Token.GE
+				|| token == Token.NEQ || token == Token.AND;
 	}
 
 	private void checkVariable(String identifier) {
 		FieldDec fieldDec = semanticChecking.getFieldDec(identifier);
 		LocalDec localDec = semanticChecking.getLocalDec(identifier);
 		Variable parameter = semanticChecking.getParamVariable(identifier);
-		
-		if(fieldDec!=null) {
-			this.error(identifier+" is already declared as global variable");
-		} else if (localDec!=null) {
-			this.error(identifier+" is already declared as local variable");
-		} else if (parameter!=null) {
-			this.error(identifier+" is already declared as a parameter");
+
+		if (fieldDec != null) {
+			this.error(identifier + " is already declared as global variable");
+		} else if (localDec != null) {
+			this.error(identifier + " is already declared as local variable");
+		} else if (parameter != null) {
+			this.error(identifier + " is already declared as a parameter");
 		}
 	}
-	
+
 	private boolean isVariable(String identifier) {
 		FieldDec fieldDec = semanticChecking.getFieldDec(identifier);
 		LocalDec localDec = semanticChecking.getLocalDec(identifier);
 		Variable parameter = semanticChecking.getParamVariable(identifier);
-		
-		if(fieldDec!=null || localDec!=null || parameter!=null) {
+
+		if (fieldDec != null || localDec != null || parameter != null) {
 			return true;
 		} else {
 			return false;
 		}
 	}
-	
+
 	private Type getTypeOfId(String id) {
-		
+
 		TypeCianetoClass cianetoClass = semanticChecking.getTypeCianetoClass(id);
-		if(cianetoClass!=null) {
-			Type type = Type.nullType;
+		if (cianetoClass != null) {
+			Type type = new TypeNull();
 			type.setName(cianetoClass.getName());
 			return type;
 		}
-		
-		if(id.equals(semanticChecking.getCurrentClassName())) {
-			Type type = Type.nullType;
+
+		if (id.equals(semanticChecking.getCurrentClassName())) {
+			Type type = new TypeNull();
 			type.setName(id);
 			return type;
 		}
-		
+
 		FieldDec fieldDec = semanticChecking.getFieldDec(id);
-		if(fieldDec!=null) {
+		if (fieldDec != null) {
 			return fieldDec.getType();
-		} 
+		}
 
 		LocalDec localDec = semanticChecking.getLocalDec(id);
-		if (localDec!=null) {
+		if (localDec != null) {
 			return localDec.getType();
-		} 
+		}
 
 		Variable parameter = semanticChecking.getParamVariable(id);
-		if (parameter!=null) {
+		if (parameter != null) {
 			return parameter.getType();
 		}
-		
-		this.error(id+" is not declared");
-		return Type.undefinedType;
+
+		this.error(id + " is not declared");
+		return new TypeUndefined();
 	}
-	
+
 	private Type verifySendMessage(String variableName, String methodName, ArrayList<Expr> exprList) {
-		//System.out.println(variableName+"."+methodName);
-		
+		// System.out.println(variableName+"."+methodName);
+
 		MethodDec method = null;
-		if(!variableName.equals("self")) {
+		if (!variableName.equals("self")) {
 			String className = "";
 			FieldDec fieldDec = semanticChecking.getFieldDec(variableName);
-			if(fieldDec==null) {
+			if (fieldDec == null) {
 				LocalDec localDec = semanticChecking.getLocalDec(variableName);
-				if(localDec==null) {
+				if (localDec == null) {
 					Variable variable = semanticChecking.getParamVariable(variableName);
-					if(variable==null) {
+					if (variable == null) {
 						this.error("erro ao procurar variavel");
 					} else {
 						className = variable.getType().getName();
@@ -1498,18 +1563,18 @@ public class Compiler {
 			} else {
 				className = fieldDec.getType().getName();
 			}
-			
+
 			TypeCianetoClass cianetoClass = semanticChecking.getTypeCianetoClass(className);
-			if(cianetoClass==null) {
-				
-				if(className.equals(semanticChecking.getCurrentClassName())) {
+			if (cianetoClass == null) {
+
+				if (className.equals(semanticChecking.getCurrentClassName())) {
 					method = semanticChecking.getMethodDec(methodName);
-					if(method==null) {
-						if(methodName.equals(semanticChecking.getCurrentMethodVariable().getName())) {
-							//verifyMethodsParams(paramList, exprList);
+					if (method == null) {
+						if (methodName.equals(semanticChecking.getCurrentMethodVariable().getName())) {
+							// verifyMethodsParams(paramList, exprList);
 							return semanticChecking.getCurrentMethodVariable().getType();
 						} else {
-							this.error("method "+methodName+" is not declared");
+							this.error("method " + methodName + " is not declared");
 						}
 					}
 				} else {
@@ -1521,55 +1586,83 @@ public class Compiler {
 		} else {
 			method = semanticChecking.getMethodDec(methodName);
 		}
-		if(method==null) {
-			this.error("method "+methodName+" is not declared");
+		if (method == null) {
+			this.error("method " + methodName + " is not declared");
 		}
-		
+
 		verifyMethodsParams(method.getParamList(), exprList);
 		return method.getType();
 	}
-	
+
 	private void verifyMethodsParams(ArrayList<Variable> paramList, ArrayList<Expr> exprList) {
 		int sizeParam = paramList.size();
 		int sizeExpr = exprList.size();
-		if(sizeParam!=sizeExpr) {
+		if (sizeParam != sizeExpr) {
 			this.error("wrong amount of parameters");
 		}
-		for(int i=0; i<sizeParam; i++) {
+		for (int i = 0; i < sizeParam; i++) {
 			Variable var = paramList.get(i);
 			Expr expr = exprList.get(i);
-			if(!var.getType().getName().equals(expr.getType().getName())) {
+			if (!var.getType().getName().equals(expr.getType().getName())) {
 				this.error("wrong type of parameter");
 			}
 		}
 	}
-	
+
 	private Type verifyArgumentsOfSendMessage(String methodName, MethodDec method, ArrayList<Expr> exprList) {
-		if(method==null) {
-			this.error("method "+methodName+" is not declared");
+		if (method == null) {
+			this.error("method " + methodName + " is not declared");
 		}
-		
+
 		ArrayList<Variable> paramList = method.getParamList();
 		int sizeParam = paramList.size();
 		int sizeExpr = exprList.size();
-		if(sizeParam!=sizeExpr) {
+		if (sizeParam != sizeExpr) {
 			this.error("wrong amount of parameters");
 		}
-		for(int i=0; i<sizeParam; i++) {
+		for (int i = 0; i < sizeParam; i++) {
 			Variable var = paramList.get(i);
 			Expr expr = exprList.get(i);
-			if(!var.getType().getName().equals(expr.getType().getName())) {
+			if (!var.getType().getName().equals(expr.getType().getName())) {
 				this.error("wrong type of parameter");
 			}
 		}
 		return method.getType();
 	}
-	
-	private SymbolTable		symbolTable;
-	private Lexer			lexer;
-	private ErrorSignaller	signalError;
-	
+
+	private boolean thereIsTheSameMethodInSuperClass(Variable method, ArrayList<Variable> paramList) {
+		String methodName = method.getName();
+		if (semanticChecking.getSuperClass() == null) {
+			return false;
+		}
+		TypeCianetoClass cianetoClass = semanticChecking
+				.getTypeCianetoClass(semanticChecking.getSuperClass().getName());
+		if (cianetoClass != null) {
+			MethodDec superMethod = cianetoClass.getMethod(methodName);
+			if (superMethod != null) {
+				int sizeParam = paramList.size();
+				int sizeSuperParam = superMethod.getParamList().size();
+				ArrayList<Variable> superParamList = superMethod.getParamList();
+				if (sizeParam == sizeSuperParam) {
+					for (int i = 0; i < sizeParam; i++) {
+						Variable v1 = paramList.get(i);
+						Variable v2 = superParamList.get(i);
+						if (!v1.getType().getName().equals(v2.getType().getName())) {
+							return false;
+						}
+					}
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	private SymbolTable symbolTable;
+	private Lexer lexer;
+	private ErrorSignaller signalError;
+
 	private boolean returnRequired = false;
-	
+
 	private SemanticChecking semanticChecking = new SemanticChecking();
 }

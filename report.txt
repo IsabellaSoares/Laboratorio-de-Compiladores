@@ -2,16 +2,16 @@ Relat�rio do Compilador
 
 Resumo
 _________________________________________________________________________
-MI:  1             I: 0              PI: 0             Exc: 0
-Dev: 1/1/100%      LE: 0/1/0%       
+MI:  0             I: 0              PI: 2             Exc: 75
+Dev: 2/2/100%      LE: 0/2/0%        SSE: 0/75/0%      
 
 MI = muito importante, I = importante, PI = pouco importante, Exc = exce��es
 Dev = deveria ter sinalizado, LE = sinalizou linha errada, SSE = sinalizado sem erro
 _________________________________________________________________________
 
-N�mero de testes 'Muito importantes' em que o compilador falhou: 1
+N�mero de testes 'Muito importantes' em que o compilador falhou: 0
 N�mero de testes 'Importantes' em que o compilador falhou: 0
-N�mero de testes 'Pouco importantes' em que o compilador falhou: 0
+N�mero de testes 'Pouco importantes' em que o compilador falhou: 2
 
 O compilador falhou em testar alguns aspectos (constru��es) de Cianeto. A lista abaixo consiste de entradas da forma 
     aspecto
@@ -19,22 +19,104 @@ O compilador falhou em testar alguns aspectos (constru��es) de Cianeto. A li
 Os nomes de arquivos listados s�o aqueles que testam 'aspecto' mas em que o compilador falhou em apontar um erro, apontou um erro inexistente ou gerou c�digo errado (se op��o -genjava ou -genc foi usada).
 Os testes s�o categorizados por import�ncia: 'Muito importante', 'Importante', 'pouco importante'
 
-Testes 'Muito importantes' em que o compilador falhou:
-    typeErrorAssignRightSideNotSubtypeLeftSide
-        C:\Users\marce\Downloads\UFSCar\Laboratorio_de_compiladores\Laboratorio-de-Compiladores\student-made-tests\ER_SEM\ER_SEM38.ci
+Testes 'pouco importantes' em que o compilador falhou
+    booleanExprRepeatUntil
+        ER_SEM88.ci
+        ER_SEM89.ci
 
 
+
+75 arquivos lan�aram exce��es que n�o foram capturadas pelo compilador ou houve algum problema e o m�todo 'compileProgram' retornou 'null'. A maioria delas � provavelmente NullPointerException. Estes arquivos s�o:
+    ER_SEM01.ci
+    ER_SEM02.ci
+    ER_SEM03.ci
+    ER_SEM04.ci
+    ER_SEM05.ci
+    ER_SEM06.ci
+    ER_SEM07.ci
+    ER_SEM08.ci
+    ER_SEM09.ci
+    ER_SEM100.ci
+    ER_SEM11.ci
+    ER_SEM12.ci
+    ER_SEM13.ci
+    ER_SEM14.ci
+    ER_SEM15.ci
+    ER_SEM16.ci
+    ER_SEM17.ci
+    ER_SEM18.ci
+    ER_SEM19.ci
+    ER_SEM20.ci
+    ER_SEM21.ci
+    ER_SEM22.ci
+    ER_SEM23.ci
+    ER_SEM24.ci
+    ER_SEM25.ci
+    ER_SEM26.ci
+    ER_SEM27.ci
+    ER_SEM28.ci
+    ER_SEM29.ci
+    ER_SEM30.ci
+    ER_SEM31.ci
+    ER_SEM32.ci
+    ER_SEM33.ci
+    ER_SEM34.ci
+    ER_SEM35.ci
+    ER_SEM36.ci
+    ER_SEM37.ci
+    ER_SEM38.ci
+    ER_SEM39.ci
+    ER_SEM40.ci
+    ER_SEM41.ci
+    ER_SEM42.ci
+    ER_SEM43.ci
+    ER_SEM44.ci
+    ER_SEM45.ci
+    ER_SEM46.ci
+    ER_SEM47.ci
+    ER_SEM48.ci
+    ER_SEM49.ci
+    ER_SEM50.ci
+    ER_SEM51.ci
+    ER_SEM52.ci
+    ER_SEM53.ci
+    ER_SEM54.ci
+    ER_SEM55.ci
+    ER_SEM56.ci
+    ER_SEM57.ci
+    ER_SEM58.ci
+    ER_SEM59.ci
+    ER_SEM60.ci
+    ER_SEM61.ci
+    ER_SEM62.ci
+    ER_SEM68.ci
+    ER_SEM70.ci
+    ER_SEM71.ci
+    ER_SEM77.ci
+    ER_SEM78.ci
+    ER_SEM79.ci
+    ER_SEM80.ci
+    ER_SEM81.ci
+    ER_SEM82.ci
+    ER_SEM86.ci
+    ER_SEM91.ci
+    ER_SEM_EXTRA01.ci
+    ER_SEM_EXTRA02.ci
 
 _________________________________________________________________________
 
-1 de um total de 1 erros que deveriam ser sinalizados n�o o foram (100%)
+2 de um total de 2 erros que deveriam ser sinalizados n�o o foram (100%)
 0 erros foram sinalizados na linha errada (0%)
+0 erros foram sinalizados em 75 arquivos sem erro (0%)
 _________________________________________________________________________
 
 Erros que deveriam ser sinalizados mas n�o foram:
 
-C:\Users\marce\Downloads\UFSCar\Laboratorio_de_compiladores\Laboratorio-de-Compiladores\student-made-tests\ER_SEM\ER_SEM38.ci, 21, Type error: type of the right-hand side of the assignment is not a subclass of the left-hand side (comp.Compiler.assignExprLocalDec())
+ER_SEM88.ci, 17, boolean expression expected in a repeat-until statement (comp.Compiler.repeatUntilStatement())
+
+ER_SEM89.ci, 17, boolean expression expected in a repeat-until statement (comp.Compiler.repeatUntilStatement())
 
 Um ou mais arquivos de teste tinham erros, mas estes foram sinalizados nos n�meros de linhas corretos
+O compilador n�o sinalizou nenhum erro que n�o deveria ter sinalizado
 
 Something wrong: null list of files that generate correct or wrong code

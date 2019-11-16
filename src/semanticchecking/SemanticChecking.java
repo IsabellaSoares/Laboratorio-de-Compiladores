@@ -54,16 +54,6 @@ public class SemanticChecking {
 	}
 	
 	public LocalDec getLocalDec(String key) {
-		System.out.println("============== get =====================");
-		LocalDec localDec = hashLocalVariables.get(key);
-		System.out.println("key: " + key);
-		if(localDec!=null) {
-			System.out.println("localDec: "+localDec.getType().getName());
-			for(Variable v : localDec.getIdList()) {
-				System.out.println(v.getName()+" -> "+v.getType().getName());
-			}
-		}
-		System.out.println("==========================================");
 		return hashLocalVariables.get(key);
 	}
 	
@@ -88,12 +78,6 @@ public class SemanticChecking {
 	}
 	
 	public void putInLocalVariables(String key, LocalDec value) {
-		System.out.println("*************** put *********************");
-		System.out.println("put: "+key+" -> "+value.getType().getName());
-		for(Variable v : value.getIdList()) {
-			System.out.println(v.getName()+" -> "+v.getType().getName());
-		}
-		System.out.println("******************************************");
 		hashLocalVariables.put(key, value);
 	}
 	
