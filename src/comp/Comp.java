@@ -126,7 +126,6 @@ public class Comp {
 
 			for ( File f : fileList ) {
 				String filename = f.getName();
-				//System.out.println("file: " + filename);
 				int lastIndexDot = filename.lastIndexOf('.');
 				String ext = filename.substring(lastIndexDot + 1);
 				if ( ext.equalsIgnoreCase("ci") ) {
@@ -148,7 +147,7 @@ public class Comp {
 						nullPointerAndOtherExceptionsList.add(filename);
 						System.out.println("Runtime exception");
 					}
-					catch (Throwable t) {
+					catch (Exception t) {
 						nullPointerAndOtherExceptionsList.add(filename);
 						System.out.println("Throwable exception");
 					}
@@ -181,7 +180,7 @@ public class Comp {
 
 		}
 
-		if ( true ) {
+		if ( this.genJava ) {
 			if ( this.filesWithCorrectlyGeneratedJavaClasses != null &&
 					this.filesWithWrongGeneratedJavaClasses != null &&
 					this.filesWithJavaClassesWithCompilationErrors != null &&
@@ -261,27 +260,27 @@ public class Comp {
 		StringBuilder partialReport = new StringBuilder();
 		if ( this.checkNameFilenameListCompilerFailedMap.size() > 0 ) {
 			partialReport.append("\r\n");
-			partialReport.append("O compilador falhou em testar alguns aspectos (construï¿½ï¿½es) de Cianeto. "
+			partialReport.append("O compilador falhou em testar alguns aspectos (construções) de Cianeto. "
 					+ "A lista abaixo consiste de entradas da forma \n"
 					+ "    aspecto\n        listas de nomes de arquivos\n");
-			partialReport.append("Os nomes de arquivos listados sï¿½o aqueles que testam 'aspecto' mas em "
-					+ "que o compilador falhou em apontar um erro, apontou um erro inexistente ou gerou cï¿½digo errado (se opï¿½ï¿½o -genjava ou -genc foi usada).\r\n");
+			partialReport.append("Os nomes de arquivos listados são aqueles que testam 'aspecto' mas em "
+					+ "que o compilador falhou em apontar um erro, apontou um erro inexistente ou gerou código errado (se opção -genjava ou -genc foi usada).\r\n");
 			if ( ! printReportCheckNameFilenameList(checkNameFilenameListCompilerFailedMap, partialReport, true) ) {
 				return ;
 			}
 		}
 		partialReport.append("\r\n");
 		if ( this.checkNameFilenameListCompilerSucceededMap.size() > 0 ) {
-			partialReport.append("O compilador obteve sucesso em testar alguns aspectos (construï¿½ï¿½es) de Cianeto. "
+			partialReport.append("O compilador obteve sucesso em testar alguns aspectos (construções) de Cianeto. "
 					+ "A lista abaixo consiste de entradas da forma \n"
 					+ "    aspecto\n        listas de nomes de arquivos\n");
-			partialReport.append("Os nomes de arquivos listados sï¿½o aqueles que testam 'aspecto' e nos quais "
-					+ "o compilador obteve sucesso e gerou cï¿½digo correto (se opï¿½ï¿½o -genjava ou -genc foi usada).\r\n");
+			partialReport.append("Os nomes de arquivos listados são aqueles que testam 'aspecto' e nos quais "
+					+ "o compilador obteve sucesso e gerou código correto (se opção -genjava ou -genc foi usada).\r\n");
 			if ( ! printReportCheckNameFilenameList(checkNameFilenameListCompilerSucceededMap, partialReport, false) ) {
 				return ;
 			}
 		}
-		report.println("Relatï¿½rio do Compilador");
+		report.println("Relatório do Compilador");
 		report.println();
 
 
@@ -306,26 +305,34 @@ public class Comp {
 			//sb.append(this.wereButShouldNotList.size() + "/" + (numSourceFiles -  numSourceFilesWithAnnotCEP) + "\r\n");
 			//sb.append(this.wereButWrongLineList.size() + "/" + numSourceFilesWithAnnotCEP + "\r\n");
 		}
-
+		if ( this.genJava && this.filesWithJavaClassesWithCompilationErrors != null &&
+				this.filesWithJavaClassesWithCompilationErrors.size() > 0 ) {
+			sb.append("\nJwithE: " + this.filesWithJavaClassesWithCompilationErrors.size());
+		}
 		report.println("Resumo");
 		report.println("_________________________________________________________________________");
 		report.println(sb.toString());
 		report.println();
-		report.println("MI = muito importante, I = importante, PI = pouco importante, Exc = exceï¿½ï¿½es");
+		report.println("MI = muito importante, I = importante, PI = pouco importante, Exc = exceções");
 		report.println("Dev = deveria ter sinalizado, LE = sinalizou linha errada, SSE = sinalizado sem erro");
+		if ( this.genJava && this.filesWithJavaClassesWithCompilationErrors != null &&
+				this.filesWithJavaClassesWithCompilationErrors.size() > 0 ) {
+			report.println(" JwithE = number of Java classes with compilation errors");
+		}
+
 		report.println("_________________________________________________________________________");
 
 		report.println();
-		report.println("Nï¿½mero de testes 'Muito importantes' em que o compilador falhou: " + Comp.numVeryImportantFailed);
-		report.println("Nï¿½mero de testes 'Importantes' em que o compilador falhou: " + Comp.numImportantFailed);
-		report.println("Nï¿½mero de testes 'Pouco importantes' em que o compilador falhou: " + Comp.numLittleImportantFailed);
+		report.println("Número de testes 'Muito importantes' em que o compilador falhou: " + Comp.numVeryImportantFailed);
+		report.println("Número de testes 'Importantes' em que o compilador falhou: " + Comp.numImportantFailed);
+		report.println("Número de testes 'Pouco importantes' em que o compilador falhou: " + Comp.numLittleImportantFailed);
 
 		report.println(partialReport.toString());
 
 		if ( this.nullPointerAndOtherExceptionsList.size() > 0 ) {
 			report.println( nullPointerAndOtherExceptionsList.size() +
-					" arquivos lanï¿½aram exceï¿½ï¿½es que nï¿½o foram capturadas pelo compilador ou houve algum problema e o mï¿½todo 'compileProgram' retornou 'null'. "
-					+ "A maioria delas ï¿½ provavelmente NullPointerException. Estes arquivos sï¿½o:");
+					" arquivos lançaram exceções que não foram capturadas pelo compilador ou houve algum problema e o método 'compileProgram' retornou 'null'. "
+					+ "A maioria delas é provavelmente NullPointerException. Estes arquivos são:");
 			for ( String fn : this.nullPointerAndOtherExceptionsList ) {
 				report.println("    " + fn);
 			}
@@ -335,7 +342,7 @@ public class Comp {
 
 		if ( numSourceFilesWithAnnotCEP > 0 ) {
 			report.println(this.shouldButWereNotList.size() + " de um total de " + numSourceFilesWithAnnotCEP +
-					" erros que deveriam ser sinalizados nï¿½o o foram (" +
+					" erros que deveriam ser sinalizados não o foram (" +
 					(int ) (100.0*this.shouldButWereNotList.size()/this.numSourceFilesWithAnnotCEP) + "%)");
 			report.println(this.wereButWrongLineList.size() + " erros foram sinalizados na linha errada ("
 					+ (int ) (100.0*this.wereButWrongLineList.size()/this.numSourceFilesWithAnnotCEP) + "%)");
@@ -356,7 +363,7 @@ public class Comp {
 			else {
 				compilerOk = false;
 				report.println();
-				report.println("Erros que deveriam ser sinalizados mas nï¿½o foram:");
+				report.println("Erros que deveriam ser sinalizados mas não foram:");
 				report.println();
 				for (String s : this.shouldButWereNotList) {
 					report.println(s);
@@ -365,7 +372,7 @@ public class Comp {
 			}
 
 			if ( wereButWrongLineList.size() == 0 ) {
-				report.println("Um ou mais arquivos de teste tinham erros, mas estes foram sinalizados nos nï¿½meros de linhas corretos");
+				report.println("Um ou mais arquivos de teste tinham erros, mas estes foram sinalizados nos números de linhas corretos");
 			}
 			else {
 				compilerOk = false;
@@ -383,12 +390,12 @@ public class Comp {
 
 		if ( numSourceFiles -  numSourceFilesWithAnnotCEP != 0  ) {
 			if ( wereButShouldNotList.size() == 0 ) {
-				report.println("O compilador nï¿½o sinalizou nenhum erro que nï¿½o deveria ter sinalizado");
+				report.println("O compilador não sinalizou nenhum erro que não deveria ter sinalizado");
 			}
 			else {
 				compilerOk = false;
 				report.println("######################################################");
-				report.println("Erros que foram sinalizados mas nï¿½o deveriam ter sido:");
+				report.println("Erros que foram sinalizados mas não deveriam ter sido:");
 				report.println();
 				for (String s : this.wereButShouldNotList) {
 					report.println(s);
@@ -400,12 +407,12 @@ public class Comp {
 		if ( correctList.size() > 0 ) {
 			report.println("######################################################");
 			report.print("Em todos os testes abaixo, o compilador sinalizou o erro na linha correta (quando o teste tinha erros) ");
-			report.print("ou nï¿½o sinalizou o erro (quando o teste Nï¿½O tinha erros). Mas ï¿½ necessï¿½rio conferir se as ");
-			report.print("mensagens emitidas pelo compilador sï¿½o compatï¿½veis com as mensagens de erro sugeridas pelas chamadas aos ");
+			report.print("ou não sinalizou o erro (quando o teste NÃO tinha erros). Mas é necessário conferir se as ");
+			report.print("mensagens emitidas pelo compilador são compatíveis com as mensagens de erro sugeridas pelas chamadas aos ");
 			report.print("metaobjetos dos testes. ");
 			report.println();
 			report.println();
-			report.println("A lista abaixo contï¿½m o nome do arquivo de teste, a mensagem que ele sinalizou e a mensagem sugerida pelo arquivo de teste");
+			report.println("A lista abaixo contém o nome do arquivo de teste, a mensagem que ele sinalizou e a mensagem sugerida pelo arquivo de teste");
 			report.println();
 			for (String s : this.correctList ) {
 				report.println(s);
@@ -414,9 +421,9 @@ public class Comp {
 		}
 		if ( compilerOk ) {
 			if ( numSourceFiles == 1 )
-				report.println("Para o caso de teste que vocï¿½ utilizou, o compilador estï¿½ correto");
+				report.println("Para o caso de teste que você utilizou, o compilador está correto");
 			else
-				report.println("Para os casos de teste que vocï¿½ utilizou, o compilador estï¿½ correto");
+				report.println("Para os casos de teste que você utilizou, o compilador está correto");
 
 		}
 
@@ -474,7 +481,7 @@ public class Comp {
 			ta.add(new TupleCheckNameText(checkName, importance, s.toString(), numFiles));
 		}
 		Collections.sort(ta);
-		partialReport.append("Os testes sï¿½o categorizados por importï¿½ncia: 'Muito importante', 'Importante', 'pouco importante'\r\n");
+		partialReport.append("Os testes são categorizados por importância: 'Muito importante', 'Importante', 'pouco importante'\r\n");
 		if ( ta.get(0).importance >= 5 ) {
 			//report.println("\nTestes 'Muito importantes' em que o compilador falhou:");
 			partialReport.append("\nTestes 'Muito importantes' em que o compilador " + (compilerFailed ? "falhou" : "acertou") + ":\r\n");
@@ -544,7 +551,7 @@ public class Comp {
 			program  = compiler.compile(input, outError );
 			callMetaobjectMethods(filename, program, outError);
 		}
-		catch ( Throwable e ) {
+		catch ( Exception e ) {
 
 		}
 
@@ -560,23 +567,30 @@ public class Comp {
 		boolean foundNCE = false;
 		for ( MetaobjectAnnotation annot : program.getMetaobjectCallList() ) {
 			String annotName = annot.getName();
+			int sizeParamList = annot.getParamList().size();
 			switch ( annotName ) {
 			case "cep":
 
 				this.numSourceFilesWithAnnotCEP++;
 
-				String message = (String ) annot.getParamList().get(2);
+				String suggestedMessage;
+				if ( sizeParamList >= 3 ) {
+					suggestedMessage = (String ) annot.getParamList().get(2);
+				}
+				else {
+					suggestedMessage = (String ) annot.getParamList().get(1);
+				}
 				int lineNumber = (Integer ) annot.getParamList().get(0);
 				if ( ! program.hasCompilationErrors() ) {
 					// there was no compilation error. There should be no call @cep(...)
 					// The source code, through calls to "@cep(...)", informs that
 					// there are errors
 					String whatToCorrect = "";
-					if ( annot.getParamList().size() >= 4 ) {
+					if ( sizeParamList >= 4 ) {
 						whatToCorrect = (String ) annot.getParamList().get(3);
 						whatToCorrect = " (" + whatToCorrect + ")";
 					}
-					this.shouldButWereNotList.add(filename + ", " + lineNumber + ", " + message +
+					this.shouldButWereNotList.add(filename + ", " + lineNumber + ", " + suggestedMessage +
 							whatToCorrect
 							);
 					if ( foundCE )
@@ -587,12 +601,11 @@ public class Comp {
 				else {
 					// there was a compilation error. Check it.
 					int lineOfError = program.getCompilationErrorList().get(0).getLineNumber();
-					String ceMessage = (String ) annot.getParamList().get(2);
 					String compilerMessage = program.getCompilationErrorList().get(0).getMessage();
 					if ( lineNumber != lineOfError ) {
 
 						String whatToCorrect = "";
-						if ( annot.getParamList().size() >= 4 ) {
+						if ( sizeParamList >= 4 ) {
 							whatToCorrect = (String ) annot.getParamList().get(3);
 							whatToCorrect = "(" + whatToCorrect + ")";
 						}
@@ -600,7 +613,7 @@ public class Comp {
 						checkAnnotList(filename, program, outError, false);
 
 						this.wereButWrongLineList.add(filename + "\n" +
-								"    correto:    " + lineNumber + ", " + ceMessage + " " + whatToCorrect + "\n" +
+								"    correto:    " + lineNumber + ", " + suggestedMessage + " " + whatToCorrect + "\n" +
 								"    sinalizado: " + lineOfError + ", " + compilerMessage);
 					}
 					else {
@@ -608,7 +621,7 @@ public class Comp {
 						// that the compiler signalled and the message of the test, given in @ce
 						correctList.add(filename + "\r\n" +
 								"The compiler message was: \"" + compilerMessage + "\"\r\n" +
-								"The 'cep' message is:      \"" + ceMessage + "\"\r\n" );
+								"The 'cep' message is:      \"" + suggestedMessage + "\"\r\n" );
 						checkAnnotList(filename, program, outError, true);
 					}
 				}
@@ -621,8 +634,8 @@ public class Comp {
 				foundNCE = true;
 				if ( program.hasCompilationErrors() ) {
 					int lineOfError = program.getCompilationErrorList().get(0).getLineNumber();
-					message = program.getCompilationErrorList().get(0).getMessage();
-					this.wereButShouldNotList.add(filename + ", " + lineOfError + ", " + message);
+					suggestedMessage = program.getCompilationErrorList().get(0).getMessage();
+					this.wereButShouldNotList.add(filename + ", " + lineOfError + ", " + suggestedMessage);
 					checkAnnotList(filename, program, outError, false);
 				}
 				else {

@@ -1,122 +1,97 @@
-Relatï¿½rio do Compilador
+Relatório do Compilador
 
 Resumo
 _________________________________________________________________________
-MI:  0             I: 0              PI: 2             Exc: 75
-Dev: 2/2/100%      LE: 0/2/0%        SSE: 0/75/0%      
+MI:  4             I: 0              PI: 0             Exc: 0
+ SSE: 3/16/18%     
 
-MI = muito importante, I = importante, PI = pouco importante, Exc = exceï¿½ï¿½es
+MI = muito importante, I = importante, PI = pouco importante, Exc = exceções
 Dev = deveria ter sinalizado, LE = sinalizou linha errada, SSE = sinalizado sem erro
 _________________________________________________________________________
 
-Nï¿½mero de testes 'Muito importantes' em que o compilador falhou: 0
-Nï¿½mero de testes 'Importantes' em que o compilador falhou: 0
-Nï¿½mero de testes 'Pouco importantes' em que o compilador falhou: 2
+Número de testes 'Muito importantes' em que o compilador falhou: 4
+Número de testes 'Importantes' em que o compilador falhou: 0
+Número de testes 'Pouco importantes' em que o compilador falhou: 0
 
-O compilador falhou em testar alguns aspectos (construï¿½ï¿½es) de Cianeto. A lista abaixo consiste de entradas da forma 
+O compilador falhou em testar alguns aspectos (construções) de Cianeto. A lista abaixo consiste de entradas da forma 
     aspecto
         listas de nomes de arquivos
-Os nomes de arquivos listados sï¿½o aqueles que testam 'aspecto' mas em que o compilador falhou em apontar um erro, apontou um erro inexistente ou gerou cï¿½digo errado (se opï¿½ï¿½o -genjava ou -genc foi usada).
-Os testes sï¿½o categorizados por importï¿½ncia: 'Muito importante', 'Importante', 'pouco importante'
+Os nomes de arquivos listados são aqueles que testam 'aspecto' mas em que o compilador falhou em apontar um erro, apontou um erro inexistente ou gerou código errado (se opção -genjava ou -genc foi usada).
+Os testes são categorizados por importância: 'Muito importante', 'Importante', 'pouco importante'
 
-Testes 'pouco importantes' em que o compilador falhou
-    booleanExprRepeatUntil
-        ER_SEM88.ci
-        ER_SEM89.ci
+Testes 'Muito importantes' em que o compilador falhou:
+    typeErrorAssignRightSideNotSubtypeLeftSide
+        OK_SEM05.ci
+
+    nilAssign
+        OK_SEM14.ci
+
+    supertypeAssignSelf
+        OK_SEM15.ci
+
+    nilEqualEqualNotEqual
+        OK_SEM14.ci
 
 
+O compilador obteve sucesso em testar alguns aspectos (construções) de Cianeto. A lista abaixo consiste de entradas da forma 
+    aspecto
+        listas de nomes de arquivos
+Os nomes de arquivos listados são aqueles que testam 'aspecto' e nos quais o compilador obteve sucesso e gerou código correto (se opção -genjava ou -genc foi usada).
+Os testes são categorizados por importância: 'Muito importante', 'Importante', 'pouco importante'
 
-75 arquivos lanï¿½aram exceï¿½ï¿½es que nï¿½o foram capturadas pelo compilador ou houve algum problema e o mï¿½todo 'compileProgram' retornou 'null'. A maioria delas ï¿½ provavelmente NullPointerException. Estes arquivos sï¿½o:
-    ER_SEM01.ci
-    ER_SEM02.ci
-    ER_SEM03.ci
-    ER_SEM04.ci
-    ER_SEM05.ci
-    ER_SEM06.ci
-    ER_SEM07.ci
-    ER_SEM08.ci
-    ER_SEM09.ci
-    ER_SEM100.ci
-    ER_SEM11.ci
-    ER_SEM12.ci
-    ER_SEM13.ci
-    ER_SEM14.ci
-    ER_SEM15.ci
-    ER_SEM16.ci
-    ER_SEM17.ci
-    ER_SEM18.ci
-    ER_SEM19.ci
-    ER_SEM20.ci
-    ER_SEM21.ci
-    ER_SEM22.ci
-    ER_SEM23.ci
-    ER_SEM24.ci
-    ER_SEM25.ci
-    ER_SEM26.ci
-    ER_SEM27.ci
-    ER_SEM28.ci
-    ER_SEM29.ci
-    ER_SEM30.ci
-    ER_SEM31.ci
-    ER_SEM32.ci
-    ER_SEM33.ci
-    ER_SEM34.ci
-    ER_SEM35.ci
-    ER_SEM36.ci
-    ER_SEM37.ci
-    ER_SEM38.ci
-    ER_SEM39.ci
-    ER_SEM40.ci
-    ER_SEM41.ci
-    ER_SEM42.ci
-    ER_SEM43.ci
-    ER_SEM44.ci
-    ER_SEM45.ci
-    ER_SEM46.ci
-    ER_SEM47.ci
-    ER_SEM48.ci
-    ER_SEM49.ci
-    ER_SEM50.ci
-    ER_SEM51.ci
-    ER_SEM52.ci
-    ER_SEM53.ci
-    ER_SEM54.ci
-    ER_SEM55.ci
-    ER_SEM56.ci
-    ER_SEM57.ci
-    ER_SEM58.ci
-    ER_SEM59.ci
-    ER_SEM60.ci
-    ER_SEM61.ci
-    ER_SEM62.ci
-    ER_SEM68.ci
-    ER_SEM70.ci
-    ER_SEM71.ci
-    ER_SEM77.ci
-    ER_SEM78.ci
-    ER_SEM79.ci
-    ER_SEM80.ci
-    ER_SEM81.ci
-    ER_SEM82.ci
-    ER_SEM86.ci
-    ER_SEM91.ci
-    ER_SEM_EXTRA01.ci
-    ER_SEM_EXTRA02.ci
+Testes 'Muito importantes' em que o compilador acertou:
+    typeErrorEqualEqualNotEqual
+        OK_SEM03.ci
+        OK_SEM04.ci
+
+    methodSearchSuperclass
+        OK_SEM10.ci
+
+
+Testes 'importantes' em que o compilador acertou:
+    localVarSameMethodName
+        OK_SEM13.ci
+
+    scopeLocalVarField
+        OK_SEM06.ci
+
+    localVarSameClassName
+        OK_SEM12.ci
+
+
+Testes 'pouco importantes' em que o compilador acertou
+    whileBreak
+        OK_SEM07.ci
+
+    assert
+        OK_SEM17.ci
+
+    selfAsExpression
+        OK_SEM09.ci
+
+    openAsIdentifier
+        OK_SEM11.ci
+
+    repeatUntil
+        OK_SEM18.ci
+
+    methodOverridingSameSignature
+        OK_SEM08.ci
+
+    repeatUntilBreak
+        OK_SEM16.ci
+
 
 _________________________________________________________________________
 
-2 de um total de 2 erros que deveriam ser sinalizados nï¿½o o foram (100%)
-0 erros foram sinalizados na linha errada (0%)
-0 erros foram sinalizados em 75 arquivos sem erro (0%)
+3 erros foram sinalizados em 16 arquivos sem erro (18%)
 _________________________________________________________________________
+######################################################
+Erros que foram sinalizados mas não deveriam ter sido:
 
-Erros que deveriam ser sinalizados mas nï¿½o foram:
+OK_SEM05.ci, 66, wrong type of parameter 1
 
-ER_SEM88.ci, 17, boolean expression expected in a repeat-until statement (comp.Compiler.repeatUntilStatement())
+OK_SEM14.ci, 34, Type not equals
 
-ER_SEM89.ci, 17, boolean expression expected in a repeat-until statement (comp.Compiler.repeatUntilStatement())
+OK_SEM15.ci, 32, wrong type of parameter 2
 
-Um ou mais arquivos de teste tinham erros, mas estes foram sinalizados nos nï¿½meros de linhas corretos
-O compilador nï¿½o sinalizou nenhum erro que nï¿½o deveria ter sinalizado
-
-Something wrong: null list of files that generate correct or wrong code

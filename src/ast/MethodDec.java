@@ -9,11 +9,13 @@ public class MethodDec extends Member {
 	private Variable method;
 	private ArrayList<Statement> statList = new ArrayList<>();
 	private ArrayList<Variable> paramList = new ArrayList<>();
+	private Qualifier qualifier;
 	
-	public MethodDec (Variable method, ArrayList<Statement> statList, ArrayList<Variable> paramList) {
+	public MethodDec (Variable method, Qualifier qualifier, ArrayList<Statement> statList, ArrayList<Variable> paramList) {
 		this.method = method;
 		this.statList = statList;
 		this.paramList = paramList;
+		this.qualifier = qualifier;
 	}
 	
 	public String getMethodName() {
@@ -22,6 +24,10 @@ public class MethodDec extends Member {
 	
 	public Type getType() {
 		return method.getType();
+	}
+	
+	public Qualifier getQualifier() {
+		return qualifier;
 	}
 	
 	public ArrayList<Variable> getParamList() {

@@ -81,7 +81,11 @@ public class Compiler {
 			}
 		}
 		if (!flag) {
-			this.error("Source code without a class 'Program'");
+			try {
+				lexer.setLineNumber(lexer.getLineNumberBeforeLastToken());
+				this.error("Source code without a class 'Program'");
+			} catch (CompilerError ee) {}
+			return program; // add this line
 		}
 
 		if (!thereWasAnError && lexer.token != Token.EOF) {
@@ -235,6 +239,7 @@ public class Compiler {
 		if (className.equals("Program")) {
 			MethodDec m = semanticChecking.getMethodDec("run");
 			if (m == null) {
+				lexer.setLineNumber(lexer.getLineNumberBeforeLastToken());
 				this.error("Method 'run' was not found in class 'Program'");
 			}
 		}
@@ -334,7 +339,11 @@ public class Compiler {
 			error("An identifier or identifer: was expected after 'func'");
 		}
 
-		if (name.equals("run")) {
+		if (name.equals("run") || name.equals("run:")) {
+			if(paramList!=null && !paramList.isEmpty()) {
+				this.error("Method 'run:' of class 'Program' cannot take parameters");
+			}
+			
 			if (qualifier.getToken1() == Token.PRIVATE) {
 				this.error("Method 'run' of class 'Program' cannot be private");
 			}
@@ -363,6 +372,7 @@ public class Compiler {
 
 		}
 
+		countOfReturn = 0;
 		if (lexer.token == Token.MINUS_GT) {
 			lexer.nextToken();
 			Type methodType = type();
@@ -373,6 +383,8 @@ public class Compiler {
 			method.setType(methodType);
 
 			returnRequired = true;
+		} else {
+			returnRequired = false;
 		}
 
 		if (qualifier.getToken1() == Token.OVERRIDE) {
@@ -424,10 +436,11 @@ public class Compiler {
 		next();
 
 		statList = statementList("methodDec");
-
-		if (returnRequired) {
-			error("missing 'return' statement");
-		}
+		
+		 if (returnRequired && countOfReturn==0) {
+			  lexer.setLineNumber(lexer.getLineNumberBeforeLastToken());
+			  error("missing 'return' statement"); 
+		  }
 
 		if (lexer.token != Token.RIGHTCURBRACKET) {
 			error("'}' expected");
@@ -437,7 +450,7 @@ public class Compiler {
 			next();
 		}
 
-		return new MethodDec(method, statList, paramList);
+		return new MethodDec(method, qualifier, statList, paramList);
 	}
 
 	private ArrayList<Variable> paramList() {
@@ -651,10 +664,9 @@ public class Compiler {
 
 		Expr expr = expr();
 
-		/*
-		 * if(!expr.getType().getName().equals("boolean")) {
-		 * this.error("boolean expression expected in a repeat-until statement"); }
-		 */
+		if(!expr.getType().getName().equals("boolean")) {
+			this.error("boolean expression expected in a repeat-until statement");
+		}
 
 		if (lexer.token == Token.RIGHTPAR)
 			this.error("')' unexpected");
@@ -673,12 +685,11 @@ public class Compiler {
 			this.error("Illegal 'return' statement. Method returns 'void'");
 		}
 		next();
+		int lineNumber = lexer.getLineNumber();
 		Expr expr = expr();
 
 		check(Token.SEMICOLON, "';' expected");
 		next();
-
-		returnRequired = false;
 
 		Type methodType = semanticChecking.getCurrentMethodVariable().getType();
 		Type exprType = expr.getType();
@@ -690,8 +701,10 @@ public class Compiler {
 				if (!nameMethodType.equals(nameExprType)) {
 					TypeCianetoClass c = semanticChecking.getTypeCianetoClass(nameExprType);
 					if (!c.isSubtype(nameMethodType)) {
-						this.error(
-								"Type error: type of the expression returned is not subclass of the method return type");
+						int oldLine = lexer.getLineNumber();
+						lexer.setLineNumber(lineNumber);
+						this.error("Type error: type of the expression returned is not subclass of the method return type");
+						lexer.setLineNumber(oldLine);
 					}
 				}
 			} else {
@@ -699,17 +712,22 @@ public class Compiler {
 			}
 		}
 
+		countOfReturn++;
 		return new ReturnStat(expr);
 	}
 
 	private WhileStat whileStat() {
 		next();
 
+		int line = lexer.getLineNumber();
 		Expr e = expr();
 		next();
 
 		if (!e.getType().getName().equals("boolean")) {
+			int oldLine = lexer.getLineNumber();
+			lexer.setLineNumber(line);
 			this.error("non-boolean expression in 'while' command (comp.Compiler.whileStatement())");
+			lexer.setLineNumber(oldLine);
 		}
 
 		ArrayList<Statement> statList = new ArrayList<>();
@@ -1062,10 +1080,7 @@ public class Compiler {
 					String rightName = right.getType().getName();
 					if (!leftName.equals(rightName)) {
 						TypeCianetoClass c = semanticChecking.getTypeCianetoClass(rightName);
-						if (c == null) {
-							this.error("assignExpr: c null");
-						}
-						if (!c.isSubtype(leftName)) {
+						if (c!=null && !c.isSubtype(leftName)) {
 							this.error(
 									"Type error: value of the right-hand side is not subtype of the variable of the left-hand side.");
 						}
@@ -1089,8 +1104,6 @@ public class Compiler {
 					}
 				}
 			}
-		} else {
-			this.error("nao tem ==");
 		}
 
 		// check(Token.SEMICOLON, "';' expected");
@@ -1152,6 +1165,10 @@ public class Compiler {
 					if (method == null) {
 						this.error("method " + id2 + " is not declared in " + t1.getName());
 					}
+					if(method.getQualifier()!=null && method.getQualifier().getToken1() == Token.PRIVATE) {
+						this.error("method " + id2 + " is not declared in " + t1.getName());
+					}
+					
 
 					return new PrimarySimpleExpr(id, id2, method.getType());
 
@@ -1194,6 +1211,9 @@ public class Compiler {
 					MethodDec methodDec = semanticChecking.getSuperClass().getMethod(id);
 					if (methodDec == null) {
 						this.error(id + " is not declared");
+					}
+					if(methodDec.getQualifier()!=null && methodDec.getQualifier().getToken1() == Token.PRIVATE) {
+						this.error("Method '"+id+"' was not found");
 					}
 
 					next();
@@ -1594,6 +1614,7 @@ public class Compiler {
 		return method.getType();
 	}
 
+	
 	private void verifyMethodsParams(ArrayList<Variable> paramList, ArrayList<Expr> exprList) {
 		int sizeParam = paramList.size();
 		int sizeExpr = exprList.size();
@@ -1604,11 +1625,12 @@ public class Compiler {
 			Variable var = paramList.get(i);
 			Expr expr = exprList.get(i);
 			if (!var.getType().getName().equals(expr.getType().getName())) {
-				this.error("wrong type of parameter");
+				this.error("wrong type of parameter 1");
 			}
 		}
 	}
 
+	
 	private Type verifyArgumentsOfSendMessage(String methodName, MethodDec method, ArrayList<Expr> exprList) {
 		if (method == null) {
 			this.error("method " + methodName + " is not declared");
@@ -1624,7 +1646,7 @@ public class Compiler {
 			Variable var = paramList.get(i);
 			Expr expr = exprList.get(i);
 			if (!var.getType().getName().equals(expr.getType().getName())) {
-				this.error("wrong type of parameter");
+				this.error("wrong type of parameter 2");
 			}
 		}
 		return method.getType();
@@ -1663,6 +1685,6 @@ public class Compiler {
 	private ErrorSignaller signalError;
 
 	private boolean returnRequired = false;
-
+	private int countOfReturn = 0;
 	private SemanticChecking semanticChecking = new SemanticChecking();
 }
