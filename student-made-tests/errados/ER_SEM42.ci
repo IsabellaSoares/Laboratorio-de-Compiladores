@@ -1,0 +1,20 @@
+@annot("check", "typeErrorAssignRightSideNotSubtypeLeftSide")
+@cep(14, "Variável de tipo básico não pode receber objetos em atribuição",
+     "Type error: type of the left-hand side of the assignment is a basic type and the type of the right-hand side is a class",
+     "comp.Compiler.assignExprLocalDec()")
+
+
+class A 
+end
+
+
+class Program 
+   
+   func run {
+      var Int i;
+      
+      i = A.new;
+   }   
+
+end
+

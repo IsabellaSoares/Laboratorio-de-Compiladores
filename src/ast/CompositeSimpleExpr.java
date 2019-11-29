@@ -23,6 +23,9 @@ public class CompositeSimpleExpr extends SimpleExpr {
 	@Override
 	public void genJava(PW pw, boolean putParenthesis) {
 		// TODO Auto-generated method stub
-		
+		pw.print("\"");
+		left.genJava(pw, true);
+		right.genJava(pw, true);
+		pw.print("\"");
 	}
 }

@@ -1,0 +1,15 @@
+@annot("check", "typeErrorAssignRightSideNotSubtypeLeftSide")
+@cep(9, "Erro de tipos", "'int' cannot be assigned to 'boolean'", 
+  "comp.Compiler.assignExprLocalDec()")
+
+
+class Program 
+   
+   func run {
+      var Boolean b;
+      
+      b = 0;   //#
+   }   
+
+end
+

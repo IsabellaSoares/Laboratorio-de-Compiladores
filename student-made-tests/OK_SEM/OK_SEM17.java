@@ -14,7 +14,7 @@ public class OK_SEM17 {
 
    private static class Program {
       public void run () {
-         int n = input.nextInt();
+         int n = input.nextLine();
 
          if (n < 15) {
             System.out.println("pequeno");

@@ -1,0 +1,24 @@
+@annot("check", "typeErrorSearchMethod")
+@cep(19, "Método 'set:' não pertence à classe 'A'", 
+  "Method 'set:' was not found in class 'A' or its superclasses",
+  "comp.Compiler.factor()")
+
+
+class A
+
+    func m {
+
+    }
+
+end
+
+class Program
+
+    func run {
+        var A a;
+
+        a = A.new;
+        a.set: 0;
+    }
+
+end

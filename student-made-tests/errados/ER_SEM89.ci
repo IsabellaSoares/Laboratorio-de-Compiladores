@@ -1,0 +1,20 @@
+/*
+Iago Freitas Piedade
+iagopiedade@hotmail.com
+*/
+@annot("check", "booleanExprRepeatUntil")
+@cep(11, "A expressão do repeat-until deve ser booleana", 
+  "boolean expression expected in a repeat-until statement",
+  "comp.Compiler.repeatUntilStatement()")
+
+class Program
+
+    func run {
+        var Int i;
+        i = 0;
+        repeat 
+            i = i + 1;
+        until ( "i < 10");
+    }
+
+end

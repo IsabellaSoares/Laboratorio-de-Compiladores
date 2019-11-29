@@ -7,8 +7,8 @@ package ast;
 public class BasicValue extends Factor {
 	
 	private Type type;
-	private Integer intValue;
-	private String stringValue;
+	private Integer intValue = null;
+	private String stringValue = null;
 	private boolean boolValue;
 	
 	public BasicValue (Integer value, Type type) {
@@ -30,12 +30,16 @@ public class BasicValue extends Factor {
 	}
 	
 	public void genJava(PW pw, boolean putParenthesis) {
-		if (type == new TypeBoolean()) {
-			pw.print(Boolean.toString(boolValue));
-		} else if (type == new TypeInt()) {
+		
+		if (stringValue != null) {
+			if (putParenthesis)
+				pw.print(" ");
+			else
+				pw.print("\"" + stringValue + "\"");		
+		} else if (type.getName().equals("int")) {
 			pw.print(Integer.toString(intValue));
-		} else {
-			pw.print("\"" + stringValue + "\"");
+		} else {			
+			pw.print(Boolean.toString(boolValue));
 		}
 	};
 	

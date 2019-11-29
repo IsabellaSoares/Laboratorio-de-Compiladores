@@ -1,0 +1,30 @@
+/* 
+Giovana Vieira de Morais 
+giovana.vmorais@gmail.com
+*/
+
+@annot("check", "typeErrorEqualEqualNotEqual")
+@cep(19, 
+"Testa se o compilador sinaliza erro nas comparações '!='",
+"Incompatible types cannot be compared with '!=' because the result will always be 'false'",
+"comp.Compiler.expr()")
+
+class A 
+end
+
+class B
+end
+
+class Program 
+    func run {
+        var A a;
+        var B b;
+
+        a = nil;
+        b = nil;
+
+        if a != b {
+            Out.println: 0;
+        }
+    }
+end

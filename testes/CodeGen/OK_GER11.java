@@ -16,28 +16,28 @@ public class OK_GER11 {
       public void m1 () {
          System.out.print(" 2 ");
       }
-      public void m2: () {
+      public void m2 (int n) {
          System.out.print(n + " ");
-;
+         this.m1;
       }
    }
 
-   private static class B {
-      override void m1 () {
+   private static class B extends A {
+      @Override void m1 () {
          System.out.println(" 4 ");
       }
    }
 
    private static class Program {
       public void run () {
-         B a;
+         A a;
          B b;
          System.out.println("4 1 2 3 4");
          System.out.print("4 ");
          a = new A();
-         a.m2:(1);
+         a.m2(1);
          a = new B();
-         a.m2:(3);
+         a.m2(3);
       }
    }
 

@@ -1,0 +1,17 @@
+/*
+João Paulo Francisco de Paula
+jpsobom@gmail.com
+*/
+@cep(8, "'{' usado em expressão", "Expression expected", "comp.Compiler.factor()")
+
+class Program
+
+    func run {
+
+        var Int i;
+
+        i = { 0 };
+        Out.print: i;
+    }
+
+end

@@ -17,27 +17,29 @@ class Program
   
     public func run {
         Out.println: "100";
-        var Int i, j, n;
+        var Int i, n;
         i = 0;
-        j = 0;
         n = 10;
         var Boolean b;
         b = false;
         repeat n = n + 1; until true;
-        assert n == 11, "'repeat-until' statement with 'false' as expression'";
-        n = 10;
+        assert n == 11, "'repeat-until' statement with 'true' as expression'";
+        var Int j;
+        j = 0;
         var Int sum;
         sum = 0;
+        n = 10;
         repeat 
             i = 0;
             repeat 
                 i = i + 1;
                 sum = sum + 1;
-            until i < n;
+            until i >= n;
             j = j + 1;
-        until j < n ;
+        until j >= n ;
         Out.println: sum;
         assert sum == 100, "Nested 'repeat-until' statement with two indexes";
     }
+    
 
 end

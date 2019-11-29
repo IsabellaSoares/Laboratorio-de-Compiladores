@@ -1,0 +1,17 @@
+@annot("check", "illegalClassName")
+@cep(7, "Tipos básicos não podem ser herdados, pois não são classes",
+   "Class expected", "comp.Compiler.classDec()")
+
+class A 
+end
+
+
+class B extends Int   //#
+
+end
+
+class Program 
+  
+    func run { }
+
+end

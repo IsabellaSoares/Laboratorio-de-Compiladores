@@ -16,25 +16,25 @@ public class OK_GER12 {
       public void m1 () {
          System.out.print(1 + " ");
       }
-      public void m2: () {
+      public void m2 (int n) {
          System.out.print(n + " ");
       }
    }
 
-   private static class B {
-      override void m2: () {
+   private static class B extends A {
+      @Override void m2 (int n) {
          System.out.print(n + " ");
-;
+         super.m2(n + 1);
       }
    }
 
-   private static class C {
-      override void m1 () {
-;
+   private static class C extends B {
+      @Override void m1 () {
+         super.m1();
          System.out.print(2 + " ");
       }
       public void m3 () {
-;
+         this.m1;
          System.out.print(1 + " ");
          System.out.print(2 + " ");
       }
@@ -42,12 +42,12 @@ public class OK_GER12 {
 
    private static class Program {
       public void run () {
-         C a;
-         C b;
+         A a;
+         B b;
          C c;
          System.out.println("1 2 1 2 1 2 1 2");
          b = new B();
-         b.m2:(1);
+         b.m2(1);
          c = new C();
          c.m1();
          c.m3();

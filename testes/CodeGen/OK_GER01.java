@@ -16,60 +16,88 @@ public class OK_GER01 {
       public void m () {
          System.out.print(7 + " ");
 
-         if (1 > 0) {
+         if ((1 > 0)) {
             System.out.print(0 + " ");
          }
+         else {
+         }
 
-         if (1 >= 0) {
+         if ((1 >= 0)) {
             System.out.print(1 + " ");
          }
+         else {
+         }
 
-         if (1 != 0) {
+         if ((1 != 0)) {
             System.out.print(2 + " ");
          }
+         else {
+         }
 
-         if (0 < 1) {
+         if ((0 < 1)) {
             System.out.print(3 + " ");
          }
+         else {
+         }
 
-         if (0 <= 1) {
+         if ((0 <= 1)) {
             System.out.print(4 + " ");
          }
+         else {
+         }
 
-         if (0 == 0) {
+         if ((0 == 0)) {
             System.out.print(5 + " ");
          }
+         else {
+         }
 
-         if (0 >= 0) {
+         if ((0 >= 0)) {
             System.out.print(6 + " ");
          }
+         else {
+         }
 
-         if (0 <= 0) {
+         if ((0 <= 0)) {
             System.out.print(7 + " ");
          }
+         else {
+         }
 
-         if (1 == 0) {
+         if ((1 == 0)) {
             System.out.print(18 + " ");
          }
+         else {
+         }
 
-         if (0 > 1) {
+         if ((0 > 1)) {
             System.out.print(10 + " ");
          }
+         else {
+         }
 
-         if (0 >= 1) {
+         if ((0 >= 1)) {
             System.out.print(11 + " ");
          }
+         else {
+         }
 
-         if (0 != 0) {
+         if ((0 != 0)) {
             System.out.print(12 + " ");
          }
-
-         if (1 < 0) {
-            System.out.print(13 + " ");
+         else {
          }
 
-         if (1 <= 0) {
+         if ((1 < 0)) {
+            System.out.print(13 + " ");
+         }
+         else {
+         }
+
+         if ((1 <= 0)) {
             System.out.print(14 + " ");
+         }
+         else {
          }
       }
    }

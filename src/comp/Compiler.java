@@ -870,7 +870,7 @@ public class Compiler {
 
 			if (!left.getType().getName().equals(right.getType().getName())) {
 				if (!(left.getType().getName().equals("NullType")) && !(right.getType().getName().equals("NullType"))) {
-					this.error("Type not equals");
+					this.error("Type not equals 1");
 				}
 			}
 
@@ -895,8 +895,11 @@ public class Compiler {
 			Expr right = null;
 			right = sumSubExpr();
 
-			if (!left.getType().getName().equals(right.getType().getName())) {
-				this.error("Type not equals");
+			if (!left.getType().getName().equals("int")
+					&& !left.getType().getName().equals("String")
+					&& !right.getType().getName().equals("int") 
+					&& !right.getType().getName().equals("String")) {
+				this.error("Type not equals 2");
 			}
 
 			left = new CompositeSimpleExpr(left, operator, right, left.getType());
@@ -925,7 +928,7 @@ public class Compiler {
 			right = term();
 
 			if (!left.getType().getName().equals(right.getType().getName())) {
-				this.error("Type not equals");
+				this.error("Type not equals 3");
 			}
 
 			if (operator == Token.PLUS
@@ -954,7 +957,7 @@ public class Compiler {
 			right = signalFactor();
 
 			if (!left.getType().getName().equals(right.getType().getName())) {
-				this.error("Type not equals");
+				this.error("Type not equals 4");
 			}
 
 			if (operator == Token.AND
@@ -1264,7 +1267,7 @@ public class Compiler {
 							Type t1 = getTypeOfId(id);
 							Type t2 = getTypeOfId(id2);
 							if (!t1.getName().equals(t2.getName())) {
-								this.error("Type not equals");
+								this.error("Type not equals 5");
 							}
 							return new PrimarySelfExpr(id, id2, t1);
 

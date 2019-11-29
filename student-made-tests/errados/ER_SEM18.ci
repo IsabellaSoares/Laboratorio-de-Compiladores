@@ -1,0 +1,14 @@
+@annot("check", "typeNotFound")
+@cep(8, "Tipo da variável 'i' é a variável 'k'", "Type 'k' was not found",
+   "comp.Compiler.localDec()")
+  
+      
+class Program 
+  
+    func run {
+       var Int  k;
+       var k i;    //#
+    }
+
+end
+

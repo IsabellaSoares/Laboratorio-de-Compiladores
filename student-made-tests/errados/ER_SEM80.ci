@@ -1,0 +1,16 @@
+/* 
+Gustavo Eda
+edapd12@gmail.com
+*/
+
+@annot("check", "returnTypeInMethodRunOfClassProgram")
+@cep(6, "método run não deve ter tipo de retorno", 
+    "Method 'run' of class 'Program' with a return value type",
+    "comp.Compiler.methodDec()" )
+
+class Program
+    
+    func run -> Int {
+    }
+
+end

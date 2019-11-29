@@ -16,22 +16,8 @@ public class OK_SEM15 {
       public void print () {
          System.out.println(0);
       }
-      public void accept (B x) {
+      public void accept (A x) {
          x.print();
-      }
-   }
-
-   private static class B extends A {
-      public void m () {
-         super.accept(this);
-      }
-   }
-
-   private static class Program {
-      public void run () {
-         B b;
-         b = new B();
-         b.m();
       }
    }
 

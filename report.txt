@@ -1,97 +1,883 @@
-Relatório do Compilador
+Relatï¿½rio do Compilador
 
 Resumo
 _________________________________________________________________________
-MI:  4             I: 0              PI: 0             Exc: 0
- SSE: 3/16/18%     
+MI:  1             I: 0              PI: 2             Exc: 0
+Dev: 2/138/1%      LE: 3/138/2%      SSE: 0/4/0%       
 
-MI = muito importante, I = importante, PI = pouco importante, Exc = exceções
+MI = muito importante, I = importante, PI = pouco importante, Exc = exceï¿½ï¿½es
 Dev = deveria ter sinalizado, LE = sinalizou linha errada, SSE = sinalizado sem erro
 _________________________________________________________________________
 
-Número de testes 'Muito importantes' em que o compilador falhou: 4
-Número de testes 'Importantes' em que o compilador falhou: 0
-Número de testes 'Pouco importantes' em que o compilador falhou: 0
+Nï¿½mero de testes 'Muito importantes' em que o compilador falhou: 1
+Nï¿½mero de testes 'Importantes' em que o compilador falhou: 0
+Nï¿½mero de testes 'Pouco importantes' em que o compilador falhou: 2
 
-O compilador falhou em testar alguns aspectos (construções) de Cianeto. A lista abaixo consiste de entradas da forma 
+O compilador falhou em testar alguns aspectos (construï¿½ï¿½es) de Cianeto. A lista abaixo consiste de entradas da forma 
     aspecto
         listas de nomes de arquivos
-Os nomes de arquivos listados são aqueles que testam 'aspecto' mas em que o compilador falhou em apontar um erro, apontou um erro inexistente ou gerou código errado (se opção -genjava ou -genc foi usada).
-Os testes são categorizados por importância: 'Muito importante', 'Importante', 'pouco importante'
+Os nomes de arquivos listados sï¿½o aqueles que testam 'aspecto' mas em que o compilador falhou em apontar um erro, apontou um erro inexistente ou gerou cï¿½digo errado (se opï¿½ï¿½o -genjava ou -genc foi usada).
+Os testes sï¿½o categorizados por importï¿½ncia: 'Muito importante', 'Importante', 'pouco importante'
 
 Testes 'Muito importantes' em que o compilador falhou:
-    typeErrorAssignRightSideNotSubtypeLeftSide
-        OK_SEM05.ci
-
-    nilAssign
-        OK_SEM14.ci
-
-    supertypeAssignSelf
-        OK_SEM15.ci
-
-    nilEqualEqualNotEqual
-        OK_SEM14.ci
+    wrongSubclassMethodSignature
+        ER_SEM51.ci
 
 
-O compilador obteve sucesso em testar alguns aspectos (construções) de Cianeto. A lista abaixo consiste de entradas da forma 
+Testes 'pouco importantes' em que o compilador falhou
+    methodReturnValueNotUsed
+        ER_SEM34.ci
+
+    missingReturn
+        ER_SEM01.ci
+
+
+O compilador obteve sucesso em testar alguns aspectos (construï¿½ï¿½es) de Cianeto. A lista abaixo consiste de entradas da forma 
     aspecto
         listas de nomes de arquivos
-Os nomes de arquivos listados são aqueles que testam 'aspecto' e nos quais o compilador obteve sucesso e gerou código correto (se opção -genjava ou -genc foi usada).
-Os testes são categorizados por importância: 'Muito importante', 'Importante', 'pouco importante'
+Os nomes de arquivos listados sï¿½o aqueles que testam 'aspecto' e nos quais o compilador obteve sucesso e gerou cï¿½digo correto (se opï¿½ï¿½o -genjava ou -genc foi usada).
+Os testes sï¿½o categorizados por importï¿½ncia: 'Muito importante', 'Importante', 'pouco importante'
 
 Testes 'Muito importantes' em que o compilador acertou:
-    typeErrorEqualEqualNotEqual
-        OK_SEM03.ci
-        OK_SEM04.ci
+    typeErrorAssignRightSideNotSubtypeLeftSide
+        ER_SEM04.ci
+        ER_SEM41.ci
+        ER_SEM39.ci
+        ER_SEM38.ci
+        ER_SEM05.ci
+        ER_SEM40.ci
+        ER_SEM42.ci
+        ER_SEM43.ci
 
-    methodSearchSuperclass
-        OK_SEM10.ci
+    typeError
+        ER_SEM16.ci
+        ER_SEM09.ci
+        ER_SEM08.ci
+        ER_SEM15.ci
+        ER_SEM14.ci
+        ER_SEM12.ci
+
+    typeErrorSearchMethod
+        ER_SEM61.ci
+        ER_SEM07.ci
+        ER_SEM13.ci
+        ER_SEM17.ci
+        ER_SEM68.ci
+        ER_SEM37.ci
+        ER_SEM59.ci
+        ER_SEM71.ci
+
+    typeErrorSearchMethodSuper
+        ER_SEM60.ci
+        ER_SEM47.ci
+
+    identifierNotFound
+        ER_SEM91.ci
+        ER_SEM100.ci
+        ER_SEM62.ci
+
+    methodFieldEqualNames
+        ER_SEM31.ci
+
+    methodsEqualNames
+        ER_SEM32.ci
+        ER_SEM33.ci
+
+    localVarRedeclared
+        ER_SEM28.ci
+
+    missingClassInNew
+        ER_SEM86.ci
+
+    wrongSubclassMethodSignature
+        ER_SEM29.ci
+        ER_SEM30.ci
+
+    typeNotFound
+        ER_SEM18.ci
+        ER_SEM19.ci
+
+    methodRedefinition
+        ER_SEM70.ci
+
+    typeErrorEqualEqualNotEqual
+        ER_SEM57.ci
+        ER_SEM58.ci
+
+    missingOverride
+        ER_SEM52.ci
+        ER_SEM53.ci
+        ER_SEM54.ci
 
 
 Testes 'importantes' em que o compilador acertou:
-    localVarSameMethodName
-        OK_SEM13.ci
+    superWithoutSuperclass
+        ER_SEM46.ci
 
-    scopeLocalVarField
-        OK_SEM06.ci
+    expressionExpected
+        ER_SEM36.ci
 
-    localVarSameClassName
-        OK_SEM12.ci
+    breakOutsideWhileRepeatUntil
+        ER_SEM26.ci
+        ER_SEM50.ci
+
+    illegalReturnStatement
+        ER_SEM35.ci
+
+    variableRedeclaration
+        ER_SEM03.ci
+
+    typeErrorPlusPlus
+        ER_SEM55.ci
+        ER_SEM56.ci
 
 
 Testes 'pouco importantes' em que o compilador acertou
-    whileBreak
-        OK_SEM07.ci
+    missingClassProgram
+        ER_SEM78.ci
 
-    assert
-        OK_SEM17.ci
+    booleanExprRepeatUntil
+        ER_SEM89.ci
+        ER_SEM88.ci
 
-    selfAsExpression
-        OK_SEM09.ci
+    while
+        ER_SEM11.ci
 
-    openAsIdentifier
-        OK_SEM11.ci
+    typeErrorOutPrint
+        ER_SEM44.ci
 
-    repeatUntil
-        OK_SEM18.ci
+    privateMethodRunOfClassProgram
+        ER_SEM81.ci
 
-    methodOverridingSameSignature
-        OK_SEM08.ci
+    illegalClassName
+        ER_SEM49.ci
+        ER_SEM48.ci
 
-    repeatUntilBreak
-        OK_SEM16.ci
+    lowerUpperCaseIdentifiers
+        ER_SEM02.ci
+
+    parametersInMethodRunOfClassProgram
+        ER_SEM82.ci
+        ER_SEM79.ci
+
+    missingRunMethodInProgram
+        ER_SEM77.ci
+
+    classExtendsItself
+        ER_SEM27.ci
+
+    exprRightHandSideAssignment
+        ER_SEM06.ci
+
+    returnTypeInMethodRunOfClassProgram
+        ER_SEM80.ci
+
+    illegalTypeOrIdentifier
+        ER_SEM45.ci
+        ER_SEM25.ci
+        ER_SEM23.ci
+        ER_SEM21.ci
+        ER_SEM22.ci
+        ER_SEM20.ci
+        ER_SEM24.ci
 
 
 _________________________________________________________________________
 
-3 erros foram sinalizados em 16 arquivos sem erro (18%)
+2 de um total de 138 erros que deveriam ser sinalizados nï¿½o o foram (1%)
+3 erros foram sinalizados na linha errada (2%)
+0 erros foram sinalizados em 4 arquivos sem erro (0%)
 _________________________________________________________________________
+
+Erros que deveriam ser sinalizados mas nï¿½o foram:
+
+ER_SEM51.ci, 21, Method 'put' is being redefined in subclass 'B' with a signature different from the method of superclass 'A' (comp.Compiler.methodDec())
+
+ER_SEM34.ci, 24, Message send 'a.m()' returns a value that is not used (comp.Compiler.statement())
+
 ######################################################
-Erros que foram sinalizados mas não deveriam ter sido:
+Erros que foram sinalizados na linha errada:
 
-OK_SEM05.ci, 66, wrong type of parameter 1
+ER_SEM01.ci
+    correto:    18, Missing 'return' statement in method 'm' (comp.Compiler.methodDec())
+    sinalizado: 17, missing 'return' statement
 
-OK_SEM14.ci, 34, Type not equals
+ER_SIN13.ci
+    correto:    9, '{' expected (comp.Compiler.methodDec())
+    sinalizado: 10, '{' expected (func m)
 
-OK_SEM15.ci, 32, wrong type of parameter 2
+ER_SIN17.ci
+    correto:    10, Missing ';' (comp.Compiler.localDec())
+    sinalizado: 11, ';' expected
+
+O compilador nï¿½o sinalizou nenhum erro que nï¿½o deveria ter sinalizado
+######################################################
+Em todos os testes abaixo, o compilador sinalizou o erro na linha correta (quando o teste tinha erros) ou nï¿½o sinalizou o erro (quando o teste Nï¿½O tinha erros). Mas ï¿½ necessï¿½rio conferir se as mensagens emitidas pelo compilador sï¿½o compatï¿½veis com as mensagens de erro sugeridas pelas chamadas aos metaobjetos dos testes. 
+
+A lista abaixo contï¿½m o nome do arquivo de teste, a mensagem que ele sinalizou e a mensagem sugerida pelo arquivo de teste
+
+ER_SEM55.ci
+The compiler message was: "Type not equals"
+The 'cep' message is:      "Illegal types with ++, only Int and String are allowed"
+
+
+ER_SEM26.ci
+The compiler message was: "'break' statement found outside a 'while' or 'repeat-until' statement (comp.Compiler.statement()))"
+The 'cep' message is:      "'break' statement found outside a 'while' or 'repeat-until' statement"
+
+
+ER_LEX04.ci
+The compiler message was: "Invalid Character: '#'"
+The 'cep' message is:      "Unknown character"
+
+
+ER_SIN42.ci
+The compiler message was: "Invalid Character: ':'"
+The 'cep' message is:      ""
+
+
+ER_SEM04.ci
+The compiler message was: "Type error: value of the right-hand side is not subtype of the variable of the left-hand side."
+The 'cep' message is:      "Type error: value of the right-hand side is not subtype of the variable of the left-hand side."
+
+
+ER_SEM57.ci
+The compiler message was: "Type not equals"
+The 'cep' message is:      "Incompatible types cannot be compared with '==' because the results will always be 'false'"
+
+
+ER_SIN23.ci
+The compiler message was: "Statement expected"
+The 'cep' message is:      "Statement expected"
+
+
+ER_SIN63.ci
+The compiler message was: "';' expected"
+The 'cep' message is:      "';' expected"
+
+
+ER_SEM45.ci
+The compiler message was: "run was not declared"
+The 'cep' message is:      "Identifier 'run' was not declared"
+
+
+ER_SEM41.ci
+The compiler message was: "Type error: value of the right-hand side is not subtype of the variable of the left-hand side."
+The 'cep' message is:      "Type error: the type of the expression of the right-hand side is a basic type and the type of the variable of the left-hand side is a class"
+
+
+ER_SEM61.ci
+The compiler message was: "method s is not declared in C"
+The 'cep' message is:      "Method 's' was not found in class 'C' or its superclasses"
+
+
+ER_SIN33.ci
+The compiler message was: "Identifier expected"
+The 'cep' message is:      "Identifier expected"
+
+
+ER_SEM46.ci
+The compiler message was: "cannot call super, the class Program has not super class"
+The 'cep' message is:      "'super' used in class 'Program' that does not have a superclass"
+
+
+ER_SEM39.ci
+The compiler message was: "Type error: type of the expression returned is not subclass of the method return type"
+The 'cep' message is:      "Type error: type of the expression returned is not subclass of the method return type"
+
+
+ER_SEM91.ci
+The compiler message was: "numero was not declared"
+The 'cep' message is:      ""
+
+
+ER_LEX03.ci
+The compiler message was: "Number out of limits"
+The 'cep' message is:      "literal int out of limits"
+
+
+ER_SEM82.ci
+The compiler message was: "Method 'run:' of class 'Program' cannot take parameters"
+The 'cep' message is:      ""
+
+
+ER_SEM60.ci
+The compiler message was: "Method 'p' was not found"
+The 'cep' message is:      "Method 'p' was not found in the public interface of 'A' or its superclasses"
+
+
+ER_SEM28.ci
+The compiler message was: "i is already declared as global variable"
+The 'cep' message is:      "Variable 'i' is being redeclared"
+
+
+ER_SEM_EXTRA01.ci
+The compiler message was: "result is not declared"
+The 'cep' message is:      ""
+
+
+ER_SEM89.ci
+The compiler message was: "boolean expression expected in a repeat-until statement"
+The 'cep' message is:      "boolean expression expected in a repeat-until statement"
+
+
+ER_SIN43.ci
+The compiler message was: "'public', 'private', '}' or 'end' expected (line 11)"
+The 'cep' message is:      "function or field declaration expected"
+
+
+ER_SIN60.ci
+The compiler message was: "')' unexpected"
+The 'cep' message is:      "')' unexpected"
+
+
+ER_SEM16.ci
+The compiler message was: "Attempt to print a boolean expression"
+The 'cep' message is:      "Operator '-' does not accepts 'boolean' expressions"
+
+
+ER_SEM56.ci
+The compiler message was: "Type not equals"
+The 'cep' message is:      "Illegal types with ++, only Int and String are allowed"
+
+
+ER_SEM07.ci
+The compiler message was: "The class of int is not declared"
+The 'cep' message is:      "Message send to a non-object receiver"
+
+
+ER_SIN35.ci
+The compiler message was: "'{' expected (func m:)"
+The 'cep' message is:      "'{' expected"
+
+
+ER_SEM18.ci
+The compiler message was: "ype 'k' was not found (comp.Compiler.localDec())"
+The 'cep' message is:      "Type 'k' was not found"
+
+
+ER_SEM03.ci
+The compiler message was: "i is already declared as local variable"
+The 'cep' message is:      "Variable 'i' is being redeclared"
+
+
+ER_SIN25.ci
+The compiler message was: "Expression expected OR Unknown sequence of symbols"
+The 'cep' message is:      "Expression expected OR invalid sequence of symbols"
+
+
+ER_SIN59.ci
+The compiler message was: "missing keyword 'until'"
+The 'cep' message is:      "'until' expected"
+
+
+ER_SIN12.ci
+The compiler message was: "Expression expected"
+The 'cep' message is:      "Expression expected"
+
+
+ER_SEM32.ci
+The compiler message was: "Method 'm' is being redeclared"
+The 'cep' message is:      "Method 'm' is being redeclared"
+
+
+ER_SEM38.ci
+The compiler message was: "Type error: value of the right-hand side is not subtype of the variable of the left-hand side."
+The 'cep' message is:      "Type error: type of the right-hand side of the assignment is not a subclass of the left-hand side"
+
+
+ER_SIN37.ci
+The compiler message was: "Expression expected"
+The 'cep' message is:      "Expression expected"
+
+
+ER_SIN28.ci
+The compiler message was: "'class' expected"
+The 'cep' message is:      "'class' expected"
+
+
+ER_SIN14.ci
+The compiler message was: "'class' expected"
+The 'cep' message is:      "'class' expected"
+
+
+ER_SEM100.ci
+The compiler message was: "error was not declared"
+The 'cep' message is:      "Identifer 'error' was not found"
+
+
+ER_SEM25.ci
+The compiler message was: "Identifier expected"
+The 'cep' message is:      "Identifier expected"
+
+
+ER_SEM33.ci
+The compiler message was: "Method 'm' is being redeclared"
+The 'cep' message is:      "Method 'm' is being redeclared"
+
+
+ER_SEM09.ci
+The compiler message was: "type 'int' does not support operator '&&' (comp.Compiler.term())"
+The 'cep' message is:      "type 'int' does not support operator '&&'"
+
+
+ER_SIN21.ci
+The compiler message was: "';' expected"
+The 'cep' message is:      "';' missing"
+
+
+ER_SEM35.ci
+The compiler message was: "Illegal 'return' statement. Method returns 'void'"
+The 'cep' message is:      "Illegal 'return' statement. Method returns 'void'"
+
+
+ER_SIN05.ci
+The compiler message was: "Expression expected"
+The 'cep' message is:      "Expression expected"
+
+
+ER_SEM88.ci
+The compiler message was: "boolean expression expected in a repeat-until statement"
+The 'cep' message is:      "boolean expression expected in a repeat-until statement"
+
+
+ER_SEM79.ci
+The compiler message was: "Method 'run:' of class 'Program' cannot take parameters"
+The 'cep' message is:      "Method 'run:' of class 'Program' cannot take parameters"
+
+
+ER_SEM05.ci
+The compiler message was: "Type error: value of the right-hand side is not subtype of the variable of the left-hand side."
+The 'cep' message is:      "'int' cannot be assigned to 'boolean'"
+
+
+ER_SIN40.ci
+The compiler message was: "Attempt to declare public instance variable in line 12"
+The 'cep' message is:      "Attempt to declare public instance variable 'i'"
+
+
+ER_SIN38.ci
+The compiler message was: "'}' expected"
+The 'cep' message is:      "'}' expected"
+
+
+ER_SIN44.ci
+The compiler message was: "Attempt to declare public instance variable in line 16"
+The 'cep' message is:      "Attempt to declare public instance variable 'i'"
+
+
+ER_SIN03.ci
+The compiler message was: "Identifier expected"
+The 'cep' message is:      "Identifier expected"
+
+
+ER_SIN36.ci
+The compiler message was: "Type expected to method in line 11"
+The 'cep' message is:      "Identifier expected"
+
+
+ER_SEM86.ci
+The compiler message was: "A was not declared"
+The 'cep' message is:      "Class 'A' was not found"
+
+
+ER_SIN24.ci
+The compiler message was: "Expression expected OR Unknown sequence of symbols"
+The 'cep' message is:      "Expression expected OR Unknown sequence of symbols"
+
+
+ER_SIN31.ci
+The compiler message was: "'public', 'private', '}' or 'end' expected (line 6)"
+The 'cep' message is:      "'public', 'private', or '}' expected"
+
+
+ER_SEM27.ci
+The compiler message was: "Class 'A' is inheriting from itself (comp.Compiler.classDec())"
+The 'cep' message is:      "Class 'A' is inheriting from itself"
+
+
+ER_SEM29.ci
+The compiler message was: "Method 'put:' of subclass 'B' has a signature different from method inherited from superclass 'A' (comp.Compiler.methodDec())"
+The 'cep' message is:      "Method 'put' of the subclass 'B' has a signature different from the same method of superclass 'A'"
+
+
+ER_SIN26.ci
+The compiler message was: "Expression expected OR invalid sequence of symbols"
+The 'cep' message is:      "Expression expected OR invalid sequence of symbols"
+
+
+ER_SIN27.ci
+The compiler message was: "Expression expected OR invalid sequence of symbols"
+The 'cep' message is:      "Expression expected OR Unknown sequence of symbols"
+
+
+ER_SEM23.ci
+The compiler message was: "Identifier expected"
+The 'cep' message is:      "Identifier expected"
+
+
+ER_SIN11.ci
+The compiler message was: "Missing 'Out.'"
+The 'cep' message is:      "Missing 'Out.'"
+
+
+ER_SIN09.ci
+The compiler message was: "a was not declared"
+The 'cep' message is:      "'{' expected"
+
+
+ER_SEM81.ci
+The compiler message was: "Method 'run' of class 'Program' cannot be private"
+The 'cep' message is:      "Method 'run' of class 'Program' cannot be private"
+
+
+ER_SIN58.ci
+The compiler message was: "Constructors do not receive parameters (line: 15)"
+The 'cep' message is:      "')' expected"
+
+
+ER_LEX05.ci
+The compiler message was: "'_' cannot start an indentifier"
+The 'cep' message is:      "Identifier starting with underscore"
+
+
+ER_SEM52.ci
+The compiler message was: "'override' expected before overridden method"
+The 'cep' message is:      "'override' expected before overridden method"
+
+
+ER_SEM53.ci
+The compiler message was: "'override' expected before overridden method"
+The 'cep' message is:      "'override' expected before overridden method"
+
+
+ER_SIN41.ci
+The compiler message was: "Identifier expected"
+The 'cep' message is:      "Identifier expected"
+
+
+ER_SEM13.ci
+The compiler message was: "Command 'In.' without arguments"
+The 'cep' message is:      "Unknown method 'readBoolean'"
+
+
+ER_SIN02.ci
+The compiler message was: "Missing identifier"
+The 'cep' message is:      "Missing identifier"
+
+
+ER_SEM17.ci
+The compiler message was: "Command 'In.' without arguments"
+The 'cep' message is:      "Method 'readInt:' was not found"
+
+
+ER_SEM49.ci
+The compiler message was: "Identifier expected"
+The 'cep' message is:      "Class expected"
+
+
+ER_SIN10.ci
+The compiler message was: "a was not declared"
+The 'cep' message is:      "'readInt' was not declared"
+
+
+ER_SEM_EXTRA02.ci
+The compiler message was: "method se: is not declared"
+The 'cep' message is:      ""
+
+
+ER_SEM70.ci
+The compiler message was: "Method 'm' is being redeclared"
+The 'cep' message is:      "Method 'm' is being redefined"
+
+
+ER_LEX08.ci
+The compiler message was: "Number out of limits"
+The 'cep' message is:      "literal int out of limits"
+
+
+ER_SIN07.ci
+The compiler message was: "Command 'In.' without arguments"
+The 'cep' message is:      "Command 'In.' without arguments"
+
+
+ER_SEM78.ci
+The compiler message was: "Source code without a class 'Program'"
+The 'cep' message is:      "Source code without a class 'Program'"
+
+
+ER_SEM44.ci
+The compiler message was: "Attempt to print a A expression"
+The 'cep' message is:      "Command 'write' does not accept objects"
+
+
+ER_SIN01.ci
+The compiler message was: "'{' expected (func run)"
+The 'cep' message is:      "'{' expected"
+
+
+ER_SIN04.ci
+The compiler message was: "i was not declared"
+The 'cep' message is:      "Statement expected"
+
+
+ER_SIN_EXTRA02.ci
+The compiler message was: "'public', 'private', '}' or 'end' expected (line 40)"
+The 'cep' message is:      ""
+
+
+ER_SIN57.ci
+The compiler message was: "'public', 'private', '}' or 'end' expected (line 12)"
+The 'cep' message is:      "'public', 'private' or '}' expected"
+
+
+ER_SEM77.ci
+The compiler message was: "Method 'run' was not found in class 'Program'"
+The 'cep' message is:      "Method 'run' was not found in class 'Program'"
+
+
+ER_SIN61.ci
+The compiler message was: "')' expected"
+The 'cep' message is:      "')' expected"
+
+
+ER_SEM02.ci
+The compiler message was: "I was not declared"
+The 'cep' message is:      "Variable 'I' was not declared"
+
+
+ER_SEM36.ci
+The compiler message was: "Type error: value of the right-hand side is not subtype of the variable of the left-hand side."
+The 'cep' message is:      "Expression expected in the right-hand side of assignment"
+
+
+ER_LEX_EXTRA01.ci
+The compiler message was: "ver was not declared"
+The 'cep' message is:      "';' expected"
+
+
+ER_LEX06.ci
+The compiler message was: "Invalid Character: '.'"
+The 'cep' message is:      "Unknown character"
+
+
+ER_SIN20.ci
+The compiler message was: "';' expected"
+The 'cep' message is:      "';' missing"
+
+
+ER_SEM21.ci
+The compiler message was: "Identifier expected"
+The 'cep' message is:      "Identifier expected"
+
+
+ER_SEM08.ci
+The compiler message was: "type boolean does not support operation '+' (comp.Compiler.simpleExpr())"
+The 'cep' message is:      "type boolean does not support operation '+'"
+
+
+ER_SIN18.ci
+The compiler message was: "';' expected"
+The 'cep' message is:      "';' expected"
+
+
+ER_SEM50.ci
+The compiler message was: "'break' statement found outside a 'while' or 'repeat-until' statement (comp.Compiler.statement()))"
+The 'cep' message is:      "Command 'break' outside a command 'while' or repeat-until"
+
+
+ER_SEM15.ci
+The compiler message was: "Operator '!' does not accepts 'int' values (comp.Compiler.factor())"
+The 'cep' message is:      "Operator '!' does not accepts 'int' values"
+
+
+ER_SIN22.ci
+The compiler message was: "';' expected"
+The 'cep' message is:      "';' missing"
+
+
+ER_SEM22.ci
+The compiler message was: "Identifier expected"
+The 'cep' message is:      "Identifier expected"
+
+
+ER_SIN06.ci
+The compiler message was: "a was not declared"
+The 'cep' message is:      "Expression expected"
+
+
+ER_SEM20.ci
+The compiler message was: "Identifier expected"
+The 'cep' message is:      "Identifier expected"
+
+
+ER_SIN100.ci
+The compiler message was: "missing 'return' statement"
+The 'cep' message is:      "missing 'return' statement"
+
+
+ER_SEM30.ci
+The compiler message was: "Wrong type of return"
+The 'cep' message is:      "Method 'put' of subclass 'B' has a signature different from method inherited from superclass 'A'"
+
+
+ER_SEM40.ci
+The compiler message was: "wrong type of parameter 1"
+The 'cep' message is:      "Type error: the type of the real parameter is not subclass of the type of the formal parameter"
+
+
+ER_SIN32.ci
+The compiler message was: "Type expected to parameter in line 6"
+The 'cep' message is:      "Type expected"
+
+
+ER_SEM19.ci
+The compiler message was: "ype 'Program' was not found (comp.Compiler.localDec())"
+The 'cep' message is:      "Type 'Program' was not found"
+
+
+ER_SEM58.ci
+The compiler message was: "Type not equals"
+The 'cep' message is:      "Incompatible types cannot be compared with '!=' because the result will always be 'false'"
+
+
+ER_SEM68.ci
+The compiler message was: "p is not declared"
+The 'cep' message is:      "Method 'p' was not found in class 'Program' or its superclasses"
+
+
+ER_SEM42.ci
+The compiler message was: "Type error: value of the right-hand side is not subtype of the variable of the left-hand side."
+The 'cep' message is:      "Type error: type of the left-hand side of the assignment is a basic type and the type of the right-hand side is a class"
+
+
+ER_SEM48.ci
+The compiler message was: "Identifier expected"
+The 'cep' message is:      "Identifier expected"
+
+
+ER_SIN30.ci
+The compiler message was: "Invalid Character: '#'"
+The 'cep' message is:      "Unknown character '#'"
+
+
+ER_SIN_EXTRA01.ci
+The compiler message was: "'{' expected (func run)"
+The 'cep' message is:      ""
+
+
+ER_SIN08.ci
+The compiler message was: "Command 'Out.print:' without arguments"
+The 'cep' message is:      "Command ' Out.print' without arguments"
+
+
+ER_SEM31.ci
+The compiler message was: "Method 'i' has name equal to an instance variable"
+The 'cep' message is:      "Method 'i' has name equal to an instance variable"
+
+
+ER_SEM80.ci
+The compiler message was: "missing 'return' statement"
+The 'cep' message is:      "Method 'run' of class 'Program' with a return value type"
+
+
+ER_SIN_EXTRA.ci
+The compiler message was: "'{' expected (func frear)"
+The 'cep' message is:      "'{' expected"
+
+
+ER_SEM54.ci
+The compiler message was: "'override' expected before overridden method"
+The 'cep' message is:      "'override' expected before overridden method"
+
+
+ER_SEM62.ci
+The compiler message was: "a was not declared"
+The 'cep' message is:      "Identifier 'a' was not found"
+
+
+ER_SEM37.ci
+The compiler message was: "method set: is not declared"
+The 'cep' message is:      "Method 'set' was not found in class 'A' or its superclasses"
+
+
+ER_SIN62.ci
+The compiler message was: "missing keyword 'until'"
+The 'cep' message is:      "'}' not expected before 'until'"
+
+
+ER_SEM24.ci
+The compiler message was: "Identifier expected"
+The 'cep' message is:      "Identifier expected"
+
+
+ER_SEM59.ci
+The compiler message was: "method p is not declared in A"
+The 'cep' message is:      "Method 'p' was not found in the public interface of 'A' or ts superclasses"
+
+
+ER_SEM47.ci
+The compiler message was: "m is not declared"
+The 'cep' message is:      "Method 'm' was not found in superclass 'B' or its superclasses"
+
+
+ER_SEM06.ci
+The compiler message was: "Cannot assign to a literal"
+The 'cep' message is:      "'operator expected' or 'variable expected at the left-hand side of a assignment'"
+
+
+ER_SEM11.ci
+The compiler message was: "non-boolean expression in 'while' command (comp.Compiler.whileStatement())"
+The 'cep' message is:      "non-boolean expression in 'while' command"
+
+
+ER_SEM14.ci
+The compiler message was: "Attempt to print a boolean expression"
+The 'cep' message is:      "Attempt to print a boolean expression"
+
+
+ER_SIN34.ci
+The compiler message was: "'{' expected (func m)"
+The 'cep' message is:      "'{' expected"
+
+
+ER_SIN19.ci
+The compiler message was: "';' expected"
+The 'cep' message is:      "';' missing"
+
+
+ER_SEM43.ci
+The compiler message was: "Type error: value of the right-hand side is not subtype of the variable of the left-hand side."
+The 'cep' message is:      "Type error: 'nil' cannot be assigned to a variable of a basic type"
+
+
+ER_LEX07.ci
+The compiler message was: "Comment opened and not closed"
+The 'cep' message is:      "Comment started in line 5 was not closed"
+
+
+ER_SIN101.ci
+The compiler message was: "A field name was expected"
+The 'cep' message is:      "Type expected"
+
+
+ER_SEM71.ci
+The compiler message was: "method set: is not declared"
+The 'cep' message is:      "Method 'set:' was not found in class 'A' or its superclasses"
+
+
+ER_SIN29.ci
+The compiler message was: "'public', 'private', '}' or 'end' expected (line 14)"
+The 'cep' message is:      " Class member OR 'end' expected"
+
+
+ER_SEM12.ci
+The compiler message was: "Type not equals"
+The 'cep' message is:      "operator '+' of 'Int' expects an 'Int' value"
+
+
+ER_SIN39.ci
+The compiler message was: "'{' expected (func get)"
+The 'cep' message is:      "'{' expected"
+
 

@@ -27,14 +27,16 @@ public class MemberList {
 		
 		if (qualifier.getToken1() != null) {
 			if (qualifier.getToken1().toString().equals("override")) {
-				pw.printIdent("@Override ");				
+				pw.printIdent("@Override ");
+				System.out.println(member);
 			} else {			
 				pw.printIdent(qualifier.getToken1() + " ");			
 			}
-		}
+		}		
 		
-		if (qualifier.getToken2() != null)
+		if (qualifier.getToken2() != null) {
 			pw.print(qualifier.getToken2() + " ");
+		}
 		
 		if (qualifier.getToken3() != null)
 			pw.print(qualifier.getToken3() + " ");

@@ -1,0 +1,11 @@
+// Isabela Sayuri Matsumoto - 726539 isabelasassa@hotmail.com
+@cep(5,"Falta 'Out.' após 'print'","Missing 'Out.'", "comp.Compiler.writeStatement()")
+
+class Program 
+  
+    func run {
+        print: "aaaaaaaaaaa"; 
+                
+    }
+
+end

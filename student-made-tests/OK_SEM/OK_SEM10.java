@@ -29,8 +29,8 @@ public class OK_SEM10 {
 
    private static class Program {
       public void run () {
-         C a;
-         C b;
+         A a;
+         B b;
          C c;
          a = new A();
          b = new B();

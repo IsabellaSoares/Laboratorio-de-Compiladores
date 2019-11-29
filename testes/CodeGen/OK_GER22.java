@@ -15,16 +15,19 @@ public class OK_GER22 {
    private static class Program {
       public void run () {
          System.out.println("100");
-         int i, j, n;
+         int i, n;
          i = 0;
-         j = 0;
          n = 10;
          boolean b;
          b = false;
-         n = 10;
+         assert n == 11 : "'repeat-until' statement with 'true' as expression'";
+         int j;
+         j = 0;
          int sum;
          sum = 0;
+         n = 10;
          System.out.println(         sum);
+         assert sum == 100 : "Nested 'repeat-until' statement with two indexes";
       }
    }
 

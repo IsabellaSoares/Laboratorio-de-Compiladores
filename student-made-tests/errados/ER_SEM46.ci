@@ -1,0 +1,14 @@
+@annot("check", "superWithoutSuperclass")
+@cep(8, "'super' é utilizado somente quando há superclasse", 
+   "'super' used in class 'Program' that does not have a superclass",
+   "comp.Compiler.factor()")
+  
+
+class Program 
+  
+    func run {
+       super.run;   //#
+    }
+
+end
+

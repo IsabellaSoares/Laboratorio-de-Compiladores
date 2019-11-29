@@ -1,0 +1,38 @@
+/*
+Giovanna Blasco Martin
+giovanna.blasco@hotmail.com
+*/
+
+@annot("check", "typeErrorSearchMethodSuper")
+@cep(18, "Chamada a método privado da superclasse", "Method 'p' was not found in the public interface of 'A' or its superclasses", "comp.Compiler.factor()" )
+  
+open
+class A  
+
+    private func p {
+    }
+  
+    func m {
+        self.p;
+    }
+
+end
+
+class B extends A
+
+    override
+    func m {
+        super.p;   
+    }
+
+end
+
+class Program
+
+    func run {
+        var B b;
+        b = B.new;
+        b.m;
+    }
+
+end

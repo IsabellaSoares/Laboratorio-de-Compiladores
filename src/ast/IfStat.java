@@ -19,12 +19,12 @@ public class IfStat extends Statement {
 	public void genJava( PW pw ) {
 		if (ifState != null) {
 			pw.println();
-			pw.printIdent("if ");
+			pw.printIdent("if (");
 			
 			if (expr != null)
 				expr.genJava(pw, true);
 			
-			pw.println(" {");
+			pw.println(") {");
 			
 			pw.add();
 			

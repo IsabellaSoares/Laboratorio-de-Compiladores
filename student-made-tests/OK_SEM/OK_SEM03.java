@@ -12,4 +12,18 @@ public class OK_SEM03 {
       new Program().run();
    }
 
+   private static class Program {
+      public void run () {
+         String r, s;
+         r = "Ola";
+         s = "Tudo bem?";
+
+         if ((r == s) && (r != s) && (r == null) && (null == r) && (r == "Ola") && ("Ola" == r) && (r != null) && (r != "Ola") && ("Ola" != r) && ("nil" == null)) {
+            System.out.println("impossivel");
+         }
+         else {
+         }
+      }
+   }
+
 }

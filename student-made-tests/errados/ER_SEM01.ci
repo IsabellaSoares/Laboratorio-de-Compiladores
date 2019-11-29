@@ -1,0 +1,23 @@
+@annot("check", "missingReturn")
+@cep(16, "Método com tipo de retorno deve ter pelo menos um comando return",
+  "Missing 'return' statement in method 'm'", 
+  "comp.Compiler.methodDec()" )
+ 
+ 
+      
+class Program 
+
+    func m -> Int {
+       var Int i;
+
+       i = 1;
+       while i < 10  {
+          Out.println: i;
+          i = i + 1;
+       }
+    }  //#
+  
+    func run {
+    }
+
+end

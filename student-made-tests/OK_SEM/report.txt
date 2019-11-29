@@ -1,0 +1,123 @@
+Relat�rio do Compilador
+
+Resumo
+_________________________________________________________________________
+MI:  4             I: 0              PI: 0             Exc: 0
+ SSE: 3/16/18%     
+JwithE: 4
+
+MI = muito importante, I = importante, PI = pouco importante, Exc = exce��es
+Dev = deveria ter sinalizado, LE = sinalizou linha errada, SSE = sinalizado sem erro
+ JwithE = number of Java classes with compilation errors
+_________________________________________________________________________
+
+N�mero de testes 'Muito importantes' em que o compilador falhou: 4
+N�mero de testes 'Importantes' em que o compilador falhou: 0
+N�mero de testes 'Pouco importantes' em que o compilador falhou: 0
+
+O compilador falhou em testar alguns aspectos (constru��es) de Cianeto. A lista abaixo consiste de entradas da forma 
+    aspecto
+        listas de nomes de arquivos
+Os nomes de arquivos listados s�o aqueles que testam 'aspecto' mas em que o compilador falhou em apontar um erro, apontou um erro inexistente ou gerou c�digo errado (se op��o -genjava ou -genc foi usada).
+Os testes s�o categorizados por import�ncia: 'Muito importante', 'Importante', 'pouco importante'
+
+Testes 'Muito importantes' em que o compilador falhou:
+    typeErrorAssignRightSideNotSubtypeLeftSide
+        OK_SEM05.ci
+
+    nilAssign
+        OK_SEM14.ci
+
+    supertypeAssignSelf
+        OK_SEM15.ci
+
+    nilEqualEqualNotEqual
+        OK_SEM14.ci
+
+
+O compilador obteve sucesso em testar alguns aspectos (constru��es) de Cianeto. A lista abaixo consiste de entradas da forma 
+    aspecto
+        listas de nomes de arquivos
+Os nomes de arquivos listados s�o aqueles que testam 'aspecto' e nos quais o compilador obteve sucesso e gerou c�digo correto (se op��o -genjava ou -genc foi usada).
+Os testes s�o categorizados por import�ncia: 'Muito importante', 'Importante', 'pouco importante'
+
+Testes 'Muito importantes' em que o compilador acertou:
+    typeErrorEqualEqualNotEqual
+        OK_SEM03.ci
+        OK_SEM04.ci
+
+    methodSearchSuperclass
+        OK_SEM10.ci
+
+
+Testes 'importantes' em que o compilador acertou:
+    localVarSameMethodName
+        OK_SEM13.ci
+
+    scopeLocalVarField
+        OK_SEM06.ci
+
+    localVarSameClassName
+        OK_SEM12.ci
+
+
+Testes 'pouco importantes' em que o compilador acertou
+    whileBreak
+        OK_SEM07.ci
+
+    assert
+        OK_SEM17.ci
+
+    selfAsExpression
+        OK_SEM09.ci
+
+    openAsIdentifier
+        OK_SEM11.ci
+
+    repeatUntil
+        OK_SEM18.ci
+
+    repeatUntilBreak
+        OK_SEM16.ci
+
+    methodOverridingSameSignature
+        OK_SEM08.ci
+
+
+_________________________________________________________________________
+
+3 erros foram sinalizados em 16 arquivos sem erro (18%)
+_________________________________________________________________________
+######################################################
+Erros que foram sinalizados mas n�o deveriam ter sido:
+
+OK_SEM05.ci, 66, wrong type of parameter 1
+
+OK_SEM14.ci, 34, Type not equals
+
+OK_SEM15.ci, 32, wrong type of parameter 2
+
+
+List of Java files with compilation errors: 
+   ./student-made-tests/OK_SEM/OK_SEM17.java
+   ./student-made-tests/OK_SEM/OK_SEM05.java
+   ./student-made-tests/OK_SEM/OK_SEM14.java
+   ./student-made-tests/OK_SEM/OK_SEM15.java
+
+List of files with correct Java code: 
+   ./student-made-tests/OK_SEM/OK_SEM11.java
+   ./student-made-tests/OK_SEM/OK_SEM16.java
+   ./student-made-tests/OK_SEM/OK_SEM12.java
+   ./student-made-tests/OK_SEM/OK_SEM03.java
+   ./student-made-tests/OK_SEM/OK_SEM13.java
+   ./student-made-tests/OK_SEM/OK_SEM04.java
+   ./student-made-tests/OK_SEM/OK_SEM10.java
+   ./student-made-tests/OK_SEM/OK_SEM09.java
+   ./student-made-tests/OK_SEM/OK_SEM08.java
+   ./student-made-tests/OK_SEM/OK_SEM18.java
+   ./student-made-tests/OK_SEM/OK_SEM07.java
+
+List of files Java code that compiles but was generated incorrectly: 
+
+The compiler could not create the following .java files:
+   ./student-made-tests/OK_SEM/OK_SEM06.java

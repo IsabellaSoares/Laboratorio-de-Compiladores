@@ -1,0 +1,43 @@
+Relat�rio do Compilador
+
+Resumo
+_________________________________________________________________________
+MI:  0             I: 0              PI: 0             Exc: 0
+ SSE: 0/11/0%      
+JwithE: 10
+
+MI = muito importante, I = importante, PI = pouco importante, Exc = exce��es
+Dev = deveria ter sinalizado, LE = sinalizou linha errada, SSE = sinalizado sem erro
+ JwithE = number of Java classes with compilation errors
+_________________________________________________________________________
+
+N�mero de testes 'Muito importantes' em que o compilador falhou: 0
+N�mero de testes 'Importantes' em que o compilador falhou: 0
+N�mero de testes 'Pouco importantes' em que o compilador falhou: 0
+
+
+_________________________________________________________________________
+
+0 erros foram sinalizados em 11 arquivos sem erro (0%)
+_________________________________________________________________________
+O compilador n�o sinalizou nenhum erro que n�o deveria ter sinalizado
+Para os casos de teste que voc� utilizou, o compilador est� correto
+
+List of Java files with compilation errors: 
+   ./student-made-tests/OK_SIN/OK_SIN11.java
+   ./student-made-tests/OK_SIN/OK_SIN04.java
+   ./student-made-tests/OK_SIN/OK_SIN16.java
+   ./student-made-tests/OK_SIN/OK_SIN09.java
+   ./student-made-tests/OK_SIN/OK_SIN03.java
+   ./student-made-tests/OK_SIN/OK_SIN02.java
+   ./student-made-tests/OK_SIN/OK_SIN13.java
+   ./student-made-tests/OK_SIN/OK_SIN08.java
+   ./student-made-tests/OK_SIN/OK_SIN12.java
+   ./student-made-tests/OK_SIN/OK_SIN10.java
+
+List of files with correct Java code: 
+
+List of files Java code that compiles but was generated incorrectly: 
+
+The compiler could not create the following .java files:
+   ./student-made-tests/OK_SIN/OK_SIN14.java
