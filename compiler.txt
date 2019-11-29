@@ -1068,8 +1068,8 @@ public class Compiler {
 			lineNumber = lexer.getLineNumber();
 			next();
 
-			// Se é um identificador, precisa verificar se já foi declarado
-			// Mensagem de erro temporária até implementação da análise semântica
+			// Se Ã© um identificador, precisa verificar se jÃ¡ foi declarado
+			// Mensagem de erro temporÃ¡ria atÃ© implementaÃ§Ã£o da anÃ¡lise semÃ¢ntica
 			if (lexer.getStringValue().equals("readInt")) {
 				this.error("'readInt' was not declared");
 			}

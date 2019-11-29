@@ -71,6 +71,9 @@ public class TypeCianetoClass extends Type {
    }
 
    public boolean isSubtype(String name) {
+	   if(this.name.equals(name)) {
+		   return true;
+	   }
 	   if(superclass!=null) {
 		   if(name.equals(superName)) {
 			   return true;
