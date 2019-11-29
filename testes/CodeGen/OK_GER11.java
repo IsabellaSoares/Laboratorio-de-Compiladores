@@ -18,12 +18,12 @@ public class OK_GER11 {
       }
       public void m2 (int n) {
          System.out.print(n + " ");
-         this.m1;
+         this.m1();
       }
    }
 
    private static class B extends A {
-      @Override void m1 () {
+      @Override public void m1 () {
          System.out.println(" 4 ");
       }
    }

@@ -22,19 +22,19 @@ public class OK_GER12 {
    }
 
    private static class B extends A {
-      @Override void m2 (int n) {
+      @Override public void m2 (int n) {
          System.out.print(n + " ");
          super.m2(n + 1);
       }
    }
 
    private static class C extends B {
-      @Override void m1 () {
+      @Override public void m1 () {
          super.m1();
          System.out.print(2 + " ");
       }
       public void m3 () {
-         this.m1;
+         this.m1();
          System.out.print(1 + " ");
          System.out.print(2 + " ");
       }
