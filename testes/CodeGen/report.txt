@@ -4,11 +4,9 @@ Resumo
 _________________________________________________________________________
 MI:  1             I: 2              PI: 1             Exc: 0
  SSE: 3/17/17%     
-JwithE: 2
 
 MI = muito importante, I = importante, PI = pouco importante, Exc = exce��es
 Dev = deveria ter sinalizado, LE = sinalizou linha errada, SSE = sinalizado sem erro
- JwithE = number of Java classes with compilation errors
 _________________________________________________________________________
 
 N�mero de testes 'Muito importantes' em que o compilador falhou: 1
@@ -115,12 +113,12 @@ OK_GER13.ci, 40, 'override' expected before overridden method
 
 
 List of Java files with compilation errors: 
-   ./testes/CodeGen/OK_GER11.java
-   ./testes/CodeGen/OK_GER12.java
 
 List of files with correct Java code: 
+   ./testes/CodeGen/OK_GER11.java
    ./testes/CodeGen/OK_GER06.java
    ./testes/CodeGen/OK_GER08.java
+   ./testes/CodeGen/OK_GER12.java
    ./testes/CodeGen/OK_GER07.java
    ./testes/CodeGen/OK_GER02.java
    ./testes/CodeGen/OK_GER04.java

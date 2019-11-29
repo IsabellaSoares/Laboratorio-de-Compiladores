@@ -1448,6 +1448,9 @@ public class Compiler {
 			if (lexer.token == Token.PUBLIC) {
 				q3 = lexer.token;
 				next();
+			} else if (lexer.token == Token.FUNC) {
+				q3 = Token.PUBLIC;
+				next();
 			}
 		} else if (lexer.token == Token.FINAL) {
 			q2 = lexer.token;
@@ -1465,6 +1468,8 @@ public class Compiler {
 					next();
 				}
 			}
+		} else if (lexer.token == Token.FUNC && q1 == Token.OVERRIDE) {
+			q2 = Token.PUBLIC;
 		}
 
 		return new Qualifier(q1, q2, q3, q4);
