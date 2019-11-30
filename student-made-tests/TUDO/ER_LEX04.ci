@@ -1,0 +1,30 @@
+@cep(20, "Teste para conferir se o lexico sinaliza o numero correto da linha com erro", 
+    "Unknown character", "lexer.Lexer.nextToken()")
+
+
+/*   @filename  er-lex05.kra
+*/      
+
+  /*
+  com erro, que 'e aquela com os caracteres #####################.
+  O lexico poderia estar deixando de incrementar o contador de numero
+  de linha nas linhas de comentarios.
+  */    // 8:
+
+
+class A        // 10
+       // 11
+    func m  { // 12
+      //       13:
+      // confira se, apesar dos comentarios, o compilador diz que o numero
+      // da linha com erro 'e 16
+       #########################     //#
+    }
+
+end
+
+class Program 
+  
+    func run {
+    }
+end

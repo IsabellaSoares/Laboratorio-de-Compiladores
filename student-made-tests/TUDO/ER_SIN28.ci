@@ -1,0 +1,27 @@
+/*
+João Vitor de Sá Medeiros Santos
+jvsms13@gmail.com
+joaovitor.santos@dcomp.sor.ufscar.br
+*/
+
+
+@cep(3, "Palavras chave não pode estar em maiúscula",
+   "'class' expected", "comp.Compiler.program()")
+
+CLASS A
+
+    func cianeto {
+    }
+
+end
+
+class Program
+
+    func run {
+       var A a;
+
+       a = A.new;
+       a.cianeto;
+    }
+
+end

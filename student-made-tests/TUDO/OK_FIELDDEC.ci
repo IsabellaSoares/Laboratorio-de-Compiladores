@@ -1,0 +1,22 @@
+/*
+    Victor Hide Watanabe
+    victor.watanabe@dcomp.sor.ufscar.br
+*/
+
+@nce
+/*
+    @filename ok-FieldDec
+
+    @comment Verifica se aceita o ";" opcional da gramatica
+        FieldDec ::= “var” Type IdList [ “;” ]
+*/
+
+class Program 
+
+    var Int i
+    var Int j;
+
+    func run {
+        Out.println: self.i;
+    }
+end

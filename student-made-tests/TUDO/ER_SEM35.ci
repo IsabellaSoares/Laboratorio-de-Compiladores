@@ -1,0 +1,29 @@
+/* 
+    Caroline Aparecida
+    hicaarol@gmail.com
+*/
+
+@annot("check", "illegalReturnStatement")
+@cep(7, "Método que não deve retornar nada possui instrução 'return'", 
+  "Illegal 'return' statement. Method returns 'void'",
+  "comp.Compiler.returnStatement()")
+  
+class A 
+   
+    func m {
+        return 0;         
+    }   
+
+end
+
+class Program 
+   
+    func run {
+        var A a;
+        a = A.new;
+        a.m;
+    }   
+
+end
+
+

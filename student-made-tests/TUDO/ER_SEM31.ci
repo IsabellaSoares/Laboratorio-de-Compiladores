@@ -1,0 +1,31 @@
+/* 
+    Caroline Aparecida
+    hicaarol@gmail.com
+*/
+
+@annot("check", "methodFieldEqualNames")
+@cep(9, "Método com nome igual a de variável de instância", 
+   "Method 'i' has name equal to an instance variable",
+   "comp.Compiler.methodDec()")
+  
+
+class A 
+
+    var Int i;
+
+    func i {       
+    }
+
+end
+
+class Program 
+    
+    func run {
+        var A a;  
+        a = A.new;
+        a.i;
+    }
+
+end
+
+

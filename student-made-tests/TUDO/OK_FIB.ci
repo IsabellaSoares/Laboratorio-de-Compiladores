@@ -1,0 +1,49 @@
+/*
+    Vinícius Furukawa Carvalho
+    email: vinicius_furuka@hotmail.com.br
+*/
+
+@nce
+
+/*
+  @filename   ok-fib.ci
+
+  @comment    Imprime o 10 termo de fibonnaci
+  Deve escrever
+  34
+
+*/
+
+class A
+
+    func fib: Int n -> Int {
+        var A a;
+        var Int left;
+        var Int right;
+        
+        if n < 2 {
+            return n;
+        } else {
+            a = A.new;
+            left = a.fib: n-1;
+            right = a.fib: n-2;
+            return left + right;
+        }
+    }  
+
+end
+
+class Program
+   
+   func run {
+      var A a;
+      
+      Out.println: "";
+      Out.println: "Ok-fib";
+      Out.println: "The output should be :";
+      Out.println: "34";
+      a = A.new;
+      Out.println: (a.fib: 10);
+   }   
+
+end

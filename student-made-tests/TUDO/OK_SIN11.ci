@@ -1,0 +1,33 @@
+/*
+Ricardo Mendes Leal Junior
+ricardomlealjr@gmail.com
+*/
+@nce
+
+/*
+  @filename   ok-sin11.kra
+
+  @comment    Testa se o compilador aceita ; como comando
+  */
+
+class Program
+    func run {
+        ;
+        ;
+        ;
+        ;
+        ;
+        Out.println: 1;
+        ;
+        ;
+        if true {
+            ;
+            while false {
+                ;
+            }
+        }
+        ;
+    }
+end
+
+

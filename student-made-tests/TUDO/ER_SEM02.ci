@@ -1,0 +1,14 @@
+@annot("check", "lowerUpperCaseIdentifiers")
+@cep(7, "Caracteres minúsculos e maiúsculos são diferentes", "Variable 'I' was not declared", "comp.Compiler.assignExprLocalDec()")
+  
+class Program 
+  
+    func run {
+        
+       var Int i;
+       I = 0;      //#
+       
+       Out.println: i
+    }
+
+end

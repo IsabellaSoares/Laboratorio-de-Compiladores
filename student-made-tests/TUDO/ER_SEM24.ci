@@ -1,0 +1,18 @@
+
+/* -----------------------
+ * Carlos Tadeu C. S
+ * tadeucarlos07@gmail.com
+ * ----------------------- */
+
+@annot("check", "illegalTypeOrIdentifier")
+@cep(7, "Palavra reservada utilizada como variavel", 
+    "Identifier expected", "comp.Compiler.localDec()")
+  
+
+class Program 
+  
+    func run {
+        var Int true;
+    }
+
+end

@@ -1,0 +1,42 @@
+@annot("check", "scopeLocalVarField")
+@nce
+
+/*
+  @filename   ok-sem06.ci
+
+  @comment    Testa se o compilador aceita variavel local e de instancia com mesmo
+  nome.
+  */
+
+class A 
+   
+   var Int n;
+   
+   func set: Int pn { 
+      var Int n;
+      
+      self.n = pn;
+   }  
+   
+   func put: Int n, String set -> Int {
+      var Boolean put;
+      
+      self.n = n;
+      return n;
+   }   
+
+end
+
+
+class Program 
+   
+   func run {
+      var A a;
+      
+      a = A.new;
+      a.set: 0;
+   }   
+
+end
+
+

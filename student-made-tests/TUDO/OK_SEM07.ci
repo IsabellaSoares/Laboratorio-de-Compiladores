@@ -1,0 +1,25 @@
+@annot("check", "whileBreak")
+@nce
+
+/*
+  @filename   ok-sem07.ci
+      
+  @comment    breaks dentro de loops encaixados.
+  */
+
+class Program 
+   
+   func run {
+    
+      while true {         
+        while true {            
+            while true {               
+                break;
+            }            
+            break;
+         }         
+         break;
+      }   
+   }   
+
+end

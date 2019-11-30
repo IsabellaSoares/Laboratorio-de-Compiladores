@@ -424,8 +424,9 @@ public class Compiler {
 			} else {
 				this.error("nonexistent superclass " + cianetoClass.getName());
 			}
-		} else if (thereIsTheSameMethodInSuperClass(method, paramList)) {
-			this.error("'override' expected before overridden method");
+		} else if (thereIsTheSameMethodInSuperClass(method, qualifier, paramList)
+					&& qualifier.getToken1().toString().equals("public")) {
+			this.error("'override' expected before overridden method ");
 		}
 
 		if (lexer.token != Token.LEFTCURBRACKET) {
@@ -774,14 +775,9 @@ public class Compiler {
 			next();
 		}
 
-		// next();
-
 		return new IfStat(expr, ifState, elseState);
 	}
-
-	/**
 	
-	 */
 	private WriteStat writeStat() {
 		next();
 		check(Token.DOT, "a '.' was expected after 'Out'");
@@ -810,7 +806,6 @@ public class Compiler {
 		}
 
 		if (lexer.token != Token.SEMICOLON) {
-			// System.out.println("linha: " + lineNumber);
 			int line = lexer.getLineNumber();
 			lexer.setLineNumber(lineNumber);
 			this.error("';' expected");
@@ -859,11 +854,6 @@ public class Compiler {
 
 			if (right == null)
 				this.error("Expression expected OR Unknown sequence of symbols");
-
-			if (left != null && right != null) {
-				// System.out.println("left type: " + left.getType());
-				// System.out.println("right type: " + right.getType());
-			}
 
 			if (!left.getType().getName().equals(right.getType().getName())) {
 				if (!(left.getType().getName().equals("NullType")) && !(right.getType().getName().equals("NullType"))) {
@@ -1108,9 +1098,7 @@ public class Compiler {
 			}
 		}
 
-		// check(Token.SEMICOLON, "';' expected");
 		if (lexer.token != Token.SEMICOLON) {
-			// System.out.println("linha: " + lineNumber);
 			int line = lexer.getLineNumber();
 			lexer.setLineNumber(lineNumber);
 			error("';' expected");
@@ -1131,7 +1119,6 @@ public class Compiler {
 			String id = lexer.getStringValue();
 
 			if (semanticChecking.getTypeCianetoClass(id) == null
-					// && semanticChecking.getFieldDec(id)==null
 					&& semanticChecking.getLocalDec(id) == null && semanticChecking.getParamVariable(id) == null) {
 
 				if (!id.equals(semanticChecking.getCurrentClassName())) {
@@ -1150,10 +1137,9 @@ public class Compiler {
 					next();
 
 					Type t1 = getTypeOfId(id);
-
-					// TypeCianetoClass cClass = hashClasses.get(t1.getName());
 					MethodDec method = null;
 					TypeCianetoClass cClass = semanticChecking.getTypeCianetoClass(t1.getName());
+					
 					if (cClass == null) {
 						if (t1.getName().equals(semanticChecking.getCurrentClassName())) {
 							method = semanticChecking.getMethodDec(id2);
@@ -1251,11 +1237,9 @@ public class Compiler {
 				next();
 
 				if (lexer.token == Token.ID) {
-
-					String id = lexer.getStringValue();
-					
+					String id = lexer.getStringValue();					
 					MethodDec isMethod = null;
-					isMethod = semanticChecking.getMethodDec(id);					
+					isMethod = semanticChecking.getMethodDec(id);
 					
 					next();
 
@@ -1306,7 +1290,7 @@ public class Compiler {
 						type = methodDec.getType();
 					}
 					
-					if (isMethod == null) {
+					if (isMethod == null && methodDec == null) {
 						return new PrimarySelfExpr(id, type, false);
 					} else {
 						return new PrimarySelfExpr(id, type, true);
@@ -1407,14 +1391,9 @@ public class Compiler {
 			next();
 		} else if (lexer.token == Token.ID) {
 			type = new TypeNull();
-			/*
-			 * type = semanticChecking.getTypeCianetoClass(lexer.getStringValue());
-			 * System.out.println("cianeto"); System.out.println(type.getName());
-			 */
 			type.setName(lexer.getStringValue());
 			next();
 		} else {
-			// this.error("A type was expected in line " + lexer.getLineNumber());
 			return null;
 		}
 
@@ -1576,9 +1555,8 @@ public class Compiler {
 	}
 
 	private Type verifySendMessage(String variableName, String methodName, ArrayList<Expr> exprList) {
-		// System.out.println(variableName+"."+methodName);
-
 		MethodDec method = null;
+		
 		if (!variableName.equals("self")) {
 			String className = "";
 			FieldDec fieldDec = semanticChecking.getFieldDec(variableName);
@@ -1687,23 +1665,35 @@ public class Compiler {
 		return method.getType();
 	}
 
-	private boolean thereIsTheSameMethodInSuperClass(Variable method, ArrayList<Variable> paramList) {
+	private boolean thereIsTheSameMethodInSuperClass(Variable method, Qualifier methodQualifier, ArrayList<Variable> paramList) {
 		String methodName = method.getName();
+		
 		if (semanticChecking.getSuperClass() == null) {
 			return false;
 		}
+		
+		
 		TypeCianetoClass cianetoClass = semanticChecking
-				.getTypeCianetoClass(semanticChecking.getSuperClass().getName());
+				.getTypeCianetoClass(semanticChecking.getSuperClass().getName());		
+		
 		if (cianetoClass != null) {
-			MethodDec superMethod = cianetoClass.getMethod(methodName);
+			MethodDec superMethod = cianetoClass.getMethod(methodName);			
+			
 			if (superMethod != null) {
+				if (superMethod.getQualifier() != methodQualifier) {
+					return false;
+				}
+				
 				int sizeParam = paramList.size();
 				int sizeSuperParam = superMethod.getParamList().size();
+				
 				ArrayList<Variable> superParamList = superMethod.getParamList();
+				
 				if (sizeParam == sizeSuperParam) {
 					for (int i = 0; i < sizeParam; i++) {
 						Variable v1 = paramList.get(i);
 						Variable v2 = superParamList.get(i);
+						
 						if (!v1.getType().getName().equals(v2.getType().getName())) {
 							return false;
 						}

@@ -1,0 +1,42 @@
+@annot("check", "localVarSameClassName")
+@nce
+
+/*
+  @filename   ok-sem12.ci
+
+  @comment    Testa se o compilador aceita variavel com nome de classe
+  */
+
+open
+class A 
+   
+   func m { }    
+
+end
+
+open
+class B extends A 
+   
+   public func p {
+      var B A;
+      
+      A = B.new;
+      A.m;
+   }   
+
+end
+
+
+class Program 
+   
+   func run {
+      var A a;
+      var B b;
+      
+      a = A.new;
+      b = B.new;
+      a.m;
+      b.p;
+   }   
+
+end

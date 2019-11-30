@@ -1,0 +1,11 @@
+@cep(7, "Falta um ';' para finalizar a exp 'Int.readInt(i)' ", "';' missing")
+
+class Program
+
+    func run {
+
+        var Int i;
+        In.readInt(i)        //#
+        In.readInt(i);
+    }
+end

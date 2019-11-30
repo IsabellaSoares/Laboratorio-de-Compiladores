@@ -1,0 +1,32 @@
+/* 
+    Caroline Aparecida
+    hicaarol@gmail.com
+*/
+
+@annot("check", "methodsEqualNames")
+@cep(11, "Método público e privado com mesmos nomes",  
+  "Method 'm' is being redeclared", 
+  "comp.Compiler.methodDec()")
+  
+
+class A 
+  
+    private func m {
+    
+    }
+  
+    func m {  
+    
+    }
+
+end
+
+class Program 
+
+    func run {
+        var A a;
+        a = A.new;
+        a.m;
+    }
+
+end

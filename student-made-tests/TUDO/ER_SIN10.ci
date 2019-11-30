@@ -1,0 +1,11 @@
+// Isabela Sayuri Matsumoto - 726539 isabelasassa@hotmail.com
+@cep(5, "'readInt' deve ser precedido de 'In.'", "'readInt' was not declared", "comp.Compiler.readStatement()")
+
+class Program 
+  
+    func run {
+        a = readInt;
+                
+    }
+
+end

@@ -1,0 +1,26 @@
+/* 
+William A Alves
+willianadrianoalves@hotmail.com
+*/
+
+@annot("check", "parametersInMethodRunOfClassProgram")
+@cep(6, "metodo 'run' nao deve tomar parametros", "")
+
+class Program
+
+    var Int numero;
+
+    func run: Int numero { 
+
+        var Int numero; 
+        numero = In.readInt; 
+        numero = 0;
+        Out.println: self.numero; 
+
+        return numero;
+
+    } 
+
+end
+
+

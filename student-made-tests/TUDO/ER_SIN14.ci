@@ -1,0 +1,18 @@
+/*
+    João Paulo Francisco de Paula
+*/
+@cep(12, "Classe esperada", "'class' expected", "comp.Compiler.program()")
+
+class Program
+
+    func run {
+    }
+
+end
+
+
+/* Ok, permite comentarios */
+
+Isto deveria ser um comentario, mas  ...
+
+// Nao deve existir nada depois do 'end', exceto comentarios

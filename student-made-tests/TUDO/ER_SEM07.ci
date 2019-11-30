@@ -1,0 +1,19 @@
+/*
+    Breno V. V. de Oliveira
+    breno.oliveira@dcomp.sor.ufscar.br
+*/
+@annot("check", "typeErrorSearchMethod")
+@cep(9, "Variável inteira sendo utilizada como se fosse objeto", "Message send to a non-object receiver",
+     "comp.Compiler.factor()")
+
+class Program
+  
+    func run {
+
+        var Int i;
+       
+        i.run;  
+
+    }
+
+end

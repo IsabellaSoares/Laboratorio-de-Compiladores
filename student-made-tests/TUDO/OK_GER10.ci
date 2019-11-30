@@ -1,0 +1,77 @@
+/*
+    Matheus Nadaleti Garcia
+    email: mat.nadaleti@hotmail.com
+*/
+
+@annot("check", "fieldAccess")
+@nce
+
+/*
+  @filename   ok-ger10.ci
+
+  @comment    Teste se a geracao de codigo para variaveis de instancia esta
+  correta.
+  Deve escrever
+  1 1 2 2 3 3 4 4
+
+  */
+
+open
+class A
+
+    var Int k;
+
+    func m1: Int n {
+        self.k = 1;
+        Out.print: self.k ++ " " ++ n ++ " ";
+    }
+
+    func getK -> Int {
+        return self.k;
+    }
+
+end
+
+open
+class B extends A
+
+    var Int k;
+
+    func m2:Int n {
+        self.k = 2;
+        super.m1: 1;
+        Out.print: self.k ++ " " ++ n ++ " ";
+    }
+
+    override
+    func getK -> Int {
+        return self.k;
+    }
+
+end
+
+class C extends B
+
+    func m3:Int n {
+        super.m2: 2;
+        Out.print: "3 " ++ n ++ " ";
+    }
+
+    func m4:Int n {
+        self.m3: 3;
+        Out.print: "4 " ++ n, " ";
+    }
+
+end
+
+class Program
+   
+   func run {
+      var C c;
+      
+      Out.println: "1 1 2 2 3 3 4 4";
+      c = C.new;
+      c.m4: 4;
+   }   
+
+end

@@ -1,0 +1,31 @@
+/*
+Evelin Soares
+evelincontatos@gmail.com
+*/
+
+
+@annot("check", "typeErrorAssignRightSideNotSubtypeLeftSide")
+@cep(16, "Erro de tipos. O tipo de 'new A()', que é 'A', não é subclasse do tipo de retorno, 'B'",
+      "Type error: type of the expression returned is not subclass of the method return type",
+      "comp.Compiler.returnStatement()")
+
+
+open
+class A
+end
+
+class B extends A
+end
+
+
+class Program
+
+    func m -> B {
+        return A.new;
+    }
+
+    func run {
+
+    }
+
+end

@@ -1,0 +1,29 @@
+@annot("check", "typeErrorEqualEqualNotEqual")
+@nce
+
+/*
+  @filename   ok-sem04.ci
+
+  @comment    testa se o compilador aceita comparacoes com == e != com
+              Int e Boolean
+  */
+
+
+class Program 
+   
+   func run {
+      var Int a, b;
+      var Boolean e, f;
+
+      a = 1;
+      b = 1;
+      e = true;
+      f = false;
+
+      if  (a == b) && (a == 1) && (1 == b) && (a != b) && (e == f)
+           && (true == f) && (e != f) && (true != f)  {
+         Out.println: "impossivel";
+      }
+   }  
+   
+end

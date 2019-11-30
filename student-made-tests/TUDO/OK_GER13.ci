@@ -1,0 +1,116 @@
+@annot("check", "privateMethodRedefinedAsPublic")
+@nce
+
+/*
+Matheus Saraiva Leão Andrade
+matheus.andrade@dcomp.sor.ufscar.br
+*/
+
+/*
+  @filename   ok-ger13.ci
+
+  @comment    
+  Deve escrever
+      0 1 0 1 0 1 2 B A 0 1 P
+
+  */
+
+open
+class A
+    var Int n;
+   
+    private func p1 { Out.print: "999 "; }
+   
+    func set: Int pn {
+        Out.print: 1, " ";
+        self.n = pn;
+    }   
+
+    private func p2 { Out.print: "888 "; }
+   
+    func get -> Int {
+        return self.n;
+    }   
+    func print {
+        Out.print: "A ";
+    }
+end
+
+class B extends A
+    private func p2 { }
+   
+    override
+    func set: Int pn {
+        Out.print: pn, " ";
+        super.set: pn;
+    }   
+   
+    func p1 { 
+        Out.print: 2, " ";
+    }   
+   
+    override
+    func print {
+        Out.print: "B ";
+    }
+end
+
+
+class Program
+    var Program program;
+
+    func print {
+        Out.print: "P ";
+    }
+   
+    func m: A a -> B {
+        a.set: 0;
+        return B.new;
+    }   
+   
+    func p: Int i -> A {
+        if i > 0 {
+            return A.new;
+        }
+        else {
+            return B.new;
+        }
+    }   
+   
+    func run {
+        var A a, a2;
+        var B b;
+
+        Out.println: "0 1 0 1 0 1 2 B A 0 1 P";
+        
+        a = A.new;
+        b = B.new;
+        a = b;
+        a.set: 0;
+        a = self.m: a;
+        b = self.m: b;
+        b.p1;
+        a = self.p: 0;
+        a.print;
+        a = self.p: 1;
+        a.print;
+    
+        a = nil;
+        b = nil;
+        a2 = A.new; 
+        if a == b {
+            Out.print: 0, " ";
+        }
+        if b == a {
+            Out.print: 1, " ";
+        }
+        if a == a2 {
+            Out.print: 2, " ";
+        }
+    
+        self.program = Program.new;
+        self.program.print;
+    }
+end
+
+

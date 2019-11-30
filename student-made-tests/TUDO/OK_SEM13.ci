@@ -1,0 +1,32 @@
+@annot("check", "localVarSameMethodName")
+@nce
+
+/*
+  @filename   ok-sem13.ci
+
+  @comment    Testa se o compilador aceita variavel local com mesmo
+  nome que metodo
+  */
+
+class A 
+   
+   func m { }
+   
+   func p { 
+      var Int m;
+   }   
+
+end
+
+
+class Program 
+   
+   public func run {
+      var A a;
+      
+      a = A.new;
+      a.p;
+   }   
+
+end
+

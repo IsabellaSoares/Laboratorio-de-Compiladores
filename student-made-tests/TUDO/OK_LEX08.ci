@@ -1,0 +1,24 @@
+/*
+    Nathan Eloy
+    nathaneloy@hotmail.com
+*/
+
+@nce
+
+/*
+    @filename   ok-lex08.ci
+
+    @comment    Testa se o lexico considera validos identificadores com mais  de
+    32 caracteres e com o carater sublinhado (_)
+*/
+
+
+class Program
+
+    func run {
+        var Int i012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789;
+        var Int abcdefghijklmnopqrstuvxwyzabcdeabcdefghijklmnopqrstuvxwyzabcdeabcdefghijklmnopqrstuvxwyzabcdeabcdefghijklmnopqrstuvxwyzabcdeabcdefghijklmnopqrstuvxwyzabcde;
+        var Int an_integer__________________ok;
+    }
+
+end

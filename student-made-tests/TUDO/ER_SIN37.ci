@@ -1,0 +1,18 @@
+/* 
+Lucas Rigo Yoshimura
+lucasrigoyoshimura@gmail.com
+*/
+
+@cep(7, "Expressao do 'if' vazia", 
+   "Expression expected", "comp.Compiler.factor()")
+
+class Program 
+  
+    func run {
+        
+        if () {   
+        }
+      
+    }
+
+end

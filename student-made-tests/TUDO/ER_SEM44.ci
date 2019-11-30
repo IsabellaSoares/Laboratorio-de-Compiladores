@@ -1,0 +1,31 @@
+@annot("check", "typeErrorOutPrint")
+@cep(25, "Não se pode escrever objetos", 
+  "Command 'write' does not accept objects", "comp.Compiler.writeStatement()")
+  
+
+class A 
+      
+   private var Int n;
+   
+   public func set: Int n {
+      self.n = n;
+   }   
+   public func get -> Int {
+      return self.n;
+   }   
+
+
+end
+
+
+class Program 
+   
+   public func run {
+      var A a;
+      
+      a = A.new;
+      Out.println: a;
+   }   
+
+end
+

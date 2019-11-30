@@ -1,0 +1,48 @@
+/*
+Ricardo Mendes Leal Junior
+ricardomlealjr@gmail.com
+*/
+@nce
+
+/*
+  @filename   ok-sin09.kra
+
+  @comment    Testa :
+    - aceitacao de declaracao de metodos privados;
+    - chamada destes metodos usando self;
+    - uso de variaveis de instancia pelos metodos privados
+  */
+
+class A
+    private var Int n;
+    private var Int k;
+
+    private func m1 -> Int {
+        return self.n + 1;
+    }
+
+    private func m2: Int pk {
+        self.k = pk;
+    }
+
+    public func m -> Int {
+        self.m2: 0;
+        return self.m1 + self.k;
+    }
+
+    public func init {
+        self.k = 1;
+        self.n = 0;
+    }
+end
+
+class Program
+    func run {
+        var A a;
+
+        a = A.new;
+        Out.println: a.m;
+    }
+end
+
+

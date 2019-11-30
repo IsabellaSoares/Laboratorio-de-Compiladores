@@ -1,0 +1,98 @@
+/*
+    Vinícius Furukawa Carvalho
+    email: vinicius_furuka@hotmail.com.br
+*/
+
+@annot("check", "if")
+@nce
+
+/*
+  @filename   ok-queue.ci
+
+  @comment    Cria uma fila e imprime
+
+*/
+
+class Node
+    var Int number;
+    var Node next;
+    
+    func setNumber: Int number { self.number = number; }
+    func getNumber -> Int { return self.number; }
+    func setNext: Node next { self.next = next; }
+    func getNext -> Node { return self.next; } 
+    
+    func print {
+        Out.print: self.number++" ";
+        if self.next != nil {
+            self.next.print;
+        }
+    }
+end
+
+class Head
+    var Node end2;
+    var Node first;
+    var Int nElements;
+    
+    func init {
+        self.end2 = nil;
+        self.first = nil;
+        self.nElements = 0;
+    }
+    
+    func print {
+        if self.nElements != 0 {
+            self.first.print;
+        }
+    }
+    
+    func getNElements -> Int { return self.nElements; } 
+    
+    func insert: Int num {
+        self.nElements = self.nElements + 1;
+        var Node aux;
+        
+        aux = Node.new;
+            
+        aux.setNumber: num;
+        aux.setNext: nil;
+        
+        if (self.first == nil) && (self.end2 == nil) {
+            self.first = aux;
+        } 
+        else {
+            self.end2.setNext: aux;
+        }
+        
+        self.end2 = aux;
+    }
+    
+end
+
+class Program
+   
+   func run {
+      var Head head;
+      var Int max;
+      var Int aux;
+      
+      aux = 0;
+      max = 10;
+      
+      Out.println: "";
+      Out.println: "Ok-queue";
+      Out.println: "The output should be :";
+      Out.println: "The values of queue";
+      head = Head.new;
+      head.init;
+      
+      while head.getNElements < max {
+          aux = In.readInt;
+          head.insert: aux;
+      }
+      
+      head.print;
+   }   
+
+end

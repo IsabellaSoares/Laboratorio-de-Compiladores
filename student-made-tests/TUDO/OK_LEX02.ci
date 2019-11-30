@@ -1,0 +1,32 @@
+/*
+Michael dos Santos
+michael-santos@outlook.com.br
+*/
+
+@nce
+
+/*
+    @filename    ok-lex02.kra
+    
+    @comment    Testa se nao aceita comentario aninhado como
+    /* aninhado. O comentario termina aqui: */
+
+class A
+    func m {
+        var Int i;
+
+        i = 1;
+
+        Out.print: i;
+    }
+end
+
+
+class Program
+    func run {
+        var A a;
+
+        a = A.new;
+        a.m;
+    }
+end

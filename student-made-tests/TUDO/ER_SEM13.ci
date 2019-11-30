@@ -1,0 +1,13 @@
+@annot("check", "typeErrorSearchMethod")
+@cep(8, "Não há método readBoolean", "Unknown method 'readBoolean'")
+  
+
+class Program 
+   
+   func run {
+      var Boolean b;
+      
+      b = In.readBoolean;
+   }   
+
+end

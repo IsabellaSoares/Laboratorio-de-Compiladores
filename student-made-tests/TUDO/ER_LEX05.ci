@@ -1,0 +1,11 @@
+@cep(7, "Sublinhado como primeiro caractere de um identificador", 
+    "Identifier starting with underscore", "lexer.Lexer.nextToken()")
+  
+      
+class Program 
+  
+    func run  {
+       var Int _i;  //#
+    }
+
+end

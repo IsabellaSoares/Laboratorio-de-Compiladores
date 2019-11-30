@@ -1,0 +1,22 @@
+/*
+Michael dos Santos
+michael-santos@outlook.com.br
+*/
+
+@nce
+
+/*
+    @filename    ok-lex04.kra
+    @comment    Testa limites validos de numeros inteiros
+    */
+
+class Program
+    func run {
+        Out.println: 0;
+        Out.println: 1;
+        Out.println: 2147483646;
+        Out.println: 2147483647;
+        Out.println: -2147483647;
+        Out.println: -0;
+    }
+end

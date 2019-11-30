@@ -12,7 +12,7 @@ public class PrimarySelfExpr extends PrimaryExpr {
 	private boolean method;
 	
 	public PrimarySelfExpr (String id, Type type, boolean isMethod) {
-		super(type);
+		super(type);		
 		this.id1 = id;
 		this.exprList = null;
 		this.method = isMethod;
@@ -24,8 +24,8 @@ public class PrimarySelfExpr extends PrimaryExpr {
 		this.exprList = exprList;
 	}
 	
-	public PrimarySelfExpr (String id1, String id2, Type type) {
-		super(type);
+	public PrimarySelfExpr (String id1, String id2, Type type) {		
+		super(type);		
 		this.id1 = id1;
 		this.id2 = id2;
 		this.exprList = null;
