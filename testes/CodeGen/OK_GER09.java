@@ -14,25 +14,25 @@ public class OK_GER09 {
 
    private static class A {
       public void m1 (int n) {
-         System.out.print(" n" + " ");
+         System.out.print("1 " + n + " ");
       }
    }
 
    private static class B extends A {
       public void m2 (int n) {
          super.m1(1);
-         System.out.print(" n" + " ");
+         System.out.print(" 2 " + n + " ");
       }
    }
 
    private static class C extends B {
       public void m3 (int n) {
          super.m2(2);
-         System.out.print(" n" + " ");
+         System.out.print(" 3 " + n + " ");
       }
       public void m4 (int n) {
          this.m3(3);
-         System.out.println(" n" + " ");
+         System.out.println(" 4 " + n + " ");
       }
    }
 

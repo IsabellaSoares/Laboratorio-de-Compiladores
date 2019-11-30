@@ -13,3 +13,13 @@ public class OK_GER21 {
    }
 
    private static class A {
+      int n;
+      public void set (int n) {
+         this.n = n;
+      }
+      public int get () {
+         return this.n;
+      }
+   }
+
+}

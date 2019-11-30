@@ -14,5 +14,29 @@ public class RepeatStat extends Statement {
 		this.expr = expr;
 	}
 	
-	public void genJava( PW pw ) {};
+	public void genJava( PW pw ) {
+		pw.println();
+		pw.printlnIdent("do {");
+		
+		pw.add();
+		
+		if (statList != null) {
+			for (int i = 0; i < statList.size(); i++) {
+				statList.get(i).genJava(pw);
+			}
+		}
+		
+		pw.sub();
+		
+		pw.printIdent("} while (");
+		
+		int indent = pw.get();
+		pw.set(0);
+				
+		expr.genJava(pw);
+		
+		pw.set(indent);
+		pw.println(");");
+		pw.println();
+	};
 }

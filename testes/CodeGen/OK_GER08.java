@@ -29,10 +29,10 @@ public class OK_GER08 {
          System.out.print(r + " ");
 
          if (falseBool) {
-            System.out.print("8 ");
+            System.out.print(8 + " ");
          }
          else {
-            System.out.print("7 ");
+            System.out.print(7 + " ");
          }
       }
    }

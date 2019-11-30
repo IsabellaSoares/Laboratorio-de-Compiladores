@@ -18,12 +18,17 @@ public class WriteStat extends Statement {
 		if (printName.equals("println:")) {
 			pw.printIdent("System.out.println(");
 			
+			int indent = pw.get();
+			pw.set(0);
+			
 			if (expr != null) {
 				for (int i = 0; i < expr.size(); i++) {
 					if (i > 0) pw.print(" + ");
 					expr.get(i).genJava(pw, false);
 				}
 			}
+			
+			pw.set(indent);
 			
 			pw.println(");");
 		} else {

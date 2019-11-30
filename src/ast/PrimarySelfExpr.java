@@ -9,11 +9,13 @@ import java.util.ArrayList;
 public class PrimarySelfExpr extends PrimaryExpr {
 	private String id1 = "self", id2 = null;
 	private ArrayList<Expr> exprList = new ArrayList<>();
+	private boolean method;
 	
-	public PrimarySelfExpr (String id, Type type) {
+	public PrimarySelfExpr (String id, Type type, boolean isMethod) {
 		super(type);
 		this.id1 = id;
 		this.exprList = null;
+		this.method = isMethod;
 	}
 	
 	public PrimarySelfExpr (String id, ArrayList<Expr> exprList, Type type) {
@@ -61,10 +63,12 @@ public class PrimarySelfExpr extends PrimaryExpr {
 			if (id1.equals("self")) {
 				pw.printIdent("this");
 			} else {
-				pw.printIdent("this." + id1 + "(");
+				pw.printIdent("this." + id1);
+				
+				if (this.method) {
+					pw.print("()");
+				}
 			}
-			
-			putParenthesis = true;
 		}		
 		
 		if (exprList != null) {

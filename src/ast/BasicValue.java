@@ -32,10 +32,7 @@ public class BasicValue extends Factor {
 	public void genJava(PW pw, boolean putParenthesis) {
 		
 		if (stringValue != null) {
-			if (putParenthesis)
-				pw.print(" ");
-			else
-				pw.print("\"" + stringValue + "\"");		
+			pw.print("\"" + stringValue + "\"");		
 		} else if (type.getName().equals("int")) {
 			pw.print(Integer.toString(intValue));
 		} else {			

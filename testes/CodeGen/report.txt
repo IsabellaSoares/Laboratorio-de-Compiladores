@@ -4,9 +4,11 @@ Resumo
 _________________________________________________________________________
 MI:  1             I: 2              PI: 1             Exc: 0
  SSE: 3/17/17%     
+JwithE: 5
 
 MI = muito importante, I = importante, PI = pouco importante, Exc = exce��es
 Dev = deveria ter sinalizado, LE = sinalizou linha errada, SSE = sinalizado sem erro
+ JwithE = number of Java classes with compilation errors
 _________________________________________________________________________
 
 N�mero de testes 'Muito importantes' em que o compilador falhou: 1
@@ -113,6 +115,11 @@ OK_GER13.ci, 40, 'override' expected before overridden method
 
 
 List of Java files with compilation errors: 
+   ./testes/CodeGen/OK_GER15.java
+   ./testes/CodeGen/OK_GER21.java
+   ./testes/CodeGen/OK_GER13.java
+   ./testes/CodeGen/OK_GER16.java
+   ./testes/CodeGen/OK_GER22.java
 
 List of files with correct Java code: 
    ./testes/CodeGen/OK_GER11.java
@@ -124,15 +131,10 @@ List of files with correct Java code:
    ./testes/CodeGen/OK_GER04.java
    ./testes/CodeGen/OK_GER01.java
    ./testes/CodeGen/OK_GER03.java
-
-List of files Java code that compiles but was generated incorrectly: 
-   ./testes/CodeGen/OK_GER22.java
    ./testes/CodeGen/OK_GER09.java
-
-The compiler could not create the following .java files:
-   ./testes/CodeGen/OK_GER15.java
-   ./testes/CodeGen/OK_GER21.java
-   ./testes/CodeGen/OK_GER13.java
-   ./testes/CodeGen/OK_GER16.java
    ./testes/CodeGen/OK_GER10.java
    ./testes/CodeGen/OK_GER14.java
+
+List of files Java code that compiles but was generated incorrectly: 
+
+The compiler could not create the following .java files:

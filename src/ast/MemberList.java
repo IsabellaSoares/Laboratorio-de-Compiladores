@@ -23,26 +23,25 @@ public class MemberList {
 		return this.member;
 	}
 	
-	public void genJava(PW pw) {	
+	public void genJava(PW pw) {
 		
-		if (qualifier.getToken1() != null) {
-			if (qualifier.getToken1().toString().equals("override")) {
-				pw.printIdent("@Override ");
-				System.out.println(member);
-			} else {			
-				pw.printIdent(qualifier.getToken1() + " ");			
+		if (qualifier != null) {
+			if (qualifier.getToken1() != null) {
+				if (qualifier.getToken1().toString().equals("override"))
+					pw.printIdent("@Override ");
+				else	
+					pw.printIdent(qualifier.getToken1().toString() + " ");
 			}
+			
+			if (qualifier.getToken2() != null)
+				pw.print(qualifier.getToken2() + " ");
+			
+			if (qualifier.getToken3() != null)
+				pw.print(qualifier.getToken3() + " ");
+			
+			if (qualifier.getToken4() != null)
+				pw.print(qualifier.getToken4() + " ");
 		}		
-		
-		if (qualifier.getToken2() != null) {
-			pw.print(qualifier.getToken2() + " ");
-		}
-		
-		if (qualifier.getToken3() != null)
-			pw.print(qualifier.getToken3() + " ");
-		
-		if (qualifier.getToken4() != null)
-			pw.print(qualifier.getToken4() + " ");
 		
 		member.genJava(pw);
 	}

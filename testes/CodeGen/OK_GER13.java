@@ -13,3 +13,23 @@ public class OK_GER13 {
    }
 
    private static class A {
+      int n;
+      private void p1 () {
+         System.out.print("999 ");
+      }
+      public void set (int pn) {
+         System.out.print(1 + " ");
+         this.n = pn;
+      }
+      private void p2 () {
+         System.out.print("888 ");
+      }
+      public int get () {
+         return this.n;
+      }
+      public void print () {
+         System.out.print("A ");
+      }
+   }
+
+}

@@ -656,9 +656,6 @@ public class Compiler {
 			statList.add(stat);
 		}
 
-		// if (!lexer.token.toString().matches("^[a-zA-Z0-9]*$"))
-		// this.error("'" + lexer.token.toString() + "' not expected before 'until'");
-
 		check(Token.UNTIL, "missing keyword 'until'");
 		next();
 
@@ -871,7 +868,7 @@ public class Compiler {
 			if (!left.getType().getName().equals(right.getType().getName())) {
 				if (!(left.getType().getName().equals("NullType")) && !(right.getType().getName().equals("NullType"))) {
 					if(!isSubtype(left.getType(), right.getType()) || !isSubtype(right.getType(), left.getType())) {
-						this.error("Type not equals 1");
+						this.error("Type not equals");
 					}
 				}
 			}
@@ -901,7 +898,7 @@ public class Compiler {
 					&& !left.getType().getName().equals("String")
 					&& !right.getType().getName().equals("int") 
 					&& !right.getType().getName().equals("String")) {
-				this.error("Type not equals 2");
+				this.error("Type not equals");
 			}
 
 			left = new CompositeSimpleExpr(left, operator, right, left.getType());
@@ -930,7 +927,7 @@ public class Compiler {
 			right = term();
 
 			if (!left.getType().getName().equals(right.getType().getName())) {
-				this.error("Type not equals 3");
+				this.error("Type not equals");
 			}
 
 			if (operator == Token.PLUS
@@ -959,7 +956,7 @@ public class Compiler {
 			right = signalFactor();
 
 			if (!left.getType().getName().equals(right.getType().getName())) {
-				this.error("Type not equals 4");
+				this.error("Type not equals");
 			}
 
 			if (operator == Token.AND
@@ -1256,6 +1253,10 @@ public class Compiler {
 				if (lexer.token == Token.ID) {
 
 					String id = lexer.getStringValue();
+					
+					MethodDec isMethod = null;
+					isMethod = semanticChecking.getMethodDec(id);					
+					
 					next();
 
 					if (lexer.token == Token.DOT) {
@@ -1268,8 +1269,9 @@ public class Compiler {
 
 							Type t1 = getTypeOfId(id);
 							Type t2 = getTypeOfId(id2);
+							
 							if (!t1.getName().equals(t2.getName())) {
-								this.error("Type not equals 5");
+								this.error("Type not equals");
 							}
 							return new PrimarySelfExpr(id, id2, t1);
 
@@ -1287,9 +1289,7 @@ public class Compiler {
 							this.error("Id or IdColon expected");
 						}
 					}
-
-					// FieldDec fieldDec = hashGlobalVariables.get(id);
-					// MethodDec methodDec = hashMethodsList.get(id);
+					
 					FieldDec fieldDec = semanticChecking.getFieldDec(id);
 					MethodDec methodDec = semanticChecking.getMethodDec(id);
 					if (methodDec == null && semanticChecking.getSuperClass() != null) {
@@ -1305,8 +1305,12 @@ public class Compiler {
 					} else if (methodDec != null) {
 						type = methodDec.getType();
 					}
-					return new PrimarySelfExpr(id, type);
-
+					
+					if (isMethod == null) {
+						return new PrimarySelfExpr(id, type, false);
+					} else {
+						return new PrimarySelfExpr(id, type, true);
+					}
 				} else if (lexer.token == Token.IDCOLON) {
 					String id = lexer.getStringValue();
 					next();
@@ -1323,7 +1327,7 @@ public class Compiler {
 			} else {
 				Type type = new TypeNull();
 				type.setName(semanticChecking.getCurrentClassName());
-				return new PrimarySelfExpr("self", type);
+				return new PrimarySelfExpr("self", type, false);
 			}
 		}
 

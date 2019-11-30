@@ -60,7 +60,7 @@ public class TypeCianetoClass extends Type {
 		
 		for(MemberList ml : memberList) {
 			if (ml != null) {
-				pw.add();			
+				pw.add();
 				ml.genJava(pw);									
 				pw.sub();
 			}
