@@ -283,8 +283,6 @@ public class Compiler {
 			if (qualifier == null && member == null)
 				this.error("'public', 'private' or '}' expected");
 
-			// if (member == null) return null;
-
 			MemberList memberList = new MemberList(qualifier, member);
 			list.add(memberList);
 		}
@@ -636,7 +634,6 @@ public class Compiler {
 
 		if (lexer.token == Token.ASSIGN) {
 			next();
-			// check if there is just one variable
 			expr = expr();
 		}
 
@@ -1054,9 +1051,7 @@ public class Compiler {
 		if (lexer.token == Token.ASSIGN) {
 			lineNumber = lexer.getLineNumber();
 			next();
-
-			// Se é um identificador, precisa verificar se já foi declarado
-			// Mensagem de erro temporária até implementação da análise semântica
+			
 			if (lexer.getStringValue().equals("readInt")) {
 				this.error("'readInt' was not declared");
 			}
